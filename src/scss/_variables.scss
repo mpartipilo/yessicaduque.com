@@ -1,0 +1,17 @@
+// Variables
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+
+// Font Variables
+$font-serif: 'Helvetica Neue', Arial, sans-serif;
+$font-sans: 'Open Sans', sans-serif;
+
+// Gray and Brand Colors for use across theme
+
+$theme-primary:    #b3446c;
+
+$gray-base:        #000 !default;
+$gray-darker:	   lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:		   lighten($gray-base, 20%) !default;   // #333
+$gray:			   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:	   lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:	   lighten($gray-base, 93.5%) !default; // #eee

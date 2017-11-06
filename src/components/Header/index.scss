@@ -1,0 +1,135 @@
+@import "../../scss/variables.scss";
+@import "../../scss/mixins.scss";
+
+.navbar-toggler {
+    z-index: 1;
+}
+
+@media (max-width: 576px) {
+    nav > .container {
+        width: 100%;
+    }
+}
+
+// Styling for the navbar
+$navbar-bg: #f8f8f8;
+
+#mainNav {
+    a#logo_inv {
+        display: block;
+        visibility: visible;
+    }
+
+    a#logo {
+        display: none;
+        visibility: collapse;
+    }
+
+    border-color: fade-out($gray-darker, 0.95);
+    background-color: $navbar-bg;
+    
+    @include sans-serif-font;
+    @include transition-all;
+
+    .navbar-brand {
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $theme-primary;
+        @include sans-serif-font;
+        &:hover,
+        &:focus {
+            color: darken($theme-primary, 0.1);
+        }
+    }
+    .navbar-toggle {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $gray-darker;
+    }
+    .navbar-nav {
+        > li.nav-item {
+            > a.nav-link,
+            > a.nav-link:focus {
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: $gray-darker;
+                &:hover {
+                    color: $theme-primary;
+                }
+                &.active {
+                    color: $theme-primary !important;
+                    background-color: transparent;
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+    }
+    @media (max-width: 576px) {
+        .navbar-brand {
+            img {
+                width: 200px;
+                height: auto;
+            }
+        }
+        
+        padding-right: 1px;
+    }
+    @media (min-width: 992px) {
+        a#logo {
+            display: block;
+            visibility: visible;
+        }
+        a#logo_inv {
+            display: none;
+            visibility: collapse;
+        }
+        border-color: fade-out(white, 0.7);
+        background-color: transparent;
+        .navbar-brand {
+            color: fade-out(white, 0.3);
+            &:hover,
+            &:focus {
+                color: white;
+            }
+        }
+        .navbar-nav > li.nav-item > a.nav-link,
+        .navbar-nav > li.nav-item > a.nav-link:focus {
+            color: fade-out(white, 0.3);
+            &:hover {
+                color: white;
+            }
+        }
+        &.navbar-shrink {
+            a#logo_inv {
+                display: block;
+                visibility: visible;
+            }
+            a#logo {
+                display: none;
+                visibility: collapse;
+            }
+            box-shadow: 0px -3px 8px #333;
+            border-color: fade-out($gray-darker, 0.95);
+            background-color: $navbar-bg;
+            .navbar-brand {
+                font-size: 16px;
+                color: $theme-primary;
+                &:hover,
+                &:focus {
+                    color: darken($theme-primary, 0.1);
+                }
+            }
+            .navbar-nav > li.nav-item > a.nav-link,
+            .navbar-nav > li.nav-item > a.nav-link:focus {
+                color: $gray-darker;
+                &:hover {
+                    color: $theme-primary;
+                }
+            }
+        }
+    }
+}
