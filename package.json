@@ -70,7 +70,7 @@
   "main": "n/a",
   "scripts": {
     "develop": "gatsby develop",
-    "developOpen": "gatsby develop -H 10.0.0.151",
+    "developOpen": "gatsby develop -H 0.0.0.0",
     "dev": "npm run develop",
     "serve": "gatsby serve",
     "build": "gatsby build",
