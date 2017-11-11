@@ -59,4 +59,5 @@ public/
 bundle-stats.json
 
 # Content
-content/
+_assets/
+static/data/feed.json
