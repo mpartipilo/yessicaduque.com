@@ -1,47 +1,61 @@
-import React from "react";
-import Helmet from "react-helmet";
-import PostListing from "../components/PostListing/PostListing";
-import config from "../../data/SiteConfig";
-
-export default class CategoryTemplate extends React.Component {
-  render() {
-    const category = this.props.pathContext.category;
-    const postEdges = this.props.data.allMarkdownRemark.edges;
-    return (
-      <div className="category-container">
-        <Helmet
-          title={`Posts in category "${category}" | ${config.siteTitle}`}
-        />
-        <PostListing postEdges={postEdges} />
-      </div>
-    );
-  }
-}
-
-/* eslint no-undef: "off" */
-export const pageQuery = graphql`
-  query CategoryPage($category: String) {
-    allMarkdownRemark(
-      limit: 1000
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { eq: $category } } }
-    ) {
-      totalCount
-      edges {
-        node {
-          fields {
-            slug
-          }
-          excerpt
-          timeToRead
-          frontmatter {
-            title
-            tags
-            cover
-            date
-          }
-        }
-      }
-    }
-  }
-`;
+// import React from "react";
+// import Helmet from "react-helmet";
+// import PostListing from "../components/PostListing/PostListing";
+// import config from "../../data/SiteConfig";
+// 
+// /* eslint "react/jsx-indent": 0 */
+// /* eslint "react/jsx-indent-props": 0 */
+// 
+// export default class CategoryTemplate extends React.Component {
+//     render() {
+//         const { category } = this.props.pathContext;
+//         const postEdges = this.props.data.allCockpitBlog.edges;
+//         return (
+//             <div className="category-container">
+//                 <Helmet
+//                     title={`Posts in category "${category}" | ${config.siteTitle}`}
+//                 />
+//                 <PostListing postEdges={postEdges} />
+//             </div>
+//         );
+//     }
+// }
+// 
+// /* eslint no-undef: "off" */
+// export const pageQuery = graphql`
+//     query CategoryPage($category: String) {
+//         allCockpitBlog(
+//             limit: 100
+//             sort: { fields: properties____modified, order: DESC }
+//             filter: { entry: { category: { eq: $category } } }
+//         ) {
+//             totalCount
+//             edges {
+//                 node {
+//                     host
+//                     properties {
+//                         title_slug
+//                         _modified
+//                     }
+//                     childCockpitBlogExcerptTextNode {
+//                         childMarkdownRemark {
+//                             html
+//                         }
+//                     }
+//                     childCockpitBlogContentTextNode {
+//                         childMarkdownRemark {
+//                             timeToRead
+//                             html
+//                         }
+//                     }
+//                     entry {
+//                         title
+//                         tags
+//                         category
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// `;
+// 

@@ -1,8 +1,8 @@
 import React from "react";
 import Helmet from "react-helmet";
 
-import 'font-awesome/scss/font-awesome.scss';
-import 'bootstrap/scss/bootstrap.scss';
+import "font-awesome/scss/font-awesome.scss";
+import "bootstrap/scss/bootstrap.scss";
 
 import config from "../../data/SiteConfig";
 
@@ -13,64 +13,63 @@ import "./index.css";
 import "../scss/index.scss";
 
 export default class MainLayout extends React.Component {
-  getInvertHeader() {
-    const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
-    const currentPath = this.props.location.pathname
-    .replace(pathPrefix, "")
-    .replace("/", "");
-    return (currentPath !== "");
-  }
-  getLocalTitle() {
-    function capitalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    getInvertHeader() {
+        const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
+        const currentPath = this.props.location.pathname
+            .replace(pathPrefix, "")
+            .replace("/", "");
+        return currentPath !== "";
     }
-    const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
-    const currentPath = this.props.location.pathname
-      .replace(pathPrefix, "")
-      .replace("/", "");
-    let title = "";
-    if (currentPath === "") {
-      title = "Home";
-    } else if (currentPath === "tags/") {
-      title = "Tags";
-    } else if (currentPath === "categories/") {
-      title = "Categories";
-    } else if (currentPath === "gallery") {
-      title = "Portfolio";
-    } else if (currentPath === "blog") {
-      title = "Blog";
-    } else if (currentPath.includes("posts")) {
-      title = "Article";
-    } else if (currentPath.includes("tags/")) {
-      const tag = currentPath
-        .replace("tags/", "")
-        .replace("/", "")
-        .replace("-", " ");
-      title = `Tagged in ${capitalize(tag)}`;
-    } else if (currentPath.includes("categories/")) {
-      const category = currentPath
-        .replace("categories/", "")
-        .replace("/", "")
-        .replace("-", " ");
-      title = `${capitalize(category)}`;
+    getLocalTitle() {
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
+        const currentPath = this.props.location.pathname
+            .replace(pathPrefix, "")
+            .replace("/", "");
+        let title = "";
+        if (currentPath === "") {
+            title = "Home";
+        } else if (currentPath === "tags/") {
+            title = "Tags";
+        } else if (currentPath === "categories/") {
+            title = "Categories";
+        } else if (currentPath === "gallery") {
+            title = "Portfolio";
+        } else if (currentPath === "blog") {
+            title = "Blog";
+        } else if (currentPath.includes("posts")) {
+            title = "Article";
+        } else if (currentPath.includes("tags/")) {
+            const tag = currentPath
+                .replace("tags/", "")
+                .replace("/", "")
+                .replace("-", " ");
+            title = `Tagged in ${capitalize(tag)}`;
+        } else if (currentPath.includes("categories/")) {
+            const category = currentPath
+                .replace("categories/", "")
+                .replace("/", "")
+                .replace("-", " ");
+            title = `${capitalize(category)}`;
+        }
+        return title;
     }
-    return title;
-  }
 
-  render() {
-    const { children } = this.props;
-    const invertFixedHeader = this.getInvertHeader();
-    return (
-      <div>
-        <Helmet>
-          <title>{`${config.siteTitle} | ${this.getLocalTitle()}`}</title>
-          <meta name="description" content={config.siteDescription} />
-        </Helmet>
-        <Header invertFixed={invertFixedHeader}>
-          {children()}
-        </Header>
-        <Footer />
-      </div>
-    );
-  }
+    render() {
+        const { children } = this.props;
+        const invertFixedHeader = this.getInvertHeader();
+        return (
+            <div>
+                <Helmet>
+                    <title
+                    >{`${config.siteTitle} | ${this.getLocalTitle()}`}</title>
+                    <meta name="description" content={config.siteDescription} />
+                </Helmet>
+                <Header invertFixed={invertFixedHeader}>{children()}</Header>
+                <Footer />
+            </div>
+        );
+    }
 }

@@ -61,3 +61,4 @@ bundle-stats.json
 # Content
 _assets/
 static/data/feed.json
+static/img/gallery
