@@ -10,8 +10,6 @@ import InstagramFeed from "../components/InstagramFeed";
 import Contact from "../components/Contact";
 import BlogSummary from "../components/BlogSummary";
 
-/* eslint "react/jsx-indent": 0 */
-
 class Index extends React.Component {
     componentWillMount() {
         configureAnchors({ offset: -100, keepLastAnchorHash: true });
@@ -22,6 +20,11 @@ class Index extends React.Component {
         const featuredGallery = this.props.data.cockpitGallery.entry.images.map(
             i => `${this.props.data.cockpitGallery.host}${i.path}`
         );
+        const highlights = this.props.data.highlights.entry.images.map(i => ({
+            src: `${this.props.data.highlights.host}${i.path}`,
+            width: i.meta.asset.width,
+            height: i.meta.asset.height
+        }));
         return (
             <div className="index-container">
                 <SEO postEdges={postEdges} />
@@ -39,7 +42,7 @@ class Index extends React.Component {
                 <section id="_portfolioSummary">
                     <ScrollableAnchor id="portfolio">
                         <div>
-                            <GallerySummary />
+                            <GallerySummary images={highlights} />
                             <div style={{ height: `30px` }} />
                             <InstagramFeed />
                         </div>
@@ -71,6 +74,23 @@ export const pageQuery = graphql`
                 title
                 images {
                     path
+                }
+            }
+        }
+        highlights: cockpitGallery(
+            properties: { title_slug: { eq: "portfolio" } }
+        ) {
+            host
+            entry {
+                title
+                images {
+                    path
+                    meta {
+                        asset {
+                            width
+                            height
+                        }
+                    }
                 }
             }
         }

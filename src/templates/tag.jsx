@@ -1,7 +1,7 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
-import PostListing from "../components/PostListing/PostListing";
+import Blog from "../components/Blog";
 import config from "../../data/SiteConfig";
 
 import "../scss/post.scss";
@@ -15,20 +15,22 @@ export default class TagTemplate extends React.Component {
                 <Helmet
                     title={`Posts tagged as "${tag}" | ${config.siteTitle}`}
                 />
-                <Container>
-                    <Row>
-                        <Col>
-                            <p>
-                                Posts tagged as <strong>{tag}</strong>
-                            </p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <PostListing postEdges={postEdges} />
-                        </Col>
-                    </Row>
-                </Container>
+                <section id="_blog">
+                    <Container>
+                        <Row>
+                            <Col>
+                                <p>
+                                    Posts tagged as <strong>{tag}</strong>
+                                </p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Blog postEdges={postEdges} />
+                            </Col>
+                        </Row>
+                    </Container>
+                </section>
             </div>
         );
     }
@@ -64,6 +66,9 @@ export const pageQuery = graphql`
                     entry {
                         title
                         tags
+                    }
+                    fields {
+                        slug
                     }
                 }
             }

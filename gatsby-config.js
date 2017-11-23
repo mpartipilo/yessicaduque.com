@@ -31,15 +31,7 @@ module.exports = {
             options: {
                 host: "http://content.yessicaduque.com",
                 accessToken: "account-0aaa1438863e50a40c082513a1dc16",
-                collectionName: "Gallery"
-            }
-        },
-        {
-            resolve: "gatsby-source-cockpit",
-            options: {
-                host: "http://content.yessicaduque.com",
-                accessToken: "account-0aaa1438863e50a40c082513a1dc16",
-                collectionName: "Blog"
+                collectionName: ["Gallery", "Blog"]
             }
         },
         {
@@ -107,8 +99,9 @@ module.exports = {
             options: {
                 setup(ref) {
                     const ret = ref.query.site.siteMetadata.rssMetadata;
-                    ret.allMarkdownRemark = ref.query.allMarkdownRemark;
-                    ret.generator = "GatsbyJS Material Starter";
+                    ret.allCockpitBlog = ref.query.allCockpitBlog;
+                    ret.generator =
+                        "Yessica Duque - Food styling and photography";
                     return ret;
                 },
                 query: `
@@ -132,49 +125,63 @@ module.exports = {
                     {
                         serialize(ctx) {
                             const { rssMetadata } = ctx.query.site.siteMetadata;
-                            return ctx.query.allMarkdownRemark.edges.map(
-                                edge => ({
-                                    categories: edge.node.frontmatter.tags,
-                                    date: edge.node.frontmatter.date,
-                                    title: edge.node.frontmatter.title,
-                                    description: edge.node.excerpt,
-                                    author: rssMetadata.author,
-                                    url:
-                                        rssMetadata.site_url +
-                                        edge.node.fields.slug,
-                                    guid:
-                                        rssMetadata.site_url +
-                                        edge.node.fields.slug,
-                                    custom_elements: [
-                                        { "content:encoded": edge.node.html }
-                                    ]
-                                })
-                            );
+                            return ctx.query.allCockpitBlog.edges.map(edge => ({
+                                categories: edge.node.entry.tags,
+                                date: edge.node.properties._modified,
+                                title: edge.node.entry.title,
+                                description:
+                                    edge.node.childCockpitBlogExcerptTextNode
+                                        .childMarkdownRemark.excerpt,
+                                author: rssMetadata.author,
+                                url:
+                                    rssMetadata.site_url +
+                                    edge.node.fields.slug,
+                                guid:
+                                    rssMetadata.site_url +
+                                    edge.node.fields.slug,
+                                custom_elements: [
+                                    {
+                                        "content:encoded":
+                                            edge.node
+                                                .childCockpitBlogContentTextNode
+                                                .childMarkdownRemark.html
+                                    }
+                                ]
+                            }));
                         },
                         query: `
-            {
-              allMarkdownRemark(
-                limit: 1000,
-                sort: { order: DESC, fields: [frontmatter___date] },
-              ) {
-                edges {
-                  node {
-                    excerpt
-                    html
-                    timeToRead
-                    fields { slug }
-                    frontmatter {
-                      title
-                      cover
-                      date
-                      category
-                      tags
-                    }
-                  }
-                }
-              }
-            }
-          `,
+                        {
+                            allCockpitBlog(limit: 100, sort: {fields: [properties____modified], order: DESC}) {
+                              edges {
+                                node {
+                                  host
+                                  properties {
+                                    title_slug
+                                    _modified
+                                  }
+                                  childCockpitBlogExcerptTextNode {
+                                    childMarkdownRemark {
+                                      excerpt
+                                      html
+                                    }
+                                  }
+                                  childCockpitBlogContentTextNode {
+                                    childMarkdownRemark {
+                                      timeToRead
+                                      html
+                                    }
+                                  }
+                                  entry {
+                                    title
+                                    tags
+                                  }
+                                  fields {
+                                    slug
+                                  }
+                                }
+                              }
+                            }
+                          }                          `,
                         output: config.siteRss
                     }
                 ]

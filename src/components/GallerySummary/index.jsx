@@ -21,7 +21,7 @@ class GallerySummary extends React.Component {
                 </Row>
                 <Row>
                     <Col lg="12" className="text-center">
-                        <Gallery limit="6" />
+                        <Gallery images={this.props.images} limit="6" />
                     </Col>
                 </Row>
                 <Row className="mt-4">

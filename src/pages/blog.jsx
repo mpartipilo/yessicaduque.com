@@ -5,7 +5,7 @@ import "../scss/blog.scss";
 
 class Index extends React.Component {
     render() {
-        const postEdges = this.props.data.allMarkdownRemark.edges;
+        const postEdges = this.props.data.allCockpitBlog.edges;
         return (
             <div className="index-container" id="_blog">
                 <Blog postEdges={postEdges} />
@@ -44,6 +44,9 @@ export const pageQuery = graphql`
                     entry {
                         title
                         tags
+                    }
+                    fields {
+                        slug
                     }
                 }
             }

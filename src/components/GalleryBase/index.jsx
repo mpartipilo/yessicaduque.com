@@ -56,7 +56,7 @@ class GalleryBase extends React.Component {
                 }}
             >
                 {({ measureRef }) => {
-                    const width = this.state.dimensions.width;
+                    const { width } = this.state.dimensions;
                     let cols = 3;
                     if (width <= 1024) {
                         cols = 2;
@@ -91,7 +91,7 @@ class GalleryBase extends React.Component {
                     onClickNext={this.gotoNext}
                     currentImage={this.state.currentImage}
                     isOpen={this.state.lightboxIsOpen}
-                    width={1600}
+                    width={1200}
                 />
             </div>
         );
