@@ -27,54 +27,62 @@ class InstagramFeed extends Component {
         const capturedThis = this;
 
         fetch("/data/feed.json", { method: "get" })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
+            .then(
+                response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
 
-                return [];
-            })
-            .then(json =>
-                json.items.slice(0, 6).map(p => {
-                    const img = p.images.low_resolution;
-                    const imgBig = p.images.standard_resolution;
-                    return {
-                        id: p.id,
-                        thumbnail: img.url,
-                        photo: imgBig.url,
-                        width: img.width,
-                        height: img.height,
-                        text: p.text,
-                        sourceUrl: p.link
-                    };
-                })
+                    return [];
+                },
+                _ => {}
             )
-            .then(result => {
-                if (result) {
-                    const localThumbs = result.map(p => ({
-                        src: p.thumbnail,
-                        width: p.width,
-                        height: p.height
-                    }));
+            .then(
+                json =>
+                    json.items.slice(0, 6).map(p => {
+                        const img = p.images.low_resolution;
+                        const imgBig = p.images.standard_resolution;
+                        return {
+                            id: p.id,
+                            thumbnail: img.url,
+                            photo: imgBig.url,
+                            width: img.width,
+                            height: img.height,
+                            text: p.text,
+                            sourceUrl: p.link
+                        };
+                    }),
+                _ => {}
+            )
+            .then(
+                result => {
+                    if (result) {
+                        const localThumbs = result.map(p => ({
+                            src: p.thumbnail,
+                            width: p.width,
+                            height: p.height
+                        }));
 
-                    const localPhotos = result.map(p => ({
-                        src: p.photo,
-                        srcset: [`${p.thumbnail} 480w`, `${p.photo} 800w`],
-                        sizes: [
-                            "(min-width: 480px) 50vw",
-                            "(min-width: 1024px) 33.3vw",
-                            "100vw"
-                        ],
-                        width: p.width,
-                        height: p.height
-                    }));
+                        const localPhotos = result.map(p => ({
+                            src: p.photo,
+                            srcset: [`${p.thumbnail} 480w`, `${p.photo} 800w`],
+                            sizes: [
+                                "(min-width: 480px) 50vw",
+                                "(min-width: 1024px) 33.3vw",
+                                "100vw"
+                            ],
+                            width: p.width,
+                            height: p.height
+                        }));
 
-                    capturedThis.setState({
-                        photos: localPhotos,
-                        thumbs: localThumbs
-                    });
-                }
-            });
+                        capturedThis.setState({
+                            photos: localPhotos,
+                            thumbs: localThumbs
+                        });
+                    }
+                },
+                _ => {}
+            );
     }
 
     openLightbox(event, obj) {

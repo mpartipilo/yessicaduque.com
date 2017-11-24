@@ -63,8 +63,9 @@ export default class MainLayout extends React.Component {
         return (
             <div>
                 <Helmet>
-                    <title
-                    >{`${config.siteTitle} | ${this.getLocalTitle()}`}</title>
+                    <title>
+                        {`${config.siteTitle} | ${this.getLocalTitle()}`}
+                    </title>
                     <meta name="description" content={config.siteDescription} />
                 </Helmet>
                 <Header invertFixed={invertFixedHeader}>{children()}</Header>
