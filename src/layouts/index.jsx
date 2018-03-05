@@ -68,7 +68,7 @@ export default class MainLayout extends React.Component {
                     </title>
                     <meta name="description" content={config.siteDescription} />
                 </Helmet>
-                <Header invertFixed={invertFixedHeader}>{children()}</Header>
+                <Header alwaysShow={invertFixedHeader}>{children()}</Header>
                 <Footer />
             </div>
         );

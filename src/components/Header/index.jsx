@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Measure from "react-measure";
+import classNames from "classnames";
 
 import {
     Collapse,
@@ -18,7 +19,7 @@ class Header extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            inverted: props.inverted || props.invertFixed || false,
+            scrollThresholdCrossed: false,
             dimensions: {
                 width: -1,
                 height: -1
@@ -53,19 +54,29 @@ class Header extends Component {
             document.documentElement.scrollTop ||
             document.body.scrollTop ||
             0;
-        const invert = scrollTop > 100 || (this.props.invertFixed || false);
-        this.setState({ inverted: invert });
+        const scrollThresholdCrossed = scrollTop > 100;
+        this.setState({ scrollThresholdCrossed });
     }
 
     render() {
         const { width, height } = this.state.dimensions;
+        const alwaysShow = this.props.alwaysShow || false;
+        const inverted =
+            this.state.isOpen ||
+            this.state.scrollThresholdCrossed ||
+            alwaysShow;
+        const classes = classNames({
+            "navbar-shrink": inverted
+        });
 
         return (
             <div>
                 <Measure
                     bounds
                     onResize={contentRect => {
-                        this.setState({ dimensions: contentRect.bounds });
+                        this.setState({
+                            dimensions: contentRect.bounds
+                        });
                     }}
                 >
                     {({ measureRef }) => (
@@ -73,70 +84,59 @@ class Header extends Component {
                             id="page-top"
                             style={{
                                 height:
-                                    width <= 946 || this.props.invertFixed
-                                        ? height + 16
-                                        : 0
+                                    width <= 946 || alwaysShow ? height + 16 : 0
                             }}
                         >
                             <Navbar
-                                toggleable={"sm"}
-                                fixed={"top"}
+                                expand="md"
+                                fixed="top"
                                 light
-                                className={
-                                    this.state.inverted ? " navbar-shrink" : ""
-                                }
+                                className={classes}
                                 id="mainNav"
                             >
                                 <div className="container" ref={measureRef}>
-                                    <NavbarToggler
-                                        right
-                                        onClick={this.toggle}
-                                    />
-                                    <NavbarBrand href={"/#page-top"}>
+                                    <NavbarBrand href="/#page-top">
                                         {width > 946 ? (
                                             <img
                                                 src={
-                                                    this.state.inverted
+                                                    inverted
                                                         ? "/img/logo_inv.png"
                                                         : "/img/logo.png"
                                                 }
-                                                alt={
-                                                    "Yessica Duque - Food stylist & photography"
-                                                }
+                                                alt="Yessica Duque - Food stylist & photography"
                                             />
                                         ) : (
                                             <img
                                                 src="/img/logo_inv.png"
-                                                alt={
-                                                    "Yessica Duque - Food stylist & photography"
-                                                }
+                                                alt="Yessica Duque - Food stylist & photography"
                                             />
                                         )}
                                     </NavbarBrand>
+                                    <NavbarToggler onClick={this.toggle} />
                                     <Collapse isOpen={this.state.isOpen} navbar>
                                         <Nav className="ml-auto" navbar>
                                             <NavItem>
-                                                <NavLink href={"/#about"}>
+                                                <NavLink href="/#about">
                                                     About
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href={"/#services"}>
+                                                <NavLink href="/#services">
                                                     Services
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href={"/#portfolio"}>
+                                                <NavLink href="/#portfolio">
                                                     Portfolio
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href={"/#blog"}>
+                                                <NavLink href="/#blog">
                                                     Blog
                                                 </NavLink>
                                             </NavItem>
                                             <NavItem>
-                                                <NavLink href={"/#contact"}>
+                                                <NavLink href="/#contact">
                                                     Contact
                                                 </NavLink>
                                             </NavItem>

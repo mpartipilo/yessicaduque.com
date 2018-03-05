@@ -20,13 +20,6 @@ module.exports = {
         "gatsby-plugin-sass",
         "gatsby-plugin-react-helmet",
         {
-            resolve: "gatsby-source-filesystem",
-            options: {
-                name: "posts",
-                path: `${__dirname}/content/${config.blogPostDir}`
-            }
-        },
-        {
             resolve: "gatsby-source-cockpit",
             options: {
                 host: "http://content.yessicaduque.com",
