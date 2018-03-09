@@ -31,7 +31,9 @@ export default class PostTemplate extends React.Component {
                                 <Jumbotron fluid>
                                     <div
                                         style={{
-                                            backgroundImage: `url('${postNode.host}/storage/uploads${encodeURI(
+                                            backgroundImage: `url('${
+                                                postNode.host
+                                            }/storage/uploads${encodeURI(
                                                 post.image.path
                                             )}')`
                                         }}

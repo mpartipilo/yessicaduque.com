@@ -5,7 +5,6 @@ import "./UserLinks.css";
 class UserLinks extends Component {
     getLinkElements() {
         const { userLinks } = this.props.config;
-        const { labeled } = this.props.labeled;
         return userLinks.map(link => (
             <a
                 key={link.label}

@@ -24,15 +24,16 @@ class Masthead extends Component {
                             currentImg:
                                 (this.state.currentImg + 1) %
                                 this.state.bgImages.length
-                        })}
+                        })
+                    }
                 />
                 {this.state.bgImages.map((i, idx) => (
                     <div
                         key={this.state.bgImages[idx]}
                         style={{
-                            backgroundImage: `url('${this.state.bgImages[
-                                idx
-                            ]}')`
+                            backgroundImage: `url('${
+                                this.state.bgImages[idx]
+                            }')`
                         }}
                         className={
                             idx === this.state.currentImg ? "opaque" : ""

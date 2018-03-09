@@ -5,13 +5,13 @@ import config from "../../../data/SiteConfig";
 class SEO extends Component {
     render() {
         const { postNode, postPath, postSEO } = this.props;
-        let title;
         let description;
         let image;
         let postURL;
+        let title;
         if (postSEO) {
             const postMeta = postNode.entry;
-            title = postMeta.title;
+            ({ title } = postMeta);
             description = postMeta.description
                 ? postMeta.description
                 : postNode.childCockpitBlogExcerptTextNode.childMarkdownRemark

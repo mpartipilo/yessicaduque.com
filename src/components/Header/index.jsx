@@ -34,10 +34,6 @@ class Header extends Component {
         window.addEventListener("scroll", this.handleScroll);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({ inverted: nextProps.invertFixed });
-    }
-
     componentWillUnmount() {
         window.removeEventListener("scroll", this.handleScroll);
     }
