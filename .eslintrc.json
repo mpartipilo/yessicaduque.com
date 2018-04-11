@@ -5,7 +5,7 @@
     "react/prefer-stateless-function": "off",
     "react/prop-types": "off",
     "react/no-danger": "off",
-    "prettier/prettier": ["error", {"tabWidth": 4}],
+    "prettier/prettier": ["error", {"tabWidth": 2}],
     "react/jsx-indent": 0,
     "react/jsx-indent-props": 0,
     "no-underscore-dangle": 0
