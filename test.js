@@ -7,14 +7,14 @@ const collectionName = "Gallery";
 const client = new cp.Cockpit({ host, accessToken });
 
 client.collectionEntries(collectionName).then(response => {
-    response.json().then(async data => {
-        console.log(data);
-        data.entries.forEach(i => {
-            const node = Object.keys(data.fields)
-                .map(f => data.fields[f].name)
-                .reduce((x, y) => ({ ...x, [y]: i[y] }), {});
+  response.json().then(async data => {
+    console.log(data);
+    data.entries.forEach(i => {
+      const node = Object.keys(data.fields)
+        .map(f => data.fields[f].name)
+        .reduce((x, y) => ({ ...x, [y]: i[y] }), {});
 
-            console.log(JSON.stringify(node));
-        });
+      console.log(JSON.stringify(node));
     });
+  });
 });

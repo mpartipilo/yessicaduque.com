@@ -2,10 +2,10 @@
 // import Helmet from "react-helmet";
 // import PostListing from "../components/PostListing/PostListing";
 // import config from "../../data/SiteConfig";
-// 
+//
 // /* eslint "react/jsx-indent": 0 */
 // /* eslint "react/jsx-indent-props": 0 */
-// 
+//
 // export default class CategoryTemplate extends React.Component {
 //     render() {
 //         const { category } = this.props.pathContext;
@@ -20,7 +20,7 @@
 //         );
 //     }
 // }
-// 
+//
 // /* eslint no-undef: "off" */
 // export const pageQuery = graphql`
 //     query CategoryPage($category: String) {
@@ -58,4 +58,4 @@
 //         }
 //     }
 // `;
-// 
+//
