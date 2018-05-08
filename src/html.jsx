@@ -37,6 +37,10 @@ export default class HTML extends React.Component {
           {this.props.headComponents}
           <link rel="shortcut icon" href={favicon} />
           {css}
+          <script
+            async
+            src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          />
         </head>
         <body>
           <div
@@ -44,6 +48,14 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-7456036738578622",
+                enable_page_level_ads: true
+              });`
+            }}
+          />
         </body>
       </html>
     );
