@@ -4,9 +4,9 @@ import config from "../../../data/SiteConfig";
 
 class SEO extends Component {
   render() {
-    const { postNode, postPath, postSEO } = this.props;
+    const { postNode, postPath, postSEO, ogImage } = this.props;
     let description;
-    let image;
+    let image = ogImage;
     let postURL;
     let title;
     if (postSEO) {
@@ -16,7 +16,7 @@ class SEO extends Component {
         ? postMeta.description
         : postNode.childCockpitBlogExcerptTextNode.childMarkdownRemark.internal
             .content;
-      image = postMeta.image.path;
+      image = ogImage || postMeta.image.path;
       postURL = config.siteUrl + config.pathPrefix + postPath;
     } else {
       title = config.siteTitle;
@@ -24,7 +24,7 @@ class SEO extends Component {
       image = config.siteLogo;
     }
     const realPrefix = config.pathPrefix === "/" ? "" : config.pathPrefix;
-    image = config.siteUrl + realPrefix + image;
+    image = ogImage || config.siteUrl + realPrefix + image;
     const blogURL = config.siteUrl + config.pathPrefix;
     const schemaOrgJSONLD = [
       {

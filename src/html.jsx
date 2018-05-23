@@ -31,16 +31,16 @@ export default class HTML extends React.Component {
         <head>
           <meta charSet="utf-8" />
           <meta
+            name="p:domain_verify"
+            content="37e144fd0d41ecdc19a1a045a5261754"
+          />
+          <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
           {this.props.headComponents}
           <link rel="shortcut icon" href={favicon} />
           {css}
-          <script
-            async
-            src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          />
         </head>
         <body>
           <div
@@ -48,14 +48,6 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "ca-pub-7456036738578622",
-                enable_page_level_ads: true
-              });`
-            }}
-          />
         </body>
       </html>
     );

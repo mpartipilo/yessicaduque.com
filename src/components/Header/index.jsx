@@ -89,17 +89,12 @@ class Header extends Component {
               >
                 <div className="container" ref={measureRef}>
                   <NavbarBrand href="/#page-top">
-                    {width > 946 ? (
-                      <img
-                        src={inverted ? "/img/logo_inv.png" : "/img/logo.png"}
-                        alt="Yessica Duque - Food stylist & photography"
-                      />
-                    ) : (
-                      <img
-                        src="/img/logo_inv.png"
-                        alt="Yessica Duque - Food stylist & photography"
-                      />
-                    )}
+                    <img
+                      src={
+                        width > 946 ? "/img/logo_inv.png" : "/img/logo_inv.png"
+                      }
+                      alt="Yessica Duque - Food stylist &amp; photography"
+                    />
                   </NavbarBrand>
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={this.state.isOpen} navbar>
@@ -108,13 +103,10 @@ class Header extends Component {
                         <NavLink href="/#about">About</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink href="/#services">Services</NavLink>
+                        <NavLink href="/#blog">Recipes</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink href="/#portfolio">Portfolio</NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink href="/#blog">Blog</NavLink>
+                        <NavLink href="/#portfolio">Gallery</NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink href="/#contact">Contact</NavLink>

@@ -13,7 +13,9 @@ class GallerySummary extends React.Component {
       <Container>
         <Row>
           <Col lg="12" className="text-center">
-            <h2 className="section-heading">Portfolio Highlights</h2>
+            <h2 className="section-heading">
+              Photography &amp; Food Styling Gallery
+            </h2>
             <hr className="primary" />
           </Col>
         </Row>

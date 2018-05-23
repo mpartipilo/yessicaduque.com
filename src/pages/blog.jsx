@@ -43,6 +43,9 @@ export const pageQuery = graphql`
           }
           entry {
             title
+            image {
+              path
+            }
             tags
           }
           fields {

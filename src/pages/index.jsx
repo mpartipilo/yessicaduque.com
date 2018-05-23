@@ -4,7 +4,6 @@ import ScrollableAnchor, { configureAnchors } from "react-scrollable-anchor";
 import SEO from "../components/SEO/SEO";
 import Masthead from "../components/Masthead";
 import About from "../components/About";
-import Services from "../components/Services";
 import GallerySummary from "../components/GallerySummary";
 // import InstagramFeed from "../components/InstagramFeed";
 import Contact from "../components/Contact";
@@ -38,9 +37,9 @@ class Index extends React.Component {
             <About />
           </ScrollableAnchor>
         </section>
-        <section id="_services">
-          <ScrollableAnchor id="services">
-            <Services />
+        <section id="_blog">
+          <ScrollableAnchor id="blog">
+            <BlogSummary postEdges={postEdges} />
           </ScrollableAnchor>
         </section>
         <section id="_portfolioSummary">
@@ -50,11 +49,6 @@ class Index extends React.Component {
               <div style={{ height: `30px` }} />
               {/* <InstagramFeed /> */}
             </div>
-          </ScrollableAnchor>
-        </section>
-        <section id="_blog">
-          <ScrollableAnchor id="blog">
-            <BlogSummary postEdges={postEdges} />
           </ScrollableAnchor>
         </section>
         <section id="_contact">
@@ -108,6 +102,7 @@ export const pageQuery = graphql`
         }
       }
     }
+
     allCockpitBlog(
       limit: 5
       sort: { fields: [properties____modified], order: DESC }
@@ -132,6 +127,9 @@ export const pageQuery = graphql`
           }
           entry {
             title
+            image {
+              path
+            }
             tags
           }
           fields {

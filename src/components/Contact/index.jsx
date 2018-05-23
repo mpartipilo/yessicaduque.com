@@ -14,7 +14,7 @@ class Contact extends Component {
             lg={{ offset: 2, size: 8 }}
             className="text-center"
           >
-            <h2 className="section-heading">{"Let's Get In Touch!"}</h2>
+            <h2 className="section-heading">Let&apos;s Get In Touch!</h2>
             <hr className="primary" />
             <p>
               {`
@@ -26,30 +26,22 @@ class Contact extends Component {
         </Row>
         <Row>
           <div className="col-lg-4 offset-lg-2 text-center">
-            <FA name="phone" size="3x" className="p-3" />
+            <FA name="phone" size="3x" className="p-3 text-primary" />
             <p>
-              <a
-                href="tel:+31625247696"
-                className="btn btn-default btn-xl sr-button"
-              >
-                +31 (0)6 2524 7696
-              </a>
+              <a href="tel:+31625247696">+31 (0)6 2524 7696</a>
             </p>
           </div>
           <div className="col-lg-4 text-center">
-            <FA name="envelope-o" size="3x" className="p-3" />
+            <FA name="envelope-o" size="3x" className="p-3 text-primary" />
             <p>
-              <a
-                href="mailto:info@yessicaduque.com"
-                className="btn btn-default btn-xl sr-button"
-              >
-                info@yessicaduque.com
-              </a>
+              <a href="mailto:info@yessicaduque.com">info@yessicaduque.com</a>
             </p>
           </div>
         </Row>
         <Row>
           <Col className="text-center">
+            <h2 className="section-heading">Follow me</h2>
+            <hr className="primary" />
             <a
               href="https://www.facebook.com/yessicaduquephotographer/"
               target="_blank"
@@ -77,6 +69,22 @@ class Contact extends Component {
               rel="noopener noreferrer"
             >
               <FA name="linkedin" size="2x" className="p-3" />
+            </a>
+
+            <a
+              href="https://www.youtube.com/user/yessicaduque/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FA name="youtube-play" size="2x" className="p-3" />
+            </a>
+
+            <a
+              href="https://nl.pinterest.com/yessicaduquephotography/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FA name="pinterest" size="2x" className="p-3" />
             </a>
           </Col>
         </Row>

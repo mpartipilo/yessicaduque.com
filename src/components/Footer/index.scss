@@ -1,7 +1,14 @@
 footer {
-    margin: 24px;
+    margin-top: 10px;
+    padding: 20px;
     font-size: 0.8em;
-    color: #b3446c;
+    background-color: #b3446c;
+    color: white;
+
+    a, a:link, a:hover {
+        color: white;
+        text-decoration: underline;
+    }
 }
 
 .footer {
