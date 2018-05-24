@@ -1,5 +1,6 @@
 import React from "react";
 import Helmet from "react-helmet";
+import _ from "lodash";
 
 import "font-awesome/scss/font-awesome.scss";
 import "bootstrap/scss/bootstrap.scss";
@@ -39,15 +40,15 @@ export default class MainLayout extends React.Component {
       title = "Portfolio";
     } else if (currentPath === "blog") {
       title = "Blog";
-    } else if (currentPath.includes("posts")) {
+    } else if (_.includes(currentPath, "posts")) {
       title = "Article";
-    } else if (currentPath.includes("tags/")) {
+    } else if (_.includes(currentPath, "tags/")) {
       const tag = currentPath
         .replace("tags/", "")
         .replace("/", "")
         .replace("-", " ");
       title = `Tagged in ${capitalize(tag)}`;
-    } else if (currentPath.includes("categories/")) {
+    } else if (_.includes(currentPath, "categories/")) {
       const category = currentPath
         .replace("categories/", "")
         .replace("/", "")

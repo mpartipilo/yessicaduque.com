@@ -45,13 +45,12 @@ export const PostCardSummary = post => {
               {title}
             </Link>
           </CardTitle>
-          <CardText>
-            <span
-              dangerouslySetInnerHTML={{
-                __html: summary.length > 0 ? summary : excerpt
-              }}
-            />
-          </CardText>
+          <div
+            className="card-text"
+            dangerouslySetInnerHTML={{
+              __html: summary.length > 0 ? summary : excerpt
+            }}
+          />
           <div>
             <span className="badge badge-default">
               Posted <Moment format="YYYY-MM-DD">{date}</Moment>
