@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 import Link from "gatsby-link";
-import { getPostList, PostCardSummary } from "../Blog";
+import Blog, { getPostList } from "../Blog";
 import "./index.scss";
 
 class BlogSummary extends Component {
@@ -17,13 +17,7 @@ class BlogSummary extends Component {
             </Col>
           </Row>
         </Container>
-        <Container>
-          <Row>
-            {getPostList(this.props.postEdges)
-              .slice(0, 3)
-              .map(PostCardSummary)}
-          </Row>
-        </Container>
+        <Blog posts={getPostList(this.props.postEdges.slice(0, 3))} />
         <Container>
           <Row className="mt-4">
             <Col className="text-center">

@@ -1,22 +1,18 @@
+/* global graphql */
+
 import React from "react";
-import Blog from "../components/Blog";
+import Blog, { getPostList } from "../components/Blog";
 
 import "../scss/blog.scss";
 
-class Index extends React.Component {
-  render() {
-    const postEdges = this.props.data.allCockpitBlog.edges;
-    return (
-      <div className="index-container" id="_blog">
-        <Blog postEdges={postEdges} />
-      </div>
-    );
-  }
-}
+const BlogPage = props => (
+  <div className="index-container" id="_blog">
+    <Blog posts={getPostList(props.data.allCockpitBlog.edges)} />
+  </div>
+);
 
-export default Index;
+export default BlogPage;
 
-/* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query BlogQuery {
     allCockpitBlog(
@@ -43,10 +39,11 @@ export const pageQuery = graphql`
           }
           entry {
             title
+            tags
             image {
               path
+              title
             }
-            tags
           }
           fields {
             slug

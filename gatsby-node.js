@@ -30,6 +30,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                   title_slug
                 }
                 entry {
+                  image {
+                    path
+                  }
                   tags
                 }
                 fields {

@@ -1,7 +1,7 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
-import Blog from "../components/Blog";
+import Blog, { getPostList } from "../components/Blog";
 import config from "../../data/SiteConfig";
 
 import "../scss/post.scss";
@@ -9,7 +9,7 @@ import "../scss/post.scss";
 export default class TagTemplate extends React.Component {
   render() {
     const { tag } = this.props.pathContext;
-    const postEdges = this.props.data.allCockpitBlog.edges;
+    const postEdges = getPostList(this.props.data.allCockpitBlog.edges);
     return (
       <div className="tag-container">
         <Helmet title={`Posts tagged as "${tag}" | ${config.siteTitle}`} />
@@ -24,7 +24,7 @@ export default class TagTemplate extends React.Component {
             </Row>
             <Row>
               <Col>
-                <Blog postEdges={postEdges} />
+                <Blog posts={postEdges} />
               </Col>
             </Row>
           </Container>
@@ -63,6 +63,9 @@ export const pageQuery = graphql`
           }
           entry {
             title
+            image {
+              path
+            }
             tags
           }
           fields {
