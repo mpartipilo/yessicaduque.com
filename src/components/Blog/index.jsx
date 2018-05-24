@@ -46,7 +46,7 @@ export const PostCardSummary = post => {
             </Link>
           </CardTitle>
           <CardText>
-            <div
+            <span
               dangerouslySetInnerHTML={{
                 __html: summary.length > 0 ? summary : excerpt
               }}
