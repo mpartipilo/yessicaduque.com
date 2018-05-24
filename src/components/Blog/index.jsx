@@ -36,6 +36,7 @@ export const PostCardSummary = post => {
         <CardImg
           top
           width="100%"
+          className="h-100"
           src={`${host}/storage/uploads${cover}`}
           alt={title}
         />

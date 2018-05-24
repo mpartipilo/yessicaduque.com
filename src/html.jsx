@@ -38,6 +38,7 @@ export default class HTML extends React.Component {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Symbol" />
           {this.props.headComponents}
           <link rel="shortcut icon" href={favicon} />
           {css}
