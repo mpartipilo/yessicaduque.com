@@ -36,7 +36,7 @@ class About extends Component {
                 I am based in the Netherlands, in the city of The Hague. My work
                 involves beautiful food imagery for outdoor campaigns, social
                 media, and PR for restaurants and Chefs in Europe. This is
-                complimented by many years of experience as Graphic and Visual
+                complemented by many years of experience as Graphic and Visual
                 Designer.
               </p>
 
