@@ -4,13 +4,6 @@
 // Styling for the services section
 #_services {
     background-color: $gray-lighter;
-
-    svg {
-        object-fit: contain;
-        path {
-            fill: #b3446c;
-        }
-    }
 }
 
 .service-box {
@@ -21,6 +14,12 @@
     }
     p {
         margin-bottom: 0;
+    }
+    svg {
+        object-fit: contain;
+        path {
+            fill: #b3446c;
+        }
     }
 }
 
