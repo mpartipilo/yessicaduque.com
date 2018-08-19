@@ -39,32 +39,34 @@ class Services extends Component {
       <Fragment>
         <Row>
           <Col lg="12" className="text-center">
-            <h3 className="section-heading">What I do</h3>
+            <h3 className="section-heading" style={{ paddingTop: "2em" }}>
+              What I do
+            </h3>
             <hr className="primary" />
           </Col>
         </Row>
         <Row className="justify-content-md-center">
-          <Col sm="6">
+          <Col sm="6" md="3">
             <div className="service-box text-center">
-              <ImageStyling className="svgFill" />
+              <ImageStyling className="svgFill" style={{ maxWidth: "64px" }} />
               <h4>Food styling</h4>
             </div>
           </Col>
-          <Col sm="6">
+          <Col sm="6" md="3">
             <div className="service-box text-center">
-              <ImageCatering className="svgFill" />
+              <ImageCatering className="svgFill" style={{ maxWidth: "64px" }} />
               <h4>Catering</h4>
             </div>
           </Col>
-          <Col sm="6">
+          <Col sm="6" md="3">
             <div className="service-box text-center">
-              <ImageCamera className="svgFill" />
+              <ImageCamera className="svgFill" style={{ maxWidth: "64px" }} />
               <h4>Photography</h4>
             </div>
           </Col>
-          <Col sm="6">
+          <Col sm="6" md="3">
             <div className="service-box text-center">
-              <ImageRecipes className="svgFill" />
+              <ImageRecipes className="svgFill" style={{ maxWidth: "64px" }} />
               <h4>Recipes</h4>
             </div>
           </Col>
