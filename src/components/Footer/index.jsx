@@ -11,11 +11,11 @@ class Footer extends Component {
         </span>{" "}
         Yessica Duque - 2017<br />Design &amp; Development by{" "}
         <a
-          href="http://thebrandingplug.com/"
+          href="https://www.linkedin.com/in/mpartipilo/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          The Branding Plug
+          Michelangelo Partipilo
         </a>
         <br />All rights reserved
       </footer>

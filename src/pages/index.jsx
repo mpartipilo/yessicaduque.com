@@ -5,7 +5,7 @@ import SEO from "../components/SEO/SEO";
 import Masthead from "../components/Masthead";
 import About from "../components/About";
 import GallerySummary from "../components/GallerySummary";
-// import InstagramFeed from "../components/InstagramFeed";
+import InstagramFeed from "../components/InstagramFeed";
 import Contact from "../components/Contact";
 import BlogSummary from "../components/BlogSummary";
 
@@ -56,6 +56,7 @@ class Index extends React.Component {
             <Contact />
           </ScrollableAnchor>
         </section>
+        <InstagramFeed />
       </div>
     );
   }

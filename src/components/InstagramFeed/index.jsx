@@ -5,7 +5,21 @@ import PhotoGallery from "react-photo-gallery";
 import Lightbox from "react-images";
 import Measure from "react-measure";
 
-class InstagramFeed extends Component {
+const InstagramFeed = () => (
+  <React.Fragment>
+    <script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
+    <iframe
+      title="lightwidget"
+      src="//lightwidget.com/widgets/ba41d8ac27ff5e9fafcc3de941888c57.html"
+      scrolling="no"
+      allowTransparency="true"
+      className="lightwidget-widget"
+      style={{ width: "100%", border: 0, overflow: "hidden" }}
+    />
+  </React.Fragment>
+);
+
+class InstagramFeedOld extends Component {
   constructor(props) {
     super(props);
     this.state = {
