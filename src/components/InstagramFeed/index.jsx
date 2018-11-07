@@ -10,7 +10,7 @@ const InstagramFeed = () => (
     <script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
     <iframe
       title="lightwidget"
-      src="//lightwidget.com/widgets/ba41d8ac27ff5e9fafcc3de941888c57.html"
+      src="//lightwidget.com/widgets/7199b3ac61ba5d9788bde04b7a11d31a.html"
       scrolling="no"
       allowTransparency="true"
       className="lightwidget-widget"
