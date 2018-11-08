@@ -1,4 +1,5 @@
 import React from "react";
+import { graphql } from 'gatsby';
 import Moment from "react-moment";
 import Helmet from "react-helmet";
 import { Container, Jumbotron, Row, Col } from "reactstrap";

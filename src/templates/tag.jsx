@@ -1,4 +1,5 @@
 import React from "react";
+import { graphql } from 'gatsby';
 import Helmet from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
 import Blog, { getPostList } from "../components/Blog";

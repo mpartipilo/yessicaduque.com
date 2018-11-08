@@ -21,11 +21,13 @@ module.exports = {
     "gatsby-plugin-sass",
     "gatsby-plugin-react-helmet",
     {
-      resolve: "gatsby-source-cockpit",
+      resolve: "gatsby-plugin-cockpit",
       options: {
-        host: "http://content.yessicaduque.com",
-        accessToken: "account-0aaa1438863e50a40c082513a1dc16",
-        collectionName: ["Gallery", "Blog"]
+        cockpitConfig: {
+          baseURL: "http://content.yessicaduque.com",
+          accessToken: "account-0aaa1438863e50a40c082513a1dc16",
+          collections: ["Gallery", "Blog"]
+        }
       }
     },
     {
@@ -60,6 +62,7 @@ module.exports = {
       }
     },
     "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
     "gatsby-plugin-catch-links",
     "gatsby-plugin-twitter",
     "gatsby-plugin-sitemap",

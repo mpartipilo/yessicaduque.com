@@ -1,4 +1,5 @@
 import React from "react";
+import { graphql } from 'gatsby';
 import ScrollableAnchor, { configureAnchors } from "react-scrollable-anchor";
 
 import SEO from "../components/SEO/SEO";
