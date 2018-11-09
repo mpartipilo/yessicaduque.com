@@ -5,13 +5,13 @@ import _ from "lodash";
 import "font-awesome/scss/font-awesome.scss";
 import "bootstrap/scss/bootstrap.scss";
 
-import config from "../../data/SiteConfig";
+import config from "../../../data/SiteConfig";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../Header";
+import Footer from "../Footer";
 
 import "./index.css";
-import "../scss/index.scss";
+import "../../scss/index.scss";
 
 export default class MainLayout extends React.Component {
   getInvertHeader() {
@@ -68,7 +68,7 @@ export default class MainLayout extends React.Component {
           <title>{`${config.siteTitle} | ${this.getLocalTitle()}`}</title>
           <meta name="description" content={config.siteDescription} />
         </Helmet>
-        <Header alwaysShow={invertFixedHeader}>{children()}</Header>
+        <Header alwaysShow={invertFixedHeader}>{children}</Header>
         <Footer />
       </div>
     );

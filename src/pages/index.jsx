@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 import ScrollableAnchor, { configureAnchors } from "react-scrollable-anchor";
 
 import SEO from "../components/SEO/SEO";
@@ -9,6 +9,7 @@ import GallerySummary from "../components/GallerySummary";
 import InstagramFeed from "../components/InstagramFeed";
 import Contact from "../components/Contact";
 import BlogSummary from "../components/BlogSummary";
+import Layout from "../components/Layout";
 
 class Index extends React.Component {
   componentWillMount() {
@@ -30,35 +31,37 @@ class Index extends React.Component {
       }
     }));
     return (
-      <div className="index-container">
-        <SEO postEdges={postEdges} />
-        <Masthead bgImages={featuredGallery} />
-        <section id="_about">
-          <ScrollableAnchor id="about">
-            <About />
-          </ScrollableAnchor>
-        </section>
-        <section id="_blog">
-          <ScrollableAnchor id="blog">
-            <BlogSummary postEdges={postEdges} />
-          </ScrollableAnchor>
-        </section>
-        <section id="_portfolioSummary">
-          <ScrollableAnchor id="portfolio">
-            <div>
-              <GallerySummary images={highlights} />
-              <div style={{ height: `30px` }} />
-              {/* <InstagramFeed /> */}
-            </div>
-          </ScrollableAnchor>
-        </section>
-        <section id="_contact">
-          <ScrollableAnchor id="contact">
-            <Contact />
-          </ScrollableAnchor>
-        </section>
-        <InstagramFeed />
-      </div>
+      <Layout {...this.props}>
+        <div className="index-container">
+          <SEO postEdges={postEdges} />
+          <Masthead bgImages={featuredGallery} />
+          <section id="_about">
+            <ScrollableAnchor id="about">
+              <About />
+            </ScrollableAnchor>
+          </section>
+          <section id="_blog">
+            <ScrollableAnchor id="blog">
+              <BlogSummary postEdges={postEdges} />
+            </ScrollableAnchor>
+          </section>
+          <section id="_portfolioSummary">
+            <ScrollableAnchor id="portfolio">
+              <div>
+                <GallerySummary images={highlights} />
+                <div style={{ height: `30px` }} />
+                {/* <InstagramFeed /> */}
+              </div>
+            </ScrollableAnchor>
+          </section>
+          <section id="_contact">
+            <ScrollableAnchor id="contact">
+              <Contact />
+            </ScrollableAnchor>
+          </section>
+          <InstagramFeed />
+        </div>
+      </Layout>
     );
   }
 }
@@ -68,8 +71,7 @@ export default Index;
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query IndexQuery {
-    cockpitGallery(properties: { title_slug: { eq: "featured-images" } }) {
-      host
+    gallery(entry: { title_slug: { eq: "featured-images" } }) {
       entry {
         title
         images {
@@ -77,43 +79,25 @@ export const pageQuery = graphql`
         }
       }
     }
-    highlights: cockpitGallery(
-      properties: { title_slug: { eq: "portfolio" } }
-    ) {
-      host
+
+    highlights: gallery(entry: { title_slug: { eq: "portfolio" } }) {
       entry {
         title
         images {
-          thumb2 {
-            src
-            width
-            height
-          }
-          thumb3 {
-            src
-            width
-            height
-          }
           path
           meta {
-            asset {
-              width
-              height
-            }
+            title
+            asset
           }
         }
       }
     }
 
-    allCockpitBlog(
-      limit: 5
-      sort: { fields: [properties____modified], order: DESC }
-    ) {
+    allBlog(limit: 5, sort: { fields: [properties____modified], order: DESC }) {
       edges {
         node {
           host
           properties {
-            title_slug
             _modified
           }
           childCockpitBlogExcerptTextNode {
@@ -129,6 +113,7 @@ export const pageQuery = graphql`
           }
           entry {
             title
+            title_slug
             image {
               path
             }

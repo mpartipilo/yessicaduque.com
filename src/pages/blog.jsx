@@ -1,29 +1,29 @@
-/* global graphql */
-
 import React from "react";
+import { graphql } from "gatsby";
 import Blog, { getPostList } from "../components/Blog";
+import Layout from "../components/Layout";
 
 import "../scss/blog.scss";
 
-const BlogPage = props => (
-  <div className="index-container" id="_blog">
-    <Blog posts={getPostList(props.data.allCockpitBlog.edges)} />
-  </div>
+const BlogPage = ({ data, location }) => (
+  <Layout {...{ location }}>
+    <div className="index-container" id="_blog">
+      <Blog posts={getPostList(data.allBlog.edges)} />
+    </div>
+  </Layout>
 );
 
 export default BlogPage;
 
 export const pageQuery = graphql`
   query BlogQuery {
-    allCockpitBlog(
+    allBlog(
       limit: 100
       sort: { fields: [properties____modified], order: DESC }
     ) {
       edges {
         node {
-          host
           properties {
-            title_slug
             _modified
           }
           childCockpitBlogExcerptTextNode {
@@ -39,6 +39,7 @@ export const pageQuery = graphql`
           }
           entry {
             title
+            title_slug
             tags
             image {
               path

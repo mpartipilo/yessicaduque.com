@@ -1,0 +1,193 @@
+Google Ads
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-7456036738578622",
+              enable_page_level_ads: true
+            });
+          </script>
+
+Domain Verify (Pinterest?)
+          <meta
+            name="p:domain_verify"
+            content="37e144fd0d41ecdc19a1a045a5261754"
+          />
+
+XML Feeds
+    "gatsby-plugin-offline",
+    {
+      resolve: "gatsby-plugin-feed",
+      options: {
+        setup(ref) {
+          const ret = ref.query.site.siteMetadata.rssMetadata;
+          ret.allCockpitBlog = ref.query.allCockpitBlog;
+          ret.generator = "Yessica Duque - Food styling and photography";
+          return ret;
+        },
+        query: `
+        {
+          site {
+            siteMetadata {
+              rssMetadata {
+                site_url
+                feed_url
+                title
+                description
+                image_url
+                author
+                copyright
+              }
+            }
+          }
+        }
+      `,
+        feeds: [
+          {
+            serialize(ctx) {
+              const { rssMetadata } = ctx.query.site.siteMetadata;
+              return ctx.query.allCockpitBlog.edges.map(edge => ({
+                categories: edge.node.entry.tags,
+                date: edge.node.properties._modified,
+                title: edge.node.entry.title,
+                description:
+                  edge.node.childCockpitBlogExcerptTextNode.childMarkdownRemark
+                    .excerpt,
+                author: rssMetadata.author,
+                url: rssMetadata.site_url + edge.node.fields.slug,
+                guid: rssMetadata.site_url + edge.node.fields.slug,
+                custom_elements: [
+                  {
+                    "content:encoded":
+                      edge.node.childCockpitBlogContentTextNode
+                        .childMarkdownRemark.html
+                  }
+                ]
+              }));
+            },
+            query: `
+                        {
+                            allCockpitBlog(limit: 100, sort: {fields: [properties____modified], order: DESC}) {
+                              edges {
+                                node {
+                                  host
+                                  properties {
+                                    title_slug
+                                    _modified
+                                  }
+                                  childCockpitBlogExcerptTextNode {
+                                    childMarkdownRemark {
+                                      excerpt
+                                      html
+                                    }
+                                  }
+                                  childCockpitBlogContentTextNode {
+                                    childMarkdownRemark {
+                                      timeToRead
+                                      html
+                                    }
+                                  }
+                                  entry {
+                                    title
+                                    tags
+                                  }
+                                  fields {
+                                    slug
+                                  }
+                                }
+                              }
+                            }
+                          }                          `,
+            output: config.siteRss
+          }
+        ]
+      }
+    }
+
+Create Pages
+
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { createPage } = boundActionCreators;
+
+  return new Promise((resolve, reject) => {
+    const postPage = path.resolve("src/templates/post.jsx");
+    const tagPage = path.resolve("src/templates/tag.jsx");
+    // const categoryPage = path.resolve("src/templates/category.jsx");
+    resolve(
+      graphql(`
+        {
+          allBlog {
+            edges {
+              node {
+                host
+                properties {
+                  title_slug
+                }
+                entry {
+                  image {
+                    path
+                  }
+                  tags
+                }
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+        }
+      `).then(result => {
+        if (result.errors) {
+          console.log(result.errors);
+          reject(result.errors);
+        }
+
+        const tagSet = new Set();
+        const categorySet = new Set();
+        result.data.allBlog.edges.forEach(edge => {
+          const { slug } = edge.node.fields;
+
+          if (edge.node.entry.tags) {
+            edge.node.entry.tags.forEach(tag => {
+              tagSet.add(tag);
+            });
+          }
+
+          if (edge.node.entry.category) {
+            categorySet.add(edge.node.entry.category);
+          }
+
+          createPage({
+            path: slug,
+            component: postPage,
+            context: {
+              slug
+            }
+          });
+        });
+
+        const tagList = Array.from(tagSet);
+        tagList.forEach(tag => {
+          createPage({
+            path: `/tags/${_.kebabCase(tag)}/`,
+            component: tagPage,
+            context: {
+              tag
+            }
+          });
+        });
+
+        // const categoryList = Array.from(categorySet);
+        // categoryList.forEach(category => {
+        //     createPage({
+        //         path: `/categories/${_.kebabCase(category)}/`,
+        //         component: categoryPage,
+        //         context: {
+        //             category
+        //         }
+        //     });
+        // });
+      })
+    );
+  });
+};
+
