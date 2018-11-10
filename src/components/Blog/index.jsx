@@ -22,10 +22,9 @@ export const getPostList = postEdges =>
     cover: node.entry.image.path,
     title: node.entry.title,
     date: node.properties._modified * 1000,
-    summary: node.childCockpitBlogExcerptTextNode.childMarkdownRemark.html,
-    excerpt: node.childCockpitBlogContentTextNode.childMarkdownRemark.html,
-    timeToRead:
-      node.childCockpitBlogContentTextNode.childMarkdownRemark.timeToRead
+    summary: node.childExcerptTextNode.childMarkdownRemark.html,
+    excerpt: node.childContentTextNode.childMarkdownRemark.html,
+    timeToRead: node.childContentTextNode.childMarkdownRemark.timeToRead
   }));
 
 export const PostCardSummary = post => {

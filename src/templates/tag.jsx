@@ -9,8 +9,9 @@ import "../scss/post.scss";
 
 export default class TagTemplate extends React.Component {
   render() {
-    const { tag } = this.props.pathContext;
-    const postEdges = getPostList(this.props.data.allCockpitBlog.edges);
+    const { data, pathContext } = this.props;
+    const { tag } = pathContext;
+    const postEdges = getPostList(data.allCockpitBlog.edges);
     return (
       <div className="tag-container">
         <Helmet title={`Posts tagged as "${tag}" | ${config.siteTitle}`} />
@@ -38,7 +39,7 @@ export default class TagTemplate extends React.Component {
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query TagPage($tag: String) {
-    allCockpitBlog(
+    allBlog(
       limit: 100
       sort: { fields: [properties____modified], order: DESC }
       filter: { entry: { tags: { in: [$tag] } } }
@@ -46,23 +47,22 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
-          host
           properties {
-            title_slug
             _modified
           }
-          childCockpitBlogExcerptTextNode {
+          childExcerptTextNode {
             childMarkdownRemark {
               html
             }
           }
-          childCockpitBlogContentTextNode {
+          childContentTextNode {
             childMarkdownRemark {
               timeToRead
               html
             }
           }
           entry {
+            title_slug
             title
             image {
               path

@@ -26,12 +26,12 @@ export const pageQuery = graphql`
           properties {
             _modified
           }
-          childCockpitBlogExcerptTextNode {
+          childExcerptTextNode {
             childMarkdownRemark {
               html
             }
           }
-          childCockpitBlogContentTextNode {
+          childContentTextNode {
             childMarkdownRemark {
               timeToRead
               html

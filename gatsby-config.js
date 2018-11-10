@@ -23,7 +23,7 @@ module.exports = {
       resolve: "gatsby-plugin-cockpit",
       options: {
         cockpitConfig: {
-          baseURL: "http://content.yessicaduque.com",
+          baseURL: "http://localhost:3001",
           folder: "",
           accessToken: "account-0aaa1438863e50a40c082513a1dc16",
           collections: ["Gallery", "Blog"],

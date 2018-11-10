@@ -13,8 +13,9 @@ import "../scss/post.scss";
 
 export default class PostTemplate extends React.Component {
   render() {
-    const { slug } = this.props.pathContext;
-    const postNode = this.props.data.cockpitBlog;
+    const { data, pathContext } = this.props;
+    const { slug } = pathContext;
+    const postNode = data.blog;
     const post = postNode.entry;
 
     post.date = postNode.properties._modified * 1000;
@@ -88,14 +89,12 @@ export default class PostTemplate extends React.Component {
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
-    cockpitBlog(fields: { slug: { eq: $slug } }) {
+    blog(fields: { slug: { eq: $slug } }) {
       id
-      host
       properties {
-        title_slug
         _modified
       }
-      childCockpitBlogExcerptTextNode {
+      childExcerptTextNode {
         childMarkdownRemark {
           internal {
             content
@@ -103,7 +102,7 @@ export const pageQuery = graphql`
           html
         }
       }
-      childCockpitBlogContentTextNode {
+      childContentTextNode {
         childMarkdownRemark {
           internal {
             content
@@ -114,6 +113,7 @@ export const pageQuery = graphql`
         }
       }
       entry {
+        title_slug
         image {
           path
           title

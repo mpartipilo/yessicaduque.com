@@ -17,15 +17,16 @@ class Index extends React.Component {
   }
 
   render() {
-    const postEdges = this.props.data.allCockpitBlog.edges;
-    const featuredGallery = this.props.data.cockpitGallery.entry.images.map(
-      i => `${this.props.data.cockpitGallery.host}${i.path}`
+    const { data } = this.props;
+    const postEdges = data.allBlog.edges;
+    const featuredGallery = data.gallery.entry.images.map(
+      i => `${data.gallery.host}${i.path}`
     );
-    const highlights = this.props.data.highlights.entry.images.map(i => ({
+    const highlights = data.highlights.entry.images.map(i => ({
       thumb2: i.thumb2,
       thumb3: i.thumb3,
       photo: {
-        src: `${this.props.data.highlights.host}${i.path}`,
+        src: `${data.highlights.host}${i.path}`,
         width: i.meta.asset.width,
         height: i.meta.asset.height
       }
@@ -50,7 +51,6 @@ class Index extends React.Component {
               <div>
                 <GallerySummary images={highlights} />
                 <div style={{ height: `30px` }} />
-                {/* <InstagramFeed /> */}
               </div>
             </ScrollableAnchor>
           </section>
@@ -59,7 +59,7 @@ class Index extends React.Component {
               <Contact />
             </ScrollableAnchor>
           </section>
-          <InstagramFeed />
+          {/* <InstagramFeed /> */}
         </div>
       </Layout>
     );
@@ -96,19 +96,17 @@ export const pageQuery = graphql`
     allBlog(limit: 5, sort: { fields: [properties____modified], order: DESC }) {
       edges {
         node {
-          host
           properties {
             _modified
           }
-          childCockpitBlogExcerptTextNode {
+          childExcerptTextNode {
             childMarkdownRemark {
               html
             }
           }
-          childCockpitBlogContentTextNode {
+          childContentTextNode {
             childMarkdownRemark {
               timeToRead
-              html
             }
           }
           entry {

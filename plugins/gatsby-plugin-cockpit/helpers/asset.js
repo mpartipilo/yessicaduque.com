@@ -119,7 +119,7 @@ class AssetMapHelpers {
 
     const allRemoteAssetsPromises = this.assets.map(asset =>
       createRemoteAssetByPath(
-        asset.path,
+        asset,
         this.store,
         this.cache,
         this.createNode,

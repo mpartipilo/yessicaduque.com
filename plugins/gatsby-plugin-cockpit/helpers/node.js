@@ -1,6 +1,33 @@
-const { singular } = require("pluralize");
+const {
+  singular
+} = require("pluralize");
 const crypto = require("crypto");
 const validUrl = require("valid-url");
+const _ = require(`lodash`);
+
+const digest =
+  data =>
+  crypto
+  .createHash(`md5`)
+  .update(JSON.stringify(data))
+  .digest(`hex`);
+
+function createTextNode(node, key, text) {
+  const str = _.isString(text) ? text : ` `;
+  const textNode = {
+    id: `${node._id}_${key}_TextNode`,
+    parent: node._id,
+    children: [],
+    internal: {
+      type: _.camelCase(`${key} TextNode`),
+      mediaType: `text/markdown`,
+      content: str,
+      contentDigest: digest(str)
+    }
+  };
+
+  return textNode;
+}
 
 module.exports = class CreateNodesHelpers {
   constructor({
@@ -23,7 +50,11 @@ module.exports = class CreateNodesHelpers {
 
   async createItemsNodes() {
     Promise.all(
-      this.collectionsItems.map(({ fields, entries, name }) => {
+      this.collectionsItems.map(({
+        fields,
+        entries,
+        name
+      }) => {
         const nodes = entries.map(entry =>
           this.createCollectionItemNode({
             entry,
@@ -32,15 +63,25 @@ module.exports = class CreateNodesHelpers {
           })
         );
 
-        return { name, nodes, fields };
+        return {
+          name,
+          nodes,
+          fields
+        };
       }),
-      this.regionsItems.map(({ name, data }) => {
+      this.regionsItems.map(({
+        name,
+        data
+      }) => {
         const node = this.createRegionItemNode({
           data,
           name
         });
 
-        return { name: "region", node };
+        return {
+          name: "region",
+          node
+        };
       })
     );
   }
@@ -57,6 +98,12 @@ module.exports = class CreateNodesHelpers {
     );
   }
 
+  getMarkdownFields(fields) {
+    return Object.keys(fields).filter(
+      fieldname => fields[fieldname].type === "markdown"
+    );
+  }
+
   getCollectionLinkFields(fields) {
     return Object.keys(fields).filter(
       fieldname => fields[fieldname].type === "collectionlink"
@@ -70,15 +117,15 @@ module.exports = class CreateNodesHelpers {
   }
 
   getOtherFields(fields) {
-    const keys =  Object.keys(fields).filter(
+    const keys = Object.keys(fields).filter(
       fieldname =>
-        !["image", "asset", "collectionlink"].includes(fields[fieldname].type)
+      !["image", "asset", "collectionlink"].includes(fields[fieldname].type)
     );
 
-    const haveSlug = 
+    const haveSlug =
       keys
-        .filter(fieldname => fields[fieldname].options.slug)
-        .map(fieldname => `${fieldname}_slug`)
+      .filter(fieldname => fields[fieldname].options.slug)
+      .map(fieldname => `${fieldname}_slug`)
 
     keys.push(haveSlug);
 
@@ -102,6 +149,14 @@ module.exports = class CreateNodesHelpers {
         [fieldname]: entry[fieldname]
       };
     }, {});
+  }
+
+  createEntryMarkdownChildNodes(assetFields, entry) {
+    return assetFields.map(fieldname => {
+        const node = createTextNode(entry, fieldname, entry[fieldname])
+        this.createNode(node)
+        return node
+      })
   }
 
   // map the entry CollectionLink fields to link to the asset node
@@ -142,7 +197,11 @@ module.exports = class CreateNodesHelpers {
 
     const imagesFulfilled = await Promise.all(wysiwygImagesPromises);
 
-    const images = imagesFulfilled.map(({ contentDigest, ext, name }) => ({
+    const images = imagesFulfilled.map(({
+      contentDigest,
+      ext,
+      name
+    }) => ({
       contentDigest,
       ext,
       name
@@ -201,16 +260,24 @@ module.exports = class CreateNodesHelpers {
       });
     }
 
-    return { setting, assets };
+    return {
+      setting,
+      assets
+    };
   }
 
   // look into Cockpit CP_LAYOUT_COMPONENTS for image and images.
   parseCustomComponent(node, fieldname) {
-    const { settings } = node;
+    const {
+      settings
+    } = node;
     const nodeAssets = [];
 
     Object.keys(settings).map((key, index) => {
-      const { setting, assets } = this.getLayoutSettingFileLocation(
+      const {
+        setting,
+        assets
+      } = this.getLayoutSettingFileLocation(
         settings[key]
       );
       settings[key] = setting;
@@ -238,9 +305,17 @@ module.exports = class CreateNodesHelpers {
     const parsedLayout = layout.map(node => {
       if (node.component === "text" || node.component === "html") {
         this.parseWysiwygField(node.settings.text || node.settings.html).then(
-          ({ wysiwygImagesMap, imageSources, images }) => {
+          ({
+            wysiwygImagesMap,
+            imageSources,
+            images
+          }) => {
             Object.entries(wysiwygImagesMap).forEach(([key, value], index) => {
-              const { name, ext, contentDigest } = images[index];
+              const {
+                name,
+                ext,
+                contentDigest
+              } = images[index];
               const newUrl = "/static/" + name + "-" + contentDigest + ext;
               if (node.settings.text) {
                 node.settings.text = node.settings.text.replace(
@@ -311,7 +386,10 @@ module.exports = class CreateNodesHelpers {
       if (entry[fieldname].length === 0) {
         return acc;
       }
-      const { parsedLayout, layoutAssets } = this.parseLayout(
+      const {
+        parsedLayout,
+        layoutAssets
+      } = this.parseLayout(
         entry[fieldname],
         fieldname
       );
@@ -328,15 +406,20 @@ module.exports = class CreateNodesHelpers {
 
   composeEntryWithOtherFields(otherFields, fields, entry) {
     return otherFields.reduce((acc, fieldname) => ({
-        ...acc,
-        [fieldname]: entry[fieldname]
-      }), {});
+      ...acc,
+      [fieldname]: entry[fieldname]
+    }), {});
   }
 
-  createCollectionItemNode({ entry, fields, name }) {
+  createCollectionItemNode({
+    entry,
+    fields,
+    name
+  }) {
     //1
     const imageFields = this.getImageFields(fields);
     const assetFields = this.getAssetFields(fields);
+    const markdownFields = this.getMarkdownFields(fields);
     const layoutFields = this.getLayoutFields(fields);
     const collectionLinkFields = this.getCollectionLinkFields(fields);
     const otherFields = this.getOtherFields(fields);
@@ -357,6 +440,8 @@ module.exports = class CreateNodesHelpers {
       entry
     );
 
+    const entryMarkdownFieldNodes = this.createEntryMarkdownChildNodes(markdownFields, entry);
+
     //3
     const node = {
       entry: {
@@ -371,7 +456,7 @@ module.exports = class CreateNodesHelpers {
         _modified: entry._modified
       },
       id: entry._id,
-      children: [],
+      children: entryMarkdownFieldNodes.map(n => n.id),
       parent: null,
       internal: {
         type: singular(name),
@@ -381,11 +466,15 @@ module.exports = class CreateNodesHelpers {
           .digest(`hex`)
       }
     };
+
     this.createNode(node);
     return node;
   }
 
-  createRegionItemNode({ data, name }) {
+  createRegionItemNode({
+    data,
+    name
+  }) {
     const node = {
       ...data,
       name: name,

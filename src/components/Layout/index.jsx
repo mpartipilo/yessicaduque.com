@@ -13,20 +13,25 @@ import Footer from "../Footer";
 import "./index.css";
 import "../../scss/index.scss";
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export default class MainLayout extends React.Component {
   getInvertHeader() {
+    const { location } = this.props;
     const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
-    const currentPath = this.props.location.pathname
+    const currentPath = location.pathname
       .replace(pathPrefix, "")
       .replace("/", "");
     return currentPath !== "";
   }
+
   getLocalTitle() {
-    function capitalize(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    const { location } = this.props;
+
     const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
-    const currentPath = this.props.location.pathname
+    const currentPath = location.pathname
       .replace(pathPrefix, "")
       .replace("/", "");
     let title = "";

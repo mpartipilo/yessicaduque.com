@@ -66,11 +66,12 @@ class About extends Component {
                   >
                     Food Styling for Media The International Culinary Center ICC
                     New York
-                  </a>.
+                  </a>
+                  .
                 </p>
 
-                <p>
-                  Some additional ceritifications:
+                <div>
+                  <p>Some additional ceritifications:</p>
                   <ul>
                     <li>
                       <a href="https://en.wikipedia.org/wiki/Hazard_analysis_and_critical_control_points">
@@ -92,7 +93,7 @@ class About extends Component {
                       </a>
                     </li>
                   </ul>
-                </p>
+                </div>
 
                 <p>
                   Check out social media feeds to learn more about my career and

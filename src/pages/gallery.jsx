@@ -34,7 +34,6 @@ export default Index;
 export const pageQuery = graphql`
   query GalleryQuery {
     gallery(entry: { title_slug: { eq: "portfolio" } }) {
-      host
       entry {
         images {
           path
