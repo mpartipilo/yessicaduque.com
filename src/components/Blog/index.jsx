@@ -54,8 +54,7 @@ export const PostCardSummary = post => {
           />
           <div>
             <span className="badge badge-default">
-              Posted
-              <Moment format="YYYY-MM-DD">{date}</Moment>
+              Posted <Moment format="YYYY-MM-DD">{date}</Moment>
             </span>
           </div>
         </CardBody>

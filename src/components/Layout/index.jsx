@@ -65,8 +65,7 @@ export default class MainLayout extends React.Component {
 
   render() {
     const { children } = this.props;
-    const invertFixedHeader = false;
-    // const invertFixedHeader = this.getInvertHeader();
+    const invertFixedHeader = this.getInvertHeader();
     return (
       <div>
         <Helmet>

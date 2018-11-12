@@ -14,8 +14,7 @@ class SEO extends Component {
       ({ title } = postMeta);
       description = postMeta.description
         ? postMeta.description
-        : postNode.childCockpitBlogExcerptTextNode.childMarkdownRemark.internal
-            .content;
+        : postNode.childExcerptTextNode.childMarkdownRemark.excerpt;
       image = ogImage || postMeta.image.path;
       postURL = config.siteUrl + config.pathPrefix + postPath;
     } else {

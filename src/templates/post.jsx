@@ -1,8 +1,10 @@
 import React from "react";
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 import Moment from "react-moment";
 import Helmet from "react-helmet";
-import { Container, Jumbotron, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+import Img from "gatsby-image";
+import Layout from "../components/Layout";
 import UserInfo from "../components/UserInfo/UserInfo";
 /* import Disqus from "../components/Disqus/Disqus"; */
 import PostTags from "../components/PostTags/PostTags";
@@ -20,68 +22,61 @@ export default class PostTemplate extends React.Component {
 
     post.date = postNode.properties._modified * 1000;
 
+    const heroImage = postNode.entry.image.localFile.childImageSharp.fluid;
+
     return (
-      <div className="blogPost">
-        <Helmet>
-          <title>{`${post.title} | ${config.siteTitle}`}</title>
-        </Helmet>
-        <SEO
-          postPath={slug}
-          postNode={postNode}
-          ogImage={`${postNode.host}/storage/uploads${encodeURI(
-            post.image.path
-          )}`}
-          postSEO
-        />
-        <article>
-          <Container>
-            <Row>
-              <Col>
-                <Jumbotron fluid>
+      <Layout {...this.props}>
+        <div className="blogPost">
+          <Helmet>
+            <title>{`${post.title} | ${config.siteTitle}`}</title>
+          </Helmet>
+          <SEO
+            postPath={slug}
+            postNode={postNode}
+            ogImage={heroImage.src}
+            postSEO
+          />
+          <article>
+            <Container>
+              <Row>
+                <Col>
+                  <Img fluid={heroImage} />
+                  <h1>{post.title}</h1>
                   <div
-                    style={{
-                      backgroundImage: `url('${
-                        postNode.host
-                      }/storage/uploads${encodeURI(post.image.path)}')`
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        postNode.childContentTextNode.childMarkdownRemark.html
                     }}
                   />
-                </Jumbotron>
-                <h1>{post.title}</h1>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      postNode.childCockpitBlogContentTextNode
-                        .childMarkdownRemark.html
-                  }}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <div>
-                  <span className="badge badge-default">
-                    Posted <Moment format="YYYY-MM-DD">{post.date}</Moment>
-                  </span>
-                  <div className="pull-right">
-                    <PostTags tags={post.tags} />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div>
+                    <span className="badge badge-default">
+                      Posted <Moment format="YYYY-MM-DD">{post.date}</Moment>
+                    </span>
+                    <div className="pull-right">
+                      <PostTags tags={post.tags} />
+                    </div>
                   </div>
-                </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <SocialLinks postPath={slug} postNode={postNode} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <UserInfo config={config} />
-                {/* <Disqus postNode={postNode} /> */}
-              </Col>
-            </Row>
-          </Container>
-        </article>
-      </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <SocialLinks postPath={slug} postNode={postNode} />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <UserInfo config={config} />
+                  {/* <Disqus postNode={postNode} /> */}
+                </Col>
+              </Row>
+            </Container>
+          </article>
+        </div>
+      </Layout>
     );
   }
 }
@@ -96,43 +91,30 @@ export const pageQuery = graphql`
       }
       childExcerptTextNode {
         childMarkdownRemark {
-          internal {
-            content
-          }
           html
         }
       }
       childContentTextNode {
         childMarkdownRemark {
-          internal {
-            content
-          }
           timeToRead
-          excerpt
           html
         }
       }
       entry {
+        tags
+        title
         title_slug
         image {
-          path
-          title
-          mime
-          description
-          size
-          image
-          video
-          audio
-          archive
-          document
-          code
-          _by
-          width
-          height
-          _id
+          localFile {
+            id
+            childImageSharp {
+              id
+              fluid(maxWidth: 1024) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
-        title
-        tags
       }
     }
   }

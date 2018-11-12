@@ -42,8 +42,15 @@ export const pageQuery = graphql`
             title_slug
             tags
             image {
-              path
-              title
+              localFile {
+                id
+                childImageSharp {
+                  id
+                  fixed(width: 510, height: 400) {
+                    ...GatsbyImageSharpFixed
+                  }
+                }
+              }
             }
           }
           fields {
