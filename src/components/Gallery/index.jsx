@@ -4,46 +4,20 @@ import GalleryBase from "../GalleryBase";
 class Gallery extends React.Component {
   constructor(props) {
     super(props);
+
+    const { limit, images } = this.props;
+
+    const localThumbs = images.map(p => p.thumb);
+
     this.state = {
-      photos: [],
-      thumbs: [],
-      limit: props.limit || 0
+      photos: images.map(p => p.picture),
+      thumbs: limit ? localThumbs.slice(0, limit) : localThumbs
     };
   }
 
-  componentDidMount() {
-    const scopedThis = this;
-
-    let localThumbs = this.props.images.map(p => ({
-      ...p.thumb2,
-      srcSet: [
-        `${p.thumb2.src} ${p.thumb2.width}w`,
-        `${p.thumb3.src} ${p.thumb3.width}w`
-      ],
-      sizes: ["(max-width: 400px) 33.3vw", "(max-width: 900px) 50vw", "100vw"]
-    }));
-    if (scopedThis.state.limit) {
-      localThumbs = localThumbs.slice(0, scopedThis.state.limit);
-    }
-
-    const localPhotos = this.props.images.map(p => ({
-      src: p.thumb2.src,
-      width: p.width,
-      height: p.height,
-      srcset: [
-        `${p.thumb2.src} ${p.thumb2.width}w`,
-        `${p.thumb3.src} ${p.thumb3.width}w`,
-        `${p.photo.src}`
-      ]
-    }));
-
-    scopedThis.setState({ thumbs: localThumbs, photos: localPhotos });
-  }
-
   render() {
-    return (
-      <GalleryBase photos={this.state.photos} thumbs={this.state.thumbs} />
-    );
+    const { photos, thumbs } = this.state;
+    return <GalleryBase photos={photos} thumbs={thumbs} />;
   }
 }
 

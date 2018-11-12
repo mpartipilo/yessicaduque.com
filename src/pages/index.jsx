@@ -20,17 +20,11 @@ class Index extends React.Component {
     const { data } = this.props;
     const postEdges = data.allBlog.edges;
     const featuredGallery = data.gallery.entry.images.map(
-      i => `${data.gallery.host}${i.path}`
+      i => i.localFile.childImageSharp
     );
-    const highlights = data.highlights.entry.images.map(i => ({
-      thumb2: i.thumb2,
-      thumb3: i.thumb3,
-      photo: {
-        src: `${data.highlights.host}${i.path}`,
-        width: i.meta.asset.width,
-        height: i.meta.asset.height
-      }
-    }));
+    const highlights = data.highlights.entry.images.map(
+      i => i.localFile.childImageSharp
+    );
     return (
       <Layout {...this.props}>
         <div className="index-container">
@@ -75,7 +69,14 @@ export const pageQuery = graphql`
       entry {
         title
         images {
-          path
+          localFile {
+            childImageSharp {
+              id
+              fluid(maxWidth: 1200) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
       }
     }
@@ -84,10 +85,16 @@ export const pageQuery = graphql`
       entry {
         title
         images {
-          path
-          meta {
-            title
-            asset
+          localFile {
+            childImageSharp {
+              id
+              thumb: fixed(width: 475) {
+                ...GatsbyImageSharpFixed
+              }
+              picture: fluid(maxWidth: 1024) {
+                ...GatsbyImageSharpFluid
+              }
+            }
           }
         }
       }
@@ -113,7 +120,15 @@ export const pageQuery = graphql`
             title
             title_slug
             image {
-              path
+              localFile {
+                id
+                childImageSharp {
+                  id
+                  fixed(width: 510, height: 400) {
+                    ...GatsbyImageSharpFixed
+                  }
+                }
+              }
             }
             tags
           }

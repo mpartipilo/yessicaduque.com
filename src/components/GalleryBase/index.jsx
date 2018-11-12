@@ -48,6 +48,9 @@ class GalleryBase extends React.Component {
   }
 
   renderGallery() {
+    const { dimensions } = this.state;
+    const { thumbs } = this.props;
+
     return (
       <Measure
         bounds
@@ -56,7 +59,7 @@ class GalleryBase extends React.Component {
         }}
       >
         {({ measureRef }) => {
-          const { width } = this.state.dimensions;
+          const { width } = dimensions;
           let cols = 3;
           if (width <= 1024) {
             cols = 2;
@@ -68,7 +71,7 @@ class GalleryBase extends React.Component {
             <div ref={measureRef}>
               <PhotoGallery
                 id="photoGallery"
-                photos={this.props.thumbs}
+                photos={thumbs}
                 columns={cols}
                 onClick={this.openLightbox}
               />
@@ -80,17 +83,20 @@ class GalleryBase extends React.Component {
   }
 
   render() {
+    const { photos } = this.props;
+    const { currentImage, lightboxIsOpen } = this.state;
+
     return (
       <div>
         {this.renderGallery()}
         <Lightbox
-          images={this.props.photos}
+          images={photos}
           backdropClosesModal
           onClose={this.closeLightbox}
           onClickPrev={this.gotoPrevious}
           onClickNext={this.gotoNext}
-          currentImage={this.state.currentImage}
-          isOpen={this.state.lightboxIsOpen}
+          currentImage={currentImage}
+          isOpen={lightboxIsOpen}
           width={1200}
         />
       </div>

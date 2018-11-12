@@ -1,14 +1,13 @@
 import React from "react";
 import { Button, Container, Row, Col } from "reactstrap";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 import Gallery from "../Gallery";
 
 import "./index.scss";
 
 class GallerySummary extends React.Component {
-  componentDidMount() {}
-
   render() {
+    const { images } = this.props;
     return (
       <Container>
         <Row>
@@ -21,7 +20,7 @@ class GallerySummary extends React.Component {
         </Row>
         <Row>
           <Col lg="12" className="text-center">
-            <Gallery images={this.props.images} limit="6" />
+            <Gallery images={images} limit="6" />
           </Col>
         </Row>
         <Row className="mt-4">

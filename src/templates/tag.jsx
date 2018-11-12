@@ -9,8 +9,8 @@ import "../scss/post.scss";
 
 export default class TagTemplate extends React.Component {
   render() {
-    const { data, pathContext } = this.props;
-    const { tag } = pathContext;
+    const { data, pageContext } = this.props;
+    const { tag } = pageContext;
     const postEdges = getPostList(data.allCockpitBlog.edges);
     return (
       <div className="tag-container">

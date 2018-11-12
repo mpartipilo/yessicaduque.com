@@ -22,16 +22,17 @@
         right: 0;
         bottom: 0;
 
-        @media (min-width: 768px) {
-            height: 100vh;
-        }
+        &.gatsby-image-wrapper {
+            height: 35vh;
 
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        transition: opacity 1s ease-in-out;
-        opacity: 0;
-        filter: alpha(opacity=0);
+            @media (min-width: 768px) {
+                height: 100vh;
+            }
+
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
 
         &.opaque {
             opacity: 1;

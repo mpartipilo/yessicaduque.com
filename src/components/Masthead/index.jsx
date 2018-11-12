@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Jumbotron } from "reactstrap";
 import { ReactInterval } from "react-interval";
-
+import Img from "gatsby-image";
 import "./index.scss";
 
 class Masthead extends Component {
@@ -14,6 +14,7 @@ class Masthead extends Component {
   }
 
   render() {
+    const { bgImages, currentImg } = this.state;
     return (
       <Jumbotron fluid>
         <ReactInterval
@@ -21,19 +22,17 @@ class Masthead extends Component {
           enabled
           callback={() =>
             this.setState({
-              currentImg:
-                (this.state.currentImg + 1) % this.state.bgImages.length
+              currentImg: (currentImg + 1) % bgImages.length
             })
           }
         />
-        {this.state.bgImages.map((i, idx) => (
-          <div
-            key={this.state.bgImages[idx]}
-            style={{
-              backgroundImage: `url('${this.state.bgImages[idx]}')`
-            }}
-            className={idx === this.state.currentImg ? "opaque" : ""}
-          />
+        {bgImages.map((i, idx) => (
+          <div key={bgImages[idx].id}>
+            <Img
+              fluid={bgImages[idx].fluid}
+              className={idx === currentImg ? "opaque" : ""}
+            />
+          </div>
         ))}
       </Jumbotron>
     );

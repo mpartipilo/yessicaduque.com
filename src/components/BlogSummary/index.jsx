@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { Button, Container, Row, Col } from "reactstrap";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
 import Blog, { getPostList } from "../Blog";
 import "./index.scss";
 
 class BlogSummary extends Component {
   render() {
+    const { postEdges } = this.props;
+
     return (
       <Fragment>
         <Container>
@@ -13,11 +15,11 @@ class BlogSummary extends Component {
             <Col lg="12" className="text-center">
               <h2 className="section-heading">My recipes</h2>
               <hr className="primary" />
-              <p>Sharing is caring, and I share a lot!</p>
+              <p>Sharing is caring, and I care a lot!</p>
             </Col>
           </Row>
         </Container>
-        <Blog posts={getPostList(this.props.postEdges.slice(0, 3))} />
+        <Blog posts={getPostList(postEdges.slice(0, 3))} />
         <Container>
           <Row className="mt-4">
             <Col className="text-center">

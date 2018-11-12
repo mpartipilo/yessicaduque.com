@@ -10,7 +10,8 @@ import {
   CardTitle,
   CardText
 } from "reactstrap";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
+import Img from "gatsby-image";
 
 import "./index.scss";
 
@@ -19,7 +20,7 @@ export const getPostList = postEdges =>
     host: node.host,
     path: node.fields.slug,
     tags: node.entry.tags || [],
-    cover: node.entry.image.path,
+    cover: node.entry.image.localFile.childImageSharp,
     title: node.entry.title,
     date: node.properties._modified * 1000,
     summary: node.childExcerptTextNode.childMarkdownRemark.html,
@@ -28,7 +29,7 @@ export const getPostList = postEdges =>
   }));
 
 export const PostCardSummary = post => {
-  const { title, cover, path, host, summary, excerpt, date } = post;
+  const { title, cover, path, summary, excerpt, date } = post;
   return (
     <Col lg={4} md={6} key={title}>
       <Card style={{ marginBottom: 5 }}>
@@ -36,7 +37,7 @@ export const PostCardSummary = post => {
           top
           width="100%"
           className="h-100"
-          src={`${host}/storage/uploads${cover}`}
+          src={cover.fixed.src}
           alt={title}
         />
         <CardBody>
@@ -53,7 +54,8 @@ export const PostCardSummary = post => {
           />
           <div>
             <span className="badge badge-default">
-              Posted <Moment format="YYYY-MM-DD">{date}</Moment>
+              Posted
+              <Moment format="YYYY-MM-DD">{date}</Moment>
             </span>
           </div>
         </CardBody>
@@ -62,9 +64,9 @@ export const PostCardSummary = post => {
   );
 };
 
-const Blog = props => (
+const Blog = ({ posts }) => (
   <Container className="oddRow">
-    <Row>{props.posts.map(PostCardSummary)}</Row>
+    <Row>{posts.map(PostCardSummary)}</Row>
   </Container>
 );
 

@@ -13,8 +13,8 @@ import "../scss/post.scss";
 
 export default class PostTemplate extends React.Component {
   render() {
-    const { data, pathContext } = this.props;
-    const { slug } = pathContext;
+    const { data, pageContext } = this.props;
+    const { slug } = pageContext;
     const postNode = data.blog;
     const post = postNode.entry;
 
