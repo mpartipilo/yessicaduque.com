@@ -8,15 +8,9 @@ import "../scss/gallery.scss";
 class Index extends React.Component {
   render() {
     const { data } = this.props;
-    const gallery = data.gallery.entry.images.map(i => ({
-      thumb2: i.thumb2,
-      thumb3: i.thumb3,
-      photo: {
-        src: `${data.gallery.host}${i.path}`,
-        width: i.meta.asset.width,
-        height: i.meta.asset.height
-      }
-    }));
+    const gallery = data.gallery.entry.images.map(
+      i => i.localFile.childImageSharp
+    );
 
     return (
       <Layout {...this.props}>
@@ -35,17 +29,23 @@ export const pageQuery = graphql`
   query GalleryQuery {
     gallery(entry: { title_slug: { eq: "portfolio" } }) {
       entry {
+        published
+        tags
+        title
+        title_slug
         images {
-          path
-          meta {
-            title
-            asset
+          localFile {
+            childImageSharp {
+              id
+              thumb: fixed(width: 475) {
+                ...GatsbyImageSharpFixed
+              }
+              picture: fluid(maxWidth: 1024) {
+                ...GatsbyImageSharpFluid
+              }
+            }
           }
         }
-        published
-        title
-        tags
-        title_slug
       }
     }
   }
