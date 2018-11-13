@@ -53,7 +53,7 @@ class Index extends React.Component {
               <Contact />
             </ScrollableAnchor>
           </section>
-          {/* <InstagramFeed /> */}
+          <InstagramFeed />
         </div>
       </Layout>
     );
