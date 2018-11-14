@@ -26,21 +26,25 @@ export const pageQuery = graphql`
           properties {
             _modified
           }
-          childExcerptTextNode {
-            childMarkdownRemark {
-              html
-            }
-          }
-          childContentTextNode {
-            childMarkdownRemark {
-              timeToRead
-              html
-            }
-          }
           entry {
             title
             title_slug
             tags
+            excerpt {
+              markdown {
+                childMarkdownRemark {
+                  html
+                }
+              }
+            }
+            content {
+              markdown {
+                childMarkdownRemark {
+                  timeToRead
+                  html
+                }
+              }
+            }
             image {
               localFile {
                 id

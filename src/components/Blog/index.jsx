@@ -11,7 +11,6 @@ import {
   CardText
 } from "reactstrap";
 import { Link } from "gatsby";
-import Img from "gatsby-image";
 
 import "./index.scss";
 
@@ -23,8 +22,8 @@ export const getPostList = postEdges =>
     cover: node.entry.image.localFile.childImageSharp,
     title: node.entry.title,
     date: node.properties._modified * 1000,
-    summary: node.childExcerptTextNode.childMarkdownRemark.html,
-    excerpt: node.childContentTextNode.childMarkdownRemark.html,
+    summary: node.entry.excerpt.markdown.childMarkdownRemark.html,
+    excerpt: node.entry.content.markdown.childMarkdownRemark.html,
     timeToRead: node.childContentTextNode.childMarkdownRemark.timeToRead
   }));
 
