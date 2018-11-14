@@ -1,33 +1,8 @@
-const {
-  singular
-} = require("pluralize");
+const { singular } = require("pluralize");
 const crypto = require("crypto");
-const validUrl = require("valid-url");
-const _ = require(`lodash`);
+const _ = require("lodash");
 
-const digest =
-  data =>
-  crypto
-  .createHash(`md5`)
-  .update(JSON.stringify(data))
-  .digest(`hex`);
-
-function createTextNode(node, key, text) {
-  const str = _.isString(text) ? text : ` `;
-  const textNode = {
-    id: `${node._id}_${key}_TextNode`,
-    parent: node._id,
-    children: [],
-    internal: {
-      type: _.camelCase(`${key} TextNode`),
-      mediaType: `text/markdown`,
-      content: str,
-      contentDigest: digest(str)
-    }
-  };
-
-  return textNode;
-}
+const fieldHandlers = require("../field-handlers")
 
 module.exports = class CreateNodesHelpers {
   constructor({
@@ -46,15 +21,12 @@ module.exports = class CreateNodesHelpers {
     this.createNode = createNode;
     this.assetsMap = assetsMap;
     this.config = config;
+    this.getFileAsset = this.getFileAsset.bind(this);
   }
 
   async createItemsNodes() {
     Promise.all(
-      this.collectionsItems.map(({
-        fields,
-        entries,
-        name
-      }) => {
+      this.collectionsItems.map(({ fields, entries, name }) => {
         const nodes = entries.map(entry =>
           this.createCollectionItemNode({
             entry,
@@ -69,10 +41,7 @@ module.exports = class CreateNodesHelpers {
           fields
         };
       }),
-      this.regionsItems.map(({
-        name,
-        data
-      }) => {
+      this.regionsItems.map(({ name, data }) => {
         const node = this.createRegionItemNode({
           data,
           name
@@ -84,163 +53,6 @@ module.exports = class CreateNodesHelpers {
         };
       })
     );
-  }
-
-  getImageFields(fields) {
-    return Object.keys(fields).filter(
-      fieldname => fields[fieldname].type === "image"
-    );
-  }
-
-  getGalleryFields(fields) {
-    return Object.keys(fields).filter(
-      fieldname => fields[fieldname].type === "gallery"
-    );
-  }
-
-  getAssetFields(fields) {
-    return Object.keys(fields).filter(
-      fieldname => fields[fieldname].type === "asset"
-    );
-  }
-
-  getMarkdownFields(fields) {
-    return Object.keys(fields).filter(
-      fieldname => fields[fieldname].type === "markdown"
-    );
-  }
-
-  getCollectionLinkFields(fields) {
-    return Object.keys(fields).filter(
-      fieldname => fields[fieldname].type === "collectionlink"
-    );
-  }
-
-  getLayoutFields(fields) {
-    return Object.keys(fields).filter(
-      fieldname => fields[fieldname].type === "layout"
-    );
-  }
-
-  getOtherFields(fields) {
-    const keys = Object.keys(fields).filter(
-      fieldname =>
-      !["image", "asset", "collectionlink"].includes(fields[fieldname].type)
-    );
-
-    const haveSlug =
-      keys
-      .filter(fieldname => fields[fieldname].options.slug)
-      .map(fieldname => `${fieldname}_slug`)
-
-    keys.push(haveSlug);
-
-    return keys;
-  }
-
-  // map the entry image fields to link to the asset node
-  // the important part is the `___NODE`.
-  composeEntryAssetFields(fields, entry) {
-    return fields.reduce((acc, fieldname) => {
-      entry[fieldname].colors = entry[fieldname].colors.map(e => "" + e);
-
-      if (entry[fieldname].path != null) {
-        let fileLocation = this.getFileAsset(entry[fieldname].path);
-
-        entry[fieldname].localFile___NODE = fileLocation;
-      }
-
-      return {
-        ...acc,
-        [fieldname]: entry[fieldname]
-      };
-    }, {});
-  }
-
-  composeEntryGalleryFields(fields, entry) {
-    return fields.reduce((acc, fieldname) => {
-
-      var mapped = entry[fieldname].map(e => {
-        if (e.path != null) {
-          let fileLocation = this.getFileAsset(e.path);
-  
-          return {
-            ...e,
-            localFile___NODE: fileLocation
-          }
-        }
-      });
-
-      return {
-        ...acc,
-        [fieldname]: mapped
-      };
-    }, {});
-  }
-
-  createEntryMarkdownChildNodes(assetFields, entry) {
-    return assetFields.map(fieldname => {
-        const node = createTextNode(entry, fieldname, entry[fieldname])
-        this.createNode(node)
-        return node
-      })
-  }
-
-  // map the entry CollectionLink fields to link to the asset node
-  // the important part is the `___NODE`.
-  composeEntryCollectionLinkFields(collectionLinkFields, entry) {
-    return collectionLinkFields.reduce((acc, fieldname) => {
-      const key = fieldname + "___NODE";
-      const newAcc = {
-        ...acc,
-        [key]: entry[fieldname]._id
-      };
-      return newAcc;
-    }, {});
-  }
-
-  async parseWysiwygField(field) {
-    const srcRegex = /src\s*=\s*"(.+?)"/gi;
-    let imageSources;
-    try {
-      imageSources = field
-        .match(srcRegex)
-        .map(src => src.substr(5).slice(0, -1));
-    } catch (error) {
-      return {
-        images: [],
-        wysiwygImagesMap: [],
-        imageSources: []
-      };
-    }
-
-    const validImageUrls = imageSources.map(src =>
-      validUrl.isUri(src) ? src : this.config.host + src
-    );
-
-    const wysiwygImagesPromises = validImageUrls.map(url =>
-      createRemoteAssetByPath(url, this.store, this.cache, this.createNode)
-    );
-
-    const imagesFulfilled = await Promise.all(wysiwygImagesPromises);
-
-    const images = imagesFulfilled.map(({
-      contentDigest,
-      ext,
-      name
-    }) => ({
-      contentDigest,
-      ext,
-      name
-    }));
-
-    const wysiwygImagesMap = await createAssetsMap(imagesFulfilled);
-
-    return {
-      images,
-      wysiwygImagesMap,
-      imageSources
-    };
   }
 
   getFileAsset(path) {
@@ -255,238 +67,27 @@ module.exports = class CreateNodesHelpers {
     return fileLocation;
   }
 
-  getLayoutSettingFileLocation(setting) {
-    let fileLocation;
-    let assets = [];
-
-    // if setting.path exists it is an images
-    if (setting !== null && setting.path !== undefined) {
-      fileLocation = this.getFileAsset(setting.path);
-      if (fileLocation) {
-        assets.push(fileLocation);
-        setting.localFileId = fileLocation;
-      }
-    }
-    // if setting[0].path exists it is an array of images
-    else if (
-      setting !== null &&
-      typeof setting === "object" &&
-      setting[0] != undefined &&
-      setting[0].path !== undefined
-    ) {
-      Object.keys(setting).forEach(imageKey => {
-        const image = setting[imageKey];
-
-        fileLocation = this.getFileAsset(image.path);
-        if (fileLocation) {
-          image.localFileId = fileLocation;
-          assets.push(fileLocation);
-        }
-
-        setting[imageKey] = image;
-      });
-    }
-
-    return {
-      setting,
-      assets
-    };
-  }
-
-  // look into Cockpit CP_LAYOUT_COMPONENTS for image and images.
-  parseCustomComponent(node, fieldname) {
-    const {
-      settings
-    } = node;
-    const nodeAssets = [];
-
-    Object.keys(settings).map((key, index) => {
-      const {
-        setting,
-        assets
-      } = this.getLayoutSettingFileLocation(
-        settings[key]
-      );
-      settings[key] = setting;
-      assets.map(asset => nodeAssets.push(asset));
-    });
-    node.settings = settings;
-
-    // filter duplicate assets
-    const seenAssets = {};
-    const distinctAssets = nodeAssets.filter(asset => {
-      const seen = seenAssets[asset] !== undefined;
-      seenAssets[asset] = true;
-      return !seen;
-    });
-
-    return {
-      node,
-      nodeAssets: distinctAssets
-    };
-  }
-
-  parseLayout(layout, fieldname, isColumn = false) {
-    let layoutAssets = [];
-
-    const parsedLayout = layout.map(node => {
-      if (node.component === "text" || node.component === "html") {
-        this.parseWysiwygField(node.settings.text || node.settings.html).then(
-          ({
-            wysiwygImagesMap,
-            imageSources,
-            images
-          }) => {
-            Object.entries(wysiwygImagesMap).forEach(([key, value], index) => {
-              const {
-                name,
-                ext,
-                contentDigest
-              } = images[index];
-              const newUrl = "/static/" + name + "-" + contentDigest + ext;
-              if (node.settings.text) {
-                node.settings.text = node.settings.text.replace(
-                  imageSources[index],
-                  newUrl
-                );
-              }
-              if (node.settings.html) {
-                node.settings.html = node.settings.html.replace(
-                  imageSources[index],
-                  newUrl
-                );
-              }
-            });
-          }
-        );
-      }
-
-      // parse Cockpit Custom Components (defined in plugin config in /gatsby-config.js)
-      if (this.config.customComponents.includes(node.component)) {
-        const {
-          node: customNode,
-          nodeAssets: customComponentAssets
-        } = this.parseCustomComponent(node, fieldname);
-
-        node = customNode;
-        layoutAssets = layoutAssets.concat(customComponentAssets);
-      }
-
-      if (node.children) {
-        if (!isColumn) {
-          console.log("component: ", node.component);
-        } else {
-          console.log("column");
-        }
-
-        const {
-          parsedLayout: childrenLayout,
-          layoutAssets: childrenAssets
-        } = this.parseLayout(node.children, fieldname);
-        node.children = childrenLayout;
-        layoutAssets = layoutAssets.concat(childrenAssets);
-      }
-      if (node.columns) {
-        const {
-          parsedLayout: columnsLayout,
-          layoutAssets: columnsAssets
-        } = this.parseLayout(node.columns, fieldname, true);
-        node.columns = childrenLayout;
-        layoutAssets = layoutAssets.concat(columnsAssets);
-      }
-
-      return node;
-    });
-
-    return {
-      parsedLayout,
-      layoutAssets
-    };
-  }
-
-  composeEntryLayoutFields(layoutFields, entry) {
-    return layoutFields.reduce((acc, fieldname) => {
-      if (entry[fieldname] == null) return;
-      if (typeof entry[fieldname] === "string")
-        entry[fieldname] = eval("(" + entry[fieldname] + ")");
-
-      if (entry[fieldname].length === 0) {
-        return acc;
-      }
-      const {
-        parsedLayout,
-        layoutAssets
-      } = this.parseLayout(
-        entry[fieldname],
-        fieldname
-      );
-
-      if (layoutAssets.length > 0) {
-        const key = fieldname + "_files___NODE";
-        if (acc[key] !== undefined) acc[key] = acc[key].concat(layoutAssets);
-        else acc[key] = layoutAssets;
-      }
-
-      return acc;
-    }, {});
-  }
-
-  composeEntryWithOtherFields(otherFields, fields, entry) {
-    return otherFields.reduce((acc, fieldname) => ({
-      ...acc,
-      [fieldname]: entry[fieldname]
-    }), {});
-  }
-
-  createCollectionItemNode({
-    entry,
-    fields,
-    name
-  }) {
+  createCollectionItemNode({ entry, fields, name }) {
     //1
-    const imageFields = this.getImageFields(fields);
-    const assetFields = this.getAssetFields(fields);
-    const galleryFields = this.getGalleryFields(fields);
-    const markdownFields = this.getMarkdownFields(fields);
-    const layoutFields = this.getLayoutFields(fields);
-    const collectionLinkFields = this.getCollectionLinkFields(fields);
-    const otherFields = this.getOtherFields(fields);
-    //2
-    const entryImageFields = this.composeEntryAssetFields(imageFields, entry);
-    const entryAssetFields = this.composeEntryAssetFields(assetFields, entry);
-    const entryGalleryFields = this.composeEntryGalleryFields(galleryFields, entry);
-    const entryCollectionLinkFields = this.composeEntryCollectionLinkFields(
-      collectionLinkFields,
-      entry
-    );
-    const entryLayoutFields = this.composeEntryLayoutFields(
-      layoutFields,
-      entry
-    );
-    const entryWithOtherFields = this.composeEntryWithOtherFields(
-      otherFields,
-      fields,
-      entry
-    );
+    var fieldsByType = fieldHandlers.getAllFields(fields)
 
-    const entryMarkdownFieldNodes = this.createEntryMarkdownChildNodes(markdownFields, entry);
+    //2
+    const nodeEntry = Object.keys(fieldsByType).reduce(
+      (acc, fieldtype) => ({
+        ...acc,
+        ...fieldHandlers.handlers[fieldtype](fieldsByType[fieldtype], fields, entry, this)
+      }
+    ), {})
 
     //3
     const node = {
-      entry: {
-        ...entryWithOtherFields,
-        ...entryImageFields,
-        ...entryAssetFields,
-        ...entryGalleryFields,
-        ...entryCollectionLinkFields,
-        ...entryLayoutFields
-      },
+      entry: nodeEntry,
       properties: {
         _created: entry._created,
         _modified: entry._modified
       },
       id: entry._id,
-      children: entryMarkdownFieldNodes.map(n => n.id),
+      children: [],
       parent: null,
       internal: {
         type: singular(name),
@@ -501,10 +102,7 @@ module.exports = class CreateNodesHelpers {
     return node;
   }
 
-  createRegionItemNode({
-    data,
-    name
-  }) {
+  createRegionItemNode({ data, name }) {
     const node = {
       ...data,
       name: name,
