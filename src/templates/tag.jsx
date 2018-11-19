@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 import Helmet from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
 import Blog, { getPostList } from "../components/Blog";
@@ -50,17 +50,6 @@ export const pageQuery = graphql`
           properties {
             _modified
           }
-          childExcerptTextNode {
-            childMarkdownRemark {
-              html
-            }
-          }
-          childContentTextNode {
-            childMarkdownRemark {
-              timeToRead
-              html
-            }
-          }
           entry {
             title_slug
             title
@@ -68,6 +57,21 @@ export const pageQuery = graphql`
               path
             }
             tags
+            excerpt {
+              markdown {
+                childMarkdownRemark {
+                  html
+                }
+              }
+            }
+            content {
+              markdown {
+                childMarkdownRemark {
+                  timeToRead
+                  html
+                }
+              }
+            }
           }
           fields {
             slug

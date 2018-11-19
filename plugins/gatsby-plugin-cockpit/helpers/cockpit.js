@@ -1,5 +1,3 @@
-
-
 module.exports = class CockpitHelpers {
   constructor(cockpit, config, reporter) {
     this.cockpit = cockpit;

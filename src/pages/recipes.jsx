@@ -14,7 +14,7 @@ const BlogPage = ({ data, location }) => (
 export default BlogPage;
 
 export const pageQuery = graphql`
-  query BlogQuery {
+  query {
     allBlog(
       limit: 100
       sort: { fields: [properties____modified], order: DESC }

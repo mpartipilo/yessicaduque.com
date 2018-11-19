@@ -1,5 +1,18 @@
+const limit = require("simple-rate-limiter");
 const { createRemoteFileNode } = require("gatsby-source-filesystem");
 const validUrl = require("valid-url");
+
+const limited = limit(async (args, callback) => {
+  const result = await createRemoteFileNode(args);
+  return result;
+})
+  .to(1)
+  .per(4000);
+
+// A function that returns a promise to resolve into the data //fetched from the API or an error
+const createRemoteFileNodeThrottled = args => {
+  return new Promise((resolve, reject) => limited(args, r => resolve(r)));
+};
 
 async function createRemoteAssetByPath(
   asset,

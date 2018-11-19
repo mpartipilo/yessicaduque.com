@@ -9,6 +9,7 @@ import GallerySummary from "../components/GallerySummary";
 import InstagramFeed from "../components/InstagramFeed";
 import Contact from "../components/Contact";
 import BlogSummary from "../components/BlogSummary";
+import RecipesSummary from "../components/RecipesSummary";
 import Layout from "../components/Layout";
 
 class Index extends React.Component {
@@ -18,8 +19,11 @@ class Index extends React.Component {
 
   render() {
     const { data } = this.props;
-    const postEdges = data.allBlog.edges;
-    const featuredGallery = data.gallery.entry.images.map(
+    const { allBlog, allPost, gallery } = data;
+    const { edges: recipePostEdges } = allBlog;
+    const { edges: blogPostsEdges } = allPost;
+
+    const featuredGallery = gallery.entry.images.map(
       i => i.localFile.childImageSharp
     );
     const highlights = data.highlights.entry.images.map(
@@ -28,16 +32,16 @@ class Index extends React.Component {
     return (
       <Layout {...this.props}>
         <div className="index-container">
-          <SEO postEdges={postEdges} />
+          <SEO />
           <Masthead bgImages={featuredGallery} />
-          <section id="_about">
-            <ScrollableAnchor id="about">
-              <About />
-            </ScrollableAnchor>
-          </section>
           <section id="_blog">
             <ScrollableAnchor id="blog">
-              <BlogSummary postEdges={postEdges} />
+              <BlogSummary postEdges={blogPostsEdges} />
+            </ScrollableAnchor>
+          </section>
+          <section id="_recipes">
+            <ScrollableAnchor id="recipes">
+              <RecipesSummary postEdges={recipePostEdges} />
             </ScrollableAnchor>
           </section>
           <section id="_portfolioSummary">
@@ -46,6 +50,11 @@ class Index extends React.Component {
                 <GallerySummary images={highlights} />
                 <div style={{ height: `30px` }} />
               </div>
+            </ScrollableAnchor>
+          </section>
+          <section id="_about">
+            <ScrollableAnchor id="about">
+              <About />
             </ScrollableAnchor>
           </section>
           <section id="_contact">
@@ -100,41 +109,18 @@ export const pageQuery = graphql`
       }
     }
 
-    allBlog(limit: 5, sort: { fields: [properties____modified], order: DESC }) {
+    allBlog(limit: 3, sort: { fields: [properties____modified], order: DESC }) {
       edges {
         node {
-          properties {
-            _modified
-          }
-          childExcerptTextNode {
-            childMarkdownRemark {
-              html
-            }
-          }
-          childContentTextNode {
-            childMarkdownRemark {
-              timeToRead
-            }
-          }
-          entry {
-            title
-            title_slug
-            image {
-              localFile {
-                id
-                childImageSharp {
-                  id
-                  fixed(width: 510, height: 400) {
-                    ...GatsbyImageSharpFixed
-                  }
-                }
-              }
-            }
-            tags
-          }
-          fields {
-            slug
-          }
+          ...RecipePostSummary
+        }
+      }
+    }
+
+    allPost(limit: 3, sort: { fields: [properties____modified], order: DESC }) {
+      edges {
+        node {
+          ...BlogPostSummary
         }
       }
     }
