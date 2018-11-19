@@ -3,8 +3,6 @@ import { graphql } from "gatsby";
 import Gallery from "../components/Gallery";
 import Layout from "../components/Layout";
 
-import "../scss/gallery.scss";
-
 class Index extends React.Component {
   render() {
     const { data } = this.props;

@@ -1,11 +1,6 @@
 @import "../../scss/variables.scss";
 @import "../../scss/mixins.scss";
 
-// Styling for the services section
-#_services {
-    background-color: $gray-lighter;
-}
-
 .service-box {
     max-width: 400px;
     margin: 16px auto 0;

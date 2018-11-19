@@ -10,6 +10,11 @@ exports.onCreateNode = ({ node, actions }) => {
     const slug = `/recipe/${_.kebabCase(node.entry.title_slug)}`;
     createNodeField({ node, name: "slug", value: slug });
   }
+
+  if (node.internal.type === "Post") {
+    const slug = `/blog/${_.kebabCase(node.entry.title_slug)}`;
+    createNodeField({ node, name: "slug", value: slug });
+  }
 };
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {

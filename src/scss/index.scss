@@ -4,8 +4,13 @@
 @import "./global.scss";
 @import "./bootstrap-overrides.scss";
 
-#root > [data-reactroot] {
-    position: absolute;
-    width: 100% !important;
-    height: 100% !important;
+section {
+    .odd {
+        background-color: $gray-lighter;
+    }
+}
+
+#_portfolio #Gallery > div {
+    max-height: 400px;
+    overflow: hidden;
 }

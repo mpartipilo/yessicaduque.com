@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 import { Link } from "gatsby";
-import Blog, { getPostList } from "../Blog";
+import Recipes, { getPostList } from "../Recipes";
 import "./index.scss";
 
-class BlogSummary extends Component {
+class RecipesSummary extends Component {
   render() {
     const { postEdges } = this.props;
 
@@ -13,24 +13,21 @@ class BlogSummary extends Component {
         <Container>
           <Row>
             <Col lg="12" className="text-center">
-              <h2 className="section-heading">My musings</h2>
+              <h2 className="section-heading">Latest recipes</h2>
               <hr className="primary" />
-              <p>
-                I write articles about food styling, photography, experiences,
-                and more!
-              </p>
+              <p>Sharing is caring, and I care a lot!</p>
             </Col>
           </Row>
         </Container>
-        <Blog posts={getPostList(postEdges)} />
+        <Recipes posts={getPostList(postEdges)} />
         <Container>
           <Row className="mt-4">
             <Col className="text-center">
               <Button
                 color="primary"
                 size="xl"
-                href="/blog"
-                to="blog"
+                href="/recipes"
+                to="recipes"
                 className="sr-button"
                 tag={Link}
               >
@@ -44,4 +41,4 @@ class BlogSummary extends Component {
   }
 }
 
-export default BlogSummary;
+export default RecipesSummary;
