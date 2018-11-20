@@ -27,7 +27,7 @@ module.exports = {
           folder: "",
           accessToken: "account-0aaa1438863e50a40c082513a1dc16",
           collections: ["Gallery", "Blog", "Posts"],
-          regions: []
+          regions: ["about", "Services"]
         }
       }
     },
@@ -43,10 +43,7 @@ module.exports = {
           },
           {
             resolve: "gatsby-remark-responsive-iframe"
-          },
-          "gatsby-remark-prismjs",
-          "gatsby-remark-copy-linked-files",
-          "gatsby-remark-autolink-headers"
+          }
         ]
       }
     },

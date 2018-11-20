@@ -31,10 +31,10 @@ exports.sourceNodes = async (
 
   const cockpitHelpers = new CockpitHelpers(cockpit, config, reporter);
 
-  const regionsItems = [];
-  const [{ assets }, collectionsItems] = await Promise.all([
+  const [{ assets }, collectionsItems, regionsItems] = await Promise.all([
     cockpit.assets(),
-    cockpitHelpers.getCockpitCollections()
+    cockpitHelpers.getCockpitCollections(),
+    cockpitHelpers.getCockpitRegions()
   ]);
 
   reporter.info(`Assets retrieved: Found ${assets.length} assets`);
