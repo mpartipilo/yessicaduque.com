@@ -17,6 +17,7 @@ export const pageQuery = graphql`
   query {
     allBlog(
       limit: 100
+      filter: { entry: { published: { eq: true } } }
       sort: { fields: [properties____modified], order: DESC }
     ) {
       edges {
@@ -39,7 +40,6 @@ export const pageQuery = graphql`
               markdown {
                 childMarkdownRemark {
                   timeToRead
-                  html
                 }
               }
             }

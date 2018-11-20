@@ -13,12 +13,12 @@ import SEO from "../components/SEO/SEO";
 import config from "../../data/SiteConfig";
 import "../scss/post.scss";
 
-export default class PostTemplate extends React.Component {
+export default class RecipeTemplate extends React.Component {
   render() {
     const { data, pageContext } = this.props;
     const { slug } = pageContext;
-    const postNode = data.post;
-    const post = postNode.entry;
+    const { blog: postNode } = data;
+    const { entry: post } = postNode;
 
     post.date = postNode.properties._modified * 1000;
 
@@ -83,8 +83,8 @@ export default class PostTemplate extends React.Component {
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
-    post(fields: { slug: { eq: $slug } }) {
+  query RecipePostBySlug($slug: String!) {
+    blog(fields: { slug: { eq: $slug } }) {
       id
       properties {
         _modified

@@ -19,7 +19,10 @@ function capitalize(string) {
 
 export default class MainLayout extends React.Component {
   getInvertHeader() {
-    const { location } = this.props;
+    const { location, invert } = this.props;
+    if (invert) {
+      return invert;
+    }
     const pathPrefix = config.pathPrefix ? config.pathPrefix : "/";
     const currentPath = location.pathname
       .replace(pathPrefix, "")

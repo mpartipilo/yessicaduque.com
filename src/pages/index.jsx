@@ -21,7 +21,7 @@ class Index extends React.Component {
     const { data } = this.props;
     const { allBlog, allPost, gallery } = data;
     const { edges: recipePostEdges } = allBlog;
-    const { edges: blogPostsEdges } = allPost;
+    const { edges: blogPostsEdges } = allPost || { edges: [] };
 
     const featuredGallery = gallery.entry.images.map(
       i => i.localFile.childImageSharp
@@ -30,15 +30,17 @@ class Index extends React.Component {
       i => i.localFile.childImageSharp
     );
     return (
-      <Layout {...this.props}>
+      <Layout {...this.props} invert>
         <div className="index-container">
           <SEO />
           <Masthead bgImages={featuredGallery} />
-          <section id="_blog">
-            <ScrollableAnchor id="blog">
-              <BlogSummary postEdges={blogPostsEdges} />
-            </ScrollableAnchor>
-          </section>
+          {(blogPostsEdges || []).length > 0 && (
+            <section id="_blog">
+              <ScrollableAnchor id="blog">
+                <BlogSummary postEdges={blogPostsEdges} />
+              </ScrollableAnchor>
+            </section>
+          )}
           <section id="_recipes">
             <ScrollableAnchor id="recipes">
               <RecipesSummary postEdges={recipePostEdges} />
@@ -109,7 +111,11 @@ export const pageQuery = graphql`
       }
     }
 
-    allBlog(limit: 3, sort: { fields: [properties____modified], order: DESC }) {
+    allBlog(
+      limit: 3
+      filter: { entry: { published: { eq: true } } }
+      sort: { fields: [properties____modified], order: DESC }
+    ) {
       edges {
         node {
           ...RecipePostSummary
@@ -117,7 +123,11 @@ export const pageQuery = graphql`
       }
     }
 
-    allPost(limit: 3, sort: { fields: [properties____modified], order: DESC }) {
+    allPost(
+      limit: 3
+      filter: { entry: { published: { eq: true } } }
+      sort: { fields: [properties____modified], order: DESC }
+    ) {
       edges {
         node {
           ...BlogPostSummary

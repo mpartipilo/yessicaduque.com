@@ -30,12 +30,26 @@ exports.createPages = ({ graphql, actions }) => {
 
   return new Promise((resolve, reject) => {
     const postPage = path.resolve("src/templates/post.jsx");
+    const recipePage = path.resolve("src/templates/recipe.jsx");
     const tagPage = path.resolve("src/templates/tag.jsx");
     // const categoryPage = path.resolve("src/templates/category.jsx");
     resolve(
       graphql(`
         {
           allBlog {
+            edges {
+              node {
+                entry {
+                  title_slug
+                  tags
+                }
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+          allPost {
             edges {
               node {
                 entry {
@@ -72,7 +86,7 @@ exports.createPages = ({ graphql, actions }) => {
 
           createPage({
             path: slug,
-            component: postPage,
+            component: recipePage,
             context: {
               slug
             }
@@ -100,6 +114,40 @@ exports.createPages = ({ graphql, actions }) => {
         //         }
         //     });
         // });
+
+        const tagSetBlog = new Set();
+        result.data.allPost.edges.forEach(edge => {
+          const { slug } = edge.node.fields;
+
+          if (edge.node.entry.tags) {
+            edge.node.entry.tags.forEach(tag => {
+              tagSetBlog.add(tag);
+            });
+          }
+
+          // if (edge.node.entry.category) {
+          //   categorySet.add(edge.node.entry.category);
+          // }
+
+          createPage({
+            path: slug,
+            component: postPage,
+            context: {
+              slug
+            }
+          });
+        });
+
+        const tagListBlog = Array.from(tagSetBlog);
+        tagListBlog.forEach(tag => {
+          createPage({
+            path: `/blog/tags/${_.kebabCase(tag)}/`,
+            component: tagPage,
+            context: {
+              tag
+            }
+          });
+        });
       })
     );
   });

@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 const BlogPage = ({ data, location }) => (
   <Layout {...{ location }}>
     <div className="index-container" id="_blog">
-      <Blog posts={getPostList(data.allBlog.edges)} />
+      <Blog posts={getPostList(data.allPost.edges)} />
     </div>
   </Layout>
 );
@@ -15,8 +15,9 @@ export default BlogPage;
 
 export const pageQuery = graphql`
   query BlogQuery {
-    allBlog(
-      limit: 100
+    allPost(
+      limit: 20
+      filter: { entry: { published: { eq: true } } }
       sort: { fields: [properties____modified], order: DESC }
     ) {
       edges {
@@ -39,7 +40,6 @@ export const pageQuery = graphql`
               markdown {
                 childMarkdownRemark {
                   timeToRead
-                  html
                 }
               }
             }
