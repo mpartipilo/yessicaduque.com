@@ -22,7 +22,8 @@ exports.createPages = ({ graphql, actions }) => {
   return new Promise((resolve, reject) => {
     const postPage = path.resolve("src/templates/post.jsx");
     const recipePage = path.resolve("src/templates/recipe.jsx");
-    const tagPage = path.resolve("src/templates/tag.jsx");
+    const tagRecipe = path.resolve("src/templates/tagRecipe.jsx");
+    const tagBlog = path.resolve("src/templates/tagBlog.jsx");
     // const categoryPage = path.resolve("src/templates/category.jsx");
     resolve(
       graphql(`
@@ -88,7 +89,7 @@ exports.createPages = ({ graphql, actions }) => {
         tagList.forEach(tag => {
           createPage({
             path: `/recipe/tags/${_.kebabCase(tag)}/`,
-            component: tagPage,
+            component: tagRecipe,
             context: {
               tag
             }
@@ -133,7 +134,7 @@ exports.createPages = ({ graphql, actions }) => {
         tagListBlog.forEach(tag => {
           createPage({
             path: `/blog/tags/${_.kebabCase(tag)}/`,
-            component: tagPage,
+            component: tagBlog,
             context: {
               tag
             }

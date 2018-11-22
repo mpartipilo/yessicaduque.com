@@ -88,7 +88,7 @@
     "developOpen": "gatsby develop -H 0.0.0.0",
     "dev": "npm run develop",
     "serve": "gatsby serve",
-    "build": "pushd plugins/gatsby-plugin-cockpit && npm install && popd && gatsby build",
+    "build": "cd plugins/gatsby-plugin-cockpit && npm install && cd ../../ && gatsby build",
     "build:pp": "gatsby build --prefix-paths",
     "build:gh": "npm run clean && npm run build:pp && gh-pages -d public",
     "clean": "rm -rf public",

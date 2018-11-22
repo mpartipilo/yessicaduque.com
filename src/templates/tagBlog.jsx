@@ -11,7 +11,7 @@ export default class TagTemplate extends React.Component {
   render() {
     const { data, pageContext } = this.props;
     const { tag } = pageContext;
-    const postEdges = getPostList(data.allCockpitBlog.edges);
+    const postEdges = getPostList(data.allPost.edges);
     return (
       <div className="tag-container">
         <Helmet title={`Posts tagged as "${tag}" | ${config.siteTitle}`} />
@@ -38,8 +38,8 @@ export default class TagTemplate extends React.Component {
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
-    allBlog(
+  query TagBlogPage($tag: String) {
+    allPost(
       limit: 100
       sort: { fields: [properties____modified], order: DESC }
       filter: { entry: { tags: { in: [$tag] } } }
