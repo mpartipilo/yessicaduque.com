@@ -3,10 +3,10 @@ import { graphql } from "gatsby";
 import Blog, { getPostList } from "../components/Blog";
 import Layout from "../components/Layout";
 
-const BlogPage = ({ data, location }) => (
+const BlogPage = ({ data: { allPost }, location }) => (
   <Layout {...{ location }}>
     <div className="index-container" id="_blog">
-      <Blog posts={getPostList(data.allPost.edges)} />
+      <Blog posts={getPostList((allPost || { edges: [] }).edges)} />
     </div>
   </Layout>
 );

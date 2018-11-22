@@ -7,7 +7,7 @@ import Img from "gatsby-image";
 import Layout from "../components/Layout";
 import UserInfo from "../components/UserInfo/UserInfo";
 /* import Disqus from "../components/Disqus/Disqus"; */
-import PostTags from "../components/PostTags/PostTags";
+import RecipeTags from "../components/RecipeTags/RecipeTags";
 import SocialLinks from "../components/SocialLinks/SocialLinks";
 import SEO from "../components/SEO/SEO";
 import config from "../../data/SiteConfig";
@@ -57,7 +57,7 @@ export default class RecipeTemplate extends React.Component {
                       Posted <Moment format="YYYY-MM-DD">{post.date}</Moment>
                     </span>
                     <div className="pull-right">
-                      <PostTags tags={post.tags} />
+                      <RecipeTags tags={post.tags} />
                     </div>
                   </div>
                 </Col>

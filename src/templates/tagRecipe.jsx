@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import Helmet from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
+import Layout from "../components/Layout";
 import Blog, { getPostList } from "../components/Blog";
 import config from "../../data/SiteConfig";
 
@@ -13,25 +14,27 @@ export default class TagTemplate extends React.Component {
     const { tag } = pageContext;
     const postEdges = getPostList(data.allBlog.edges);
     return (
-      <div className="tag-container">
-        <Helmet title={`Recipes tagged as "${tag}" | ${config.siteTitle}`} />
-        <section id="_blog">
-          <Container>
-            <Row>
-              <Col>
-                <p>
-                  Recipes tagged as <strong>{tag}</strong>
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Blog posts={postEdges} />
-              </Col>
-            </Row>
-          </Container>
-        </section>
-      </div>
+      <Layout {...this.props}>
+        <div className="tag-container">
+          <Helmet title={`Recipes tagged as "${tag}" | ${config.siteTitle}`} />
+          <section id="_blog">
+            <Container>
+              <Row>
+                <Col>
+                  <p>
+                    Recipes tagged as <strong>{tag}</strong>
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Blog posts={postEdges} />
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        </div>
+      </Layout>
     );
   }
 }
@@ -47,35 +50,7 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
-          properties {
-            _modified
-          }
-          entry {
-            title_slug
-            title
-            image {
-              path
-            }
-            tags
-            excerpt {
-              markdown {
-                childMarkdownRemark {
-                  html
-                }
-              }
-            }
-            content {
-              markdown {
-                childMarkdownRemark {
-                  timeToRead
-                  html
-                }
-              }
-            }
-          }
-          fields {
-            slug
-          }
+          ...RecipePostSummary
         }
       }
     }
