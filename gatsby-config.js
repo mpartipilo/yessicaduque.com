@@ -60,6 +60,7 @@ module.exports = {
       }
     },
     "gatsby-plugin-sharp",
+    "gatsby-plugin-netlify-cache",
     "gatsby-transformer-sharp",
     "gatsby-plugin-catch-links",
     "gatsby-plugin-twitter",
