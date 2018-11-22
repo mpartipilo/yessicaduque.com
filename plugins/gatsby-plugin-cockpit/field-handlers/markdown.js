@@ -26,9 +26,14 @@ function createTextNode(node, key, text) {
   return textNode;
 }
 
-function composeEntryFields(fields, allFields, entry, { createNode }) {
+function composeEntryFields(fields, allFields, entry, { createNode, assetsMap }) {
   return fields.reduce((acc, fieldname) => {
+
     const node = createTextNode(entry, fieldname, entry[fieldname]);
+
+    // Replace image links by assets links that can be picked up by gatsby-remark-images
+    
+
     createNode(node);
 
     const transformed = {
