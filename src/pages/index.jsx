@@ -56,7 +56,7 @@ class Index extends React.Component {
             <Contact />
           </ScrollableAnchor>
         </section>
-        <InstagramFeed />
+        -<InstagramFeed />-
       </div>
     );
   }
@@ -106,13 +106,14 @@ export const pageQuery = graphql`
 
     allCockpitBlog(
       limit: 5
-      sort: { fields: [properties____modified], order: DESC }
+      sort: { fields: [properties____created], order: DESC }
     ) {
       edges {
         node {
           host
           properties {
             title_slug
+            _created
             _modified
           }
           childCockpitBlogExcerptTextNode {

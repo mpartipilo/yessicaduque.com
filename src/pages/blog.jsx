@@ -17,13 +17,14 @@ export const pageQuery = graphql`
   query BlogQuery {
     allCockpitBlog(
       limit: 100
-      sort: { fields: [properties____modified], order: DESC }
+      sort: { fields: [properties____created], order: DESC }
     ) {
       edges {
         node {
           host
           properties {
             title_slug
+            _created
             _modified
           }
           childCockpitBlogExcerptTextNode {
