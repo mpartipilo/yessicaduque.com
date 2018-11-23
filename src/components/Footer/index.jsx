@@ -6,10 +6,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className="text-center">
-        <span role="img" aria-label="copyright">
-          ©
-        </span>{" "}
-        Yessica Duque - 2017<br />Design &amp; Development by{" "}
+        Yessica Duque - KvK 72845996<br />Design &amp; Development by{" "}
         <a
           href="https://www.linkedin.com/in/mpartipilo/"
           target="_blank"
@@ -17,7 +14,10 @@ class Footer extends Component {
         >
           Michelangelo Partipilo
         </a>
-        <br />All rights reserved
+        <br />
+        <span role="img" aria-label="copyright">
+          © 2017 - All rights reserved
+        </span>
       </footer>
     );
   }

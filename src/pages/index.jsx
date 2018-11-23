@@ -114,7 +114,7 @@ export const pageQuery = graphql`
     allBlog(
       limit: 3
       filter: { entry: { published: { eq: true } } }
-      sort: { fields: [properties____modified], order: DESC }
+      sort: { fields: [properties____created], order: DESC }
     ) {
       edges {
         node {

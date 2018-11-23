@@ -18,11 +18,12 @@ export const pageQuery = graphql`
     allPost(
       limit: 20
       filter: { entry: { published: { eq: true } } }
-      sort: { fields: [properties____modified], order: DESC }
+      sort: { fields: [properties____created], order: DESC }
     ) {
       edges {
         node {
           properties {
+            _created
             _modified
           }
           entry {

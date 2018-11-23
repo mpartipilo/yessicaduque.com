@@ -45,6 +45,13 @@ export default class PostTemplate extends React.Component {
                   <div
                     dangerouslySetInnerHTML={{
                       __html:
+                        postNode.entry.excerpt.markdown.childMarkdownRemark.html
+                    }}
+                  />
+                  <hr />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html:
                         postNode.entry.content.markdown.childMarkdownRemark.html
                     }}
                   />

@@ -13,7 +13,7 @@ class About extends Component {
           <Row>
             <Col lg={{ size: 6 }} md={{ size: 4 }}>
               <img
-                src="/img/profile.jpg"
+                src="http://content.yessicaduque.com/storage/uploads/2018/11/23/5bf867cb4d496Yessica-KEMA-14.jpg"
                 alt="Yessica Duque"
                 width="100%"
                 height="100%"
@@ -69,10 +69,15 @@ class About extends Component {
                   </a>
                   .
                 </p>
-
-                <div>
-                  <p>Some additional ceritifications:</p>
+                <p>
+                  Awards and Certifications:
                   <ul>
+                    <li>
+                      <a href="http://foodelia.cc/best-photography-gallery/37">
+                        Foodelia - International Food Photography Awards -
+                        Winner of the 37 collection - 3 Awards (November 2018)
+                      </a>
+                    </li>
                     <li>
                       <a href="https://en.wikipedia.org/wiki/Hazard_analysis_and_critical_control_points">
                         HACCP
@@ -92,9 +97,14 @@ class About extends Component {
                         Capriol&eacute; Caf&eacute;
                       </a>
                     </li>
+                    <li>
+                      Fotografía Gastronómica y estilismo culinario:{" "}
+                      <a href="http://kemafoodculture.com/">
+                        KEMA Food Culture - Barcelona España
+                      </a>
+                    </li>
                   </ul>
-                </div>
-
+                </p>
                 <p>
                   Check out social media feeds to learn more about my career and
                   current work.
