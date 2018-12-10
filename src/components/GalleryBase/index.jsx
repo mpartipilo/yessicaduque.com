@@ -3,8 +3,6 @@ import PhotoGallery from "react-photo-gallery";
 import Measure from "react-measure";
 import Lightbox from "react-images";
 
-import "./index.scss";
-
 class GalleryBase extends React.Component {
   constructor(props) {
     super(props);

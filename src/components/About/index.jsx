@@ -3,8 +3,6 @@ import { Container, Row, Col } from "reactstrap";
 
 import Services from "../Services";
 
-import "./index.scss";
-
 class About extends Component {
   render() {
     return (
@@ -69,42 +67,40 @@ class About extends Component {
                   </a>
                   .
                 </p>
-                <p>
-                  Awards and Certifications:
-                  <ul>
-                    <li>
-                      <a href="http://foodelia.cc/best-photography-gallery/37">
-                        Foodelia - International Food Photography Awards -
-                        Winner of the 37 collection - 3 Awards (November 2018)
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://en.wikipedia.org/wiki/Hazard_analysis_and_critical_control_points">
-                        HACCP
-                      </a>{" "}
-                      <a href="https://www.horecaacademie.nl/">
-                        Horeca Academie Den Haag
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://online.stanford.edu/courses/som-y0002-child-nutrition-and-cooking">
-                        Child nutrition and Cooking - Stanford University
-                      </a>
-                    </li>
-                    <li>
-                      Barista Training by Giancarlo Matarazzi:{" "}
-                      <a href="https://capriolecafe.nl/koffie-barista-workshops-den-haag/">
-                        Capriol&eacute; Caf&eacute;
-                      </a>
-                    </li>
-                    <li>
-                      Fotografía Gastronómica y estilismo culinario:{" "}
-                      <a href="http://kemafoodculture.com/">
-                        KEMA Food Culture - Barcelona España
-                      </a>
-                    </li>
-                  </ul>
-                </p>
+                <p>Awards and Certifications:</p>
+                <ul>
+                  <li>
+                    <a href="http://foodelia.cc/best-photography-gallery/37">
+                      Foodelia - International Food Photography Awards - Winner
+                      of the 37 collection - 3 Awards (November 2018)
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://en.wikipedia.org/wiki/Hazard_analysis_and_critical_control_points">
+                      HACCP
+                    </a>{" "}
+                    <a href="https://www.horecaacademie.nl/">
+                      Horeca Academie Den Haag
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://online.stanford.edu/courses/som-y0002-child-nutrition-and-cooking">
+                      Child nutrition and Cooking - Stanford University
+                    </a>
+                  </li>
+                  <li>
+                    Barista Training by Giancarlo Matarazzi:{" "}
+                    <a href="https://capriolecafe.nl/koffie-barista-workshops-den-haag/">
+                      Capriol&eacute; Caf&eacute;
+                    </a>
+                  </li>
+                  <li>
+                    Fotografía Gastronómica y estilismo culinario:{" "}
+                    <a href="http://kemafoodculture.com/">
+                      KEMA Food Culture - Barcelona España
+                    </a>
+                  </li>
+                </ul>
                 <p>
                   Check out social media feeds to learn more about my career and
                   current work.

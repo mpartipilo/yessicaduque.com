@@ -1,105 +1,89 @@
-import React, { Component } from "react";
+import React from "react";
 import Helmet from "react-helmet";
-import config from "../../../data/SiteConfig";
+import PropTypes from "prop-types";
+import { StaticQuery, graphql } from "gatsby";
 
-class SEO extends Component {
-  render() {
-    const { postNode, postPath, postSEO, ogImage } = this.props;
-    let description;
-    let image = ogImage;
-    let postURL;
-    let title;
-    if (postSEO) {
-      const postMeta = postNode.entry;
-      ({ title } = postMeta);
-      description = postMeta.description
-        ? postMeta.description
-        : postNode.entry.excerpt.markdown.childMarkdownRemark.excerpt;
-      image = ogImage || postMeta.image.path;
-      postURL = config.siteUrl + config.pathPrefix + postPath;
-    } else {
-      title = config.siteTitle;
-      description = config.siteDescription;
-      image = config.siteLogo;
-    }
-    const realPrefix = config.pathPrefix === "/" ? "" : config.pathPrefix;
-    image = ogImage || config.siteUrl + realPrefix + image;
-    const blogURL = config.siteUrl + config.pathPrefix;
-    const schemaOrgJSONLD = [
-      {
-        "@context": "http://schema.org",
-        "@type": "WebSite",
-        url: blogURL,
-        name: title,
-        alternateName: config.siteTitleAlt ? config.siteTitleAlt : ""
+const query = graphql`
+  query SEO {
+    site {
+      siteMetadata {
+        defaultTitle: title
+        titleTemplate
+        defaultDescription: description
+        siteUrl: url
+        defaultImage: image
+        twitterUsername
       }
-    ];
-    if (postSEO) {
-      schemaOrgJSONLD.push([
-        {
-          "@context": "http://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              item: {
-                "@id": postURL,
-                name: title,
-                image
-              }
-            }
-          ]
-        },
-        {
-          "@context": "http://schema.org",
-          "@type": "BlogPosting",
-          url: blogURL,
-          name: title,
-          alternateName: config.siteTitleAlt ? config.siteTitleAlt : "",
-          headline: title,
-          image: {
-            "@type": "ImageObject",
-            url: image
-          },
-          description
-        }
-      ]);
     }
-    return (
-      <Helmet>
-        {/* General tags */}
-        <meta name="description" content={description} />
-        <meta name="image" content={image} />
-
-        {/* Schema.org tags */}
-        <script type="application/ld+json">
-          {JSON.stringify(schemaOrgJSONLD)}
-        </script>
-
-        {/* OpenGraph tags */}
-        <meta property="og:url" content={postSEO ? postURL : blogURL} />
-        {postSEO ? <meta property="og:type" content="article" /> : null}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
-        <meta
-          property="fb:app_id"
-          content={config.siteFBAppID ? config.siteFBAppID : ""}
-        />
-
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:creator"
-          content={config.userTwitter ? config.userTwitter : ""}
-        />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={image} />
-      </Helmet>
-    );
   }
-}
+`;
+
+const SEO = ({ title, description, image, pathname, article }) => (
+  <StaticQuery
+    query={query}
+    render={({
+      site: {
+        siteMetadata: {
+          defaultTitle,
+          titleTemplate,
+          defaultDescription,
+          siteUrl,
+          defaultImage,
+          twitterUsername
+        }
+      }
+    }) => {
+      const seo = {
+        title: title || defaultTitle,
+        description: description || defaultDescription,
+        image: `${siteUrl}${image || defaultImage}`,
+        url: `${siteUrl}${pathname || "/"}`
+      };
+
+      return (
+        <>
+          <Helmet title={seo.title} titleTemplate={titleTemplate}>
+            <meta name="description" content={seo.description} />
+            <meta name="image" content={seo.image} />
+            {seo.url && <meta property="og:url" content={seo.url} />}
+            {(article ? true : null) && (
+              <meta property="og:type" content="article" />
+            )}
+            {seo.title && <meta property="og:title" content={seo.title} />}
+            {seo.description && (
+              <meta property="og:description" content={seo.description} />
+            )}
+            {seo.image && <meta property="og:image" content={seo.image} />}
+            <meta name="twitter:card" content="summary_large_image" />
+            {twitterUsername && (
+              <meta name="twitter:creator" content={twitterUsername} />
+            )}
+            {seo.title && <meta name="twitter:title" content={seo.title} />}
+            {seo.description && (
+              <meta name="twitter:description" content={seo.description} />
+            )}
+            {seo.image && <meta name="twitter:image" content={seo.image} />}
+          </Helmet>
+        </>
+      );
+    }}
+  />
+);
 
 export default SEO;
+
+SEO.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+  pathname: PropTypes.string,
+  article: PropTypes.bool
+};
+
+SEO.defaultProps = {
+  title: null,
+  description: null,
+  image: null,
+  pathname: null,
+  article: false
+};

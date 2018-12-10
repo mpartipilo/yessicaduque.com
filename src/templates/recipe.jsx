@@ -11,7 +11,6 @@ import RecipeTags from "../components/RecipeTags/RecipeTags";
 import SocialLinks from "../components/SocialLinks/SocialLinks";
 import SEO from "../components/SEO/SEO";
 import config from "../../data/SiteConfig";
-import "../scss/post.scss";
 
 export default class RecipeTemplate extends React.Component {
   render() {

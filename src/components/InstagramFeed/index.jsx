@@ -12,7 +12,7 @@ const InstagramFeed = () => (
       title="lightwidget"
       src="//lightwidget.com/widgets/7199b3ac61ba5d9788bde04b7a11d31a.html"
       scrolling="no"
-      allowTransparency="true"
+      allowtransparency="false"
       className="lightwidget-widget"
       style={{ width: "100%", border: 0, overflow: "hidden" }}
     />

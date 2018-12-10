@@ -1,6 +1,3 @@
-@import "../../scss/variables.scss";
-@import "../../scss/mixins.scss";
-
 // Styling for the portfolio section
 .portfolio-box {
     position: relative;
@@ -19,7 +16,7 @@
         opacity: 0;
         color: white;
         background: fade-out($theme-primary, .1);
-        @include transition-all;
+        transition: all .5s;
         .portfolio-box-caption-content {
             position: absolute;
             top: 50%;

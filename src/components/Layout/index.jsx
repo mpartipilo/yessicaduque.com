@@ -10,7 +10,6 @@ import config from "../../../data/SiteConfig";
 import Header from "../Header";
 import Footer from "../Footer";
 
-import "./index.css";
 import "../../scss/index.scss";
 
 function capitalize(string) {
@@ -70,14 +69,15 @@ export default class MainLayout extends React.Component {
     const { children } = this.props;
     const invertFixedHeader = this.getInvertHeader();
     return (
-      <div>
+      <React.Fragment>
         <Helmet>
           <title>{`${config.siteTitle} | ${this.getLocalTitle()}`}</title>
           <meta name="description" content={config.siteDescription} />
         </Helmet>
-        <Header alwaysShow={invertFixedHeader}>{children}</Header>
+        <Header alwaysShow={invertFixedHeader} />
+        {children}
         <Footer />
-      </div>
+      </React.Fragment>
     );
   }
 }

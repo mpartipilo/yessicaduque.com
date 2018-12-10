@@ -6,8 +6,6 @@ import Layout from "../components/Layout";
 import Blog, { getPostList } from "../components/Blog";
 import config from "../../data/SiteConfig";
 
-import "../scss/post.scss";
-
 export default class TagTemplate extends React.Component {
   render() {
     const { data, pageContext } = this.props;

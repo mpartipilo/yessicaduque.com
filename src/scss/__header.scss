@@ -1,6 +1,3 @@
-@import "../../scss/variables.scss";
-@import "../../scss/mixins.scss";
-
 .navbar-toggler {
     z-index: 1;
 }
@@ -29,7 +26,7 @@ $navbar-bg: #f8f8f8;
     background-color: $navbar-bg;
     
     @include sans-serif-font;
-    @include transition-all;
+    transition: all .2s;
 
     .navbar-brand {
         font-weight: 700;

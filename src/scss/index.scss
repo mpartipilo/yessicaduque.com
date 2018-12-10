@@ -1,16 +1,28 @@
+// Font
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);
 
-@import "./variables.scss";
-@import "./mixins.scss";
+@mixin serif-font() {
+    font-family: $font-serif
+}
+
+@mixin sans-serif-font() {
+    font-family: $font-sans;
+}
+
+// Font Variables
+$font-serif: 'Quicksand', 'Helvetica Neue', Arial, sans-serif;
+$font-sans: 'Quicksand', 'Open Sans', sans-serif;
+
+$theme-primary:    #b3446c;
+
+$gray-base:        #000 !default;
+$gray-darker:	   lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:		   lighten($gray-base, 20%) !default;   // #333
+$gray:			   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:	   lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:	   lighten($gray-base, 93.5%) !default; // #eee
+
 @import "./global.scss";
 @import "./bootstrap-overrides.scss";
-
-section {
-    .odd {
-        background-color: $gray-lighter;
-    }
-}
-
-#_portfolio #Gallery > div {
-    max-height: 400px;
-    overflow: hidden;
-}
+@import "./content.scss";

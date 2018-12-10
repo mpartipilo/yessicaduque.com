@@ -1,21 +1,8 @@
 const config = require("./data/SiteConfig");
 
-const pathPrefix = config.pathPrefix === "/" ? "" : config.pathPrefix;
-
 module.exports = {
   pathPrefix: config.pathPrefix,
-  siteMetadata: {
-    siteUrl: config.siteUrl + pathPrefix,
-    rssMetadata: {
-      site_url: config.siteUrl + pathPrefix,
-      feed_url: config.siteUrl + pathPrefix + config.siteRss,
-      title: config.siteTitle,
-      description: config.siteDescription,
-      image_url: `${config.siteUrl + pathPrefix}/logos/logo-512.png`,
-      author: config.userName,
-      copyright: config.copyright
-    }
-  },
+  siteMetadata: config.siteMetadata,
   plugins: [
     "gatsby-plugin-sass",
     "gatsby-plugin-react-helmet",
@@ -23,7 +10,8 @@ module.exports = {
       resolve: "gatsby-plugin-cockpit",
       options: {
         cockpitConfig: {
-          baseURL: "http://content.yessicaduque.com",
+          baseURL: "http://localhost:3001",
+          // baseURL: "http://content.yessicaduque.com",
           folder: "",
           accessToken: "account-0aaa1438863e50a40c082513a1dc16",
           collections: ["Gallery", "Blog", "Posts"],
@@ -75,18 +63,7 @@ module.exports = {
         background_color: config.backgroundColor,
         theme_color: config.themeColor,
         display: "minimal-ui",
-        icons: [
-          {
-            src: "/logos/logo-192x192.png",
-            sizes: "192x192",
-            type: "image/png"
-          },
-          {
-            src: "/logos/logo-512x512.png",
-            sizes: "512x512",
-            type: "image/png"
-          }
-        ]
+        icon: "src/favicon.png"
       }
     }
   ]

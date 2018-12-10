@@ -1,29 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 import FA from "react-fontawesome";
-import "./UserLinks.css";
 
-class UserLinks extends Component {
-  getLinkElements() {
-    const { userLinks } = this.props.config;
-    return userLinks.map(link => (
-      <a
-        key={link.label}
-        href={link.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        title={link.label}
-      >
-        <FA name={link.iconClassName} size="2x" className="p-3" />
-      </a>
-    ));
-  }
-  render() {
-    const { userLinks } = this.props.config;
-    if (!userLinks) {
-      return null;
-    }
-    return <div className="user-links">{this.getLinkElements()}</div>;
-  }
-}
+const style = {
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  alignItems: "center",
+  maxWidth: "100%"
+};
+
+const UserLink = ({ label, url, iconClassName }) => (
+  <a
+    key={label}
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    title={label}
+  >
+    <FA name={iconClassName} size="2x" className="p-3" />
+  </a>
+);
+
+const UserLinks = ({ config: userLinks }) =>
+  userLinks && <div style={style}>{userLinks.map(UserLink)}</div>;
 
 export default UserLinks;

@@ -3,8 +3,6 @@ import { Button, Container, Row, Col } from "reactstrap";
 import { Link } from "gatsby";
 import Gallery from "../Gallery";
 
-import "./index.scss";
-
 class GallerySummary extends React.Component {
   render() {
     const { images } = this.props;

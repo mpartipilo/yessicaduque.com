@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 
-import "./index.scss";
-
 const ImageRecipes = props => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" {...props}>
     <g>

@@ -11,8 +11,6 @@ import {
 } from "reactstrap";
 import { graphql, Link } from "gatsby";
 
-import "./index.scss";
-
 export const getPostList = postEdges =>
   postEdges.map(({ node }) => ({
     path: node.fields.slug,

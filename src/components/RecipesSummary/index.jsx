@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 import { Link } from "gatsby";
 import Recipes, { getPostList } from "../Recipes";
-import "./index.scss";
 
 class RecipesSummary extends Component {
   render() {

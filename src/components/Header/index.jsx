@@ -12,8 +12,6 @@ import {
   NavLink
 } from "reactstrap";
 
-import "./index.scss";
-
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -38,12 +36,6 @@ class Header extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
 
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
   handleScroll() {
     const scrollTop =
       window.pageYOffset ||
@@ -54,17 +46,28 @@ class Header extends Component {
     this.setState({ scrollThresholdCrossed });
   }
 
+  toggle() {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
+  }
+
   render() {
-    const { width, height } = this.state.dimensions;
-    const alwaysShow = this.props.alwaysShow || false;
-    const inverted =
-      this.state.isOpen || this.state.scrollThresholdCrossed || alwaysShow;
+    const {
+      state: {
+        dimensions: { width, height },
+        isOpen,
+        scrollThresholdCrossed
+      },
+      props: { alwaysShow = false }
+    } = this;
+    const inverted = isOpen || scrollThresholdCrossed || alwaysShow;
     const classes = classNames({
       "navbar-shrink": inverted
     });
 
     return (
-      <div>
+      <React.Fragment>
         <Measure
           bounds
           onResize={contentRect => {
@@ -74,12 +77,7 @@ class Header extends Component {
           }}
         >
           {({ measureRef }) => (
-            <header
-              id="page-top"
-              style={{
-                height: width <= 946 || alwaysShow ? height + 16 : 0
-              }}
-            >
+            <header id="page-top" style={{ height }}>
               <Navbar
                 expand="md"
                 fixed="top"
@@ -97,7 +95,7 @@ class Header extends Component {
                     />
                   </NavbarBrand>
                   <NavbarToggler onClick={this.toggle} />
-                  <Collapse isOpen={this.state.isOpen} navbar>
+                  <Collapse isOpen={isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                       <NavItem>
                         <NavLink href="/#blog">Blog</NavLink>
@@ -121,8 +119,7 @@ class Header extends Component {
             </header>
           )}
         </Measure>
-        {this.props.children}
-      </div>
+      </React.Fragment>
     );
   }
 }

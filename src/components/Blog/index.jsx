@@ -4,8 +4,6 @@ import { Container, Row, Col, CardBody, CardTitle } from "reactstrap";
 import { graphql, Link } from "gatsby";
 import Img from "gatsby-image";
 
-import "./index.scss";
-
 export const getPostList = postEdges =>
   postEdges.map(({ node }) => ({
     host: node.host,

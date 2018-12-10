@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import FA from "react-fontawesome";
 
-import "./index.scss";
-
 class Contact extends Component {
   render() {
     return (
@@ -26,13 +24,13 @@ class Contact extends Component {
         </Row>
         <Row>
           <div className="col-lg-4 offset-lg-2 text-center">
-            <FA name="phone" size="3x" className="p-3 text-primary" />
+            <FA name="phone" size="3x" className="p-3" />
             <p>
               <a href="tel:+31625247696">+31 (0)6 2524 7696</a>
             </p>
           </div>
           <div className="col-lg-4 text-center">
-            <FA name="envelope-o" size="3x" className="p-3 text-primary" />
+            <FA name="envelope-o" size="3x" className="p-3" />
             <p>
               <a href="mailto:info@yessicaduque.com">info@yessicaduque.com</a>
             </p>

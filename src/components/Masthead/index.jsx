@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Jumbotron } from "reactstrap";
 import { ReactInterval } from "react-interval";
 import Img from "gatsby-image";
-import "./index.scss";
 
 class Masthead extends Component {
   constructor(props) {
