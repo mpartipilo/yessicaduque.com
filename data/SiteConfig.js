@@ -3,7 +3,7 @@ const siteMetadata = {
   titleTemplate: "%s · Food Styling & Photography",
   description:
     "Professional website from Yessica Duque about food styling, cooking and professional photography.",
-  url: "http://yessicaduque.com", // No trailing slash allowed!
+  siteUrl: "http://yessicaduque.com", // No trailing slash allowed!
   image: "/img/profile.jpg", // Path to your image you placed in the 'static' folder
   twitterUsername: "@YekaMagenta"
 };
@@ -14,7 +14,7 @@ module.exports = {
   siteTitle: siteMetadata.title, // Site title.
   siteTitleAlt: "Yessica Duque Photography & Food Stylist ", // Alternative site title for SEO.
   siteLogo: "/logos/logo-1024.png", // Logo used for SEO and manifest.
-  siteUrl: siteMetadata.url, // Domain of your website without pathPrefix.
+  siteUrl: siteMetadata.siteUrl, // Domain of your website without pathPrefix.
   pathPrefix: "/", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
   siteDescription: siteMetadata.description, // Website description used for RSS feeds/meta description tag.
   siteRss: "/rss.xml", // Path to the RSS file.
