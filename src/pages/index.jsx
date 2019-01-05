@@ -29,10 +29,11 @@ class Index extends React.Component {
     const highlights = data.highlights.entry.images.map(
       i => i.localFile.childImageSharp
     );
+    const seoImage = featuredGallery[0].fluid.src;
     return (
       <Layout {...this.props} invert>
         <div className="index-container">
-          <SEO />
+          <SEO image={seoImage} />
           <Masthead bgImages={featuredGallery} />
           {(blogPostsEdges || []).length > 0 && (
             <section id="_blog">

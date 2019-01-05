@@ -5,6 +5,27 @@
 }
 
 .blogPost {
+    h1 {
+        margin-top: 1em;
+    }
+
+    p {
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+        vertical-align: middle;
+        padding: 10px;
+        object-fit: cover;
+        object-position: center;
+        height: 300px;
+
+        @media (max-width: 768px) {
+            width: 50%;
+        }
+    }
+
     .jumbotron {
         position: relative;
         min-height: 300px;
