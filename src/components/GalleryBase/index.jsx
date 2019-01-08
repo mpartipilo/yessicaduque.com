@@ -2,6 +2,20 @@ import React from "react";
 import PhotoGallery from "react-photo-gallery";
 import Measure from "react-measure";
 import Lightbox from "react-images";
+import Img from "gatsby-image";
+
+const ImgWrapper = props => {
+  console.log(props);
+  const { onClick, photo, index, margin, ...rest } = props;
+  return (
+    <div
+      className="gallery-base-img-wrapper"
+      onClick={e => onClick(e, { index, photo })}
+    >
+      <Img fixed={photo} style={{ margin }} {...rest} />
+    </div>
+  );
+};
 
 class GalleryBase extends React.Component {
   constructor(props) {
@@ -72,6 +86,7 @@ class GalleryBase extends React.Component {
                 photos={thumbs}
                 columns={cols}
                 onClick={this.openLightbox}
+                ImageComponent={ImgWrapper}
               />
             </div>
           );
