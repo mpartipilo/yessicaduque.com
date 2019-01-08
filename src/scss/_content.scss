@@ -22,15 +22,13 @@
   }
 
   div {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-
     &.gatsby-image-wrapper {
-      height: 35vh;
-
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+  
       @media (min-width: 768px) {
         height: 100vh;
       }

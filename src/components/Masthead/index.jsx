@@ -26,12 +26,14 @@ class Masthead extends Component {
           }
         />
         {bgImages.map((i, idx) => (
-          <div key={bgImages[idx].id}>
-            <Img
-              fluid={bgImages[idx].fluid}
-              className={idx === currentImg ? "opaque" : ""}
-            />
-          </div>
+          <Img
+            style={{
+              position: "absolute"
+            }}
+            key={bgImages[idx].id}
+            fluid={bgImages[idx].fluid}
+            className={idx === currentImg ? "opaque" : ""}
+          />
         ))}
       </Jumbotron>
     );
