@@ -1,10 +1,17 @@
+const path = require("path");
 const config = require("./data/SiteConfig");
 
 module.exports = {
   pathPrefix: config.pathPrefix,
   siteMetadata: config.siteMetadata,
   plugins: [
-    "gatsby-plugin-sass",
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        precision: 8,
+        includePaths: [path.resolve(__dirname, "node_modules")]
+      }
+    },
     "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-plugin-cockpit",
