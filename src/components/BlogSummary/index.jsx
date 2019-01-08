@@ -12,7 +12,7 @@ class BlogSummary extends Component {
         <Container>
           <Row>
             <Col lg="12" className="text-center">
-              <h2 className="section-heading">My musings</h2>
+              <h2 className="section-heading">My blog</h2>
               <hr className="primary" />
               <p>
                 I write articles about food styling, photography, experiences,
