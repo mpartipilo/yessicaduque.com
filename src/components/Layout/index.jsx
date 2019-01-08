@@ -1,16 +1,15 @@
+import "font-awesome/scss/font-awesome.scss";
+import "bootstrap/scss/bootstrap.scss";
+import "../../scss/index.scss";
+
 import React from "react";
 import Helmet from "react-helmet";
 import _ from "lodash";
-
-import "font-awesome/scss/font-awesome.scss";
-import "bootstrap/scss/bootstrap.scss";
 
 import config from "../../../data/SiteConfig";
 
 import Header from "../Header";
 import Footer from "../Footer";
-
-import "../../scss/index.scss";
 
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
