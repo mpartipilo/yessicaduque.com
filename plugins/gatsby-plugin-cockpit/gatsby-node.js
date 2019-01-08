@@ -7,9 +7,10 @@ const {
 const extendNodeType = require("./extend-node-type");
 
 exports.sourceNodes = async (
-  { actions: { createNode, createNodeId, touchNode }, reporter, store, cache },
+  { actions, reporter, store, cache },
   pluginOptions
 ) => {
+  const { createNode, touchNode } = actions;
   const defaultConfig = {
     baseURL: "",
     folder: "",
