@@ -52,18 +52,23 @@ async function createRemoteAssetByPath(
       contentDigest: internal.contentDigest
     };
 
+    console.log(JSON.stringify(result))
+    process.exit(1);
+  
     if (id) {
       await cache.set(cacheKey, result);
     }
   } catch (e) {
+    console.log(e)
+    process.exit(1);
+
     // Ignore
   }
 
   return result;
 }
 
-async function createAssetsMap(assetPromises) {
-  const allResults = await Promise.all(assetPromises);
+function createAssetsMap(allResults) {
   return allResults.reduce(
     (acc, { url, id }) => ({
       ...acc,
@@ -141,7 +146,10 @@ class AssetMapHelpers {
       )
     );
 
-    const finalAssetsMap = await createAssetsMap(allRemoteAssetsPromises);
+    const resolved = await Promise.all(allRemoteAssetsPromises);
+
+    const finalAssetsMap = createAssetsMap(resolved);
+
     return finalAssetsMap;
   }
 }
