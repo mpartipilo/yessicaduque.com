@@ -52,9 +52,6 @@ async function createRemoteAssetByPath(
       contentDigest: internal.contentDigest
     };
 
-    console.log(JSON.stringify(result))
-    process.exit(1);
-  
     if (id) {
       await cache.set(cacheKey, result);
     }

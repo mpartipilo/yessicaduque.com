@@ -1,4 +1,6 @@
+const createNodeHelpers = require('gatsby-node-helpers').default;
 const CockpitSDK = require("cockpit-sdk").default;
+
 const {
   AssetMapHelpers,
   CockpitHelpers,
@@ -11,6 +13,13 @@ exports.sourceNodes = async (
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions;
+  const {
+    createNodeFactory,
+    generateNodeId,
+    generateTypeName,
+  } = createNodeHelpers({
+    typePrefix: `Cockpit`,
+  });
   const defaultConfig = {
     baseURL: "",
     folder: "",
@@ -49,7 +58,7 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
-    createNodeId,
+    createNodeId: generateNodeId,
     touchNode,
     collectionsItems,
     config,

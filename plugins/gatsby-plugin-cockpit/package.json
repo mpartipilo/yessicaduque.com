@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "cockpit-sdk": "^0.9.4",
+    "gatsby-node-helpers": "^0.3.0",
     "graphql-type-json": "^0.2.1",
     "html-to-react": "^1.3.3",
     "pluralize": "^7.0.0",
