@@ -1,7 +1,7 @@
 {
   "author": {
-    "name": "Paul Hayes",
-    "email": "paul@ginetta.net"
+    "name": "Michelangelo Partipilo",
+    "email": "michelangelo.partipilo@gmail.com"
   },
   "dependencies": {
     "cockpit-sdk": "^0.9.4",
