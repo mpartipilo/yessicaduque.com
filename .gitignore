@@ -62,3 +62,5 @@ bundle-stats.json
 _assets/
 static/data/feed.json
 static/img/gallery
+# Local Netlify folder
+.netlify
