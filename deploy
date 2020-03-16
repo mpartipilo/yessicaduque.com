@@ -9,11 +9,11 @@ elif [ $1 == "live" ]
         if [[ -z $2 ]]
             then
                 echo "Running dry-run"
-                rsync --dry-run -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@thebrandingplug.com:/var/www/yessicaduque.com/html
+                rsync --dry-run -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@partipilo.net:/var/www/yessicaduque.com/html
         elif [ $2 == "go" ]
             then
                 echo "Running actual deploy"
-                rsync -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@thebrandingplug.com:/var/www/yessicaduque.com/html
+                rsync -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@partipilo.net:/var/www/yessicaduque.com/html
         else
             echo $ERRORSTRING;
         fi
@@ -22,11 +22,11 @@ elif [ $1 == "staging" ]
         if [[ -z $2 ]]
             then
                 echo "Running dry-run"
-                rsync --dry-run -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@thebrandingplug.com:/var/www/staging/yessicaduque/html
+                rsync --dry-run -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@partipilo.net:/var/www/staging/yessicaduque/html
         elif [ $2 == "go" ]
             then
                 echo "Running actual deploy"
-                rsync -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@thebrandingplug.com:/var/www/staging/yessicaduque/html
+                rsync -az --force --delete --progress --exclude-from=rsync_exclude.txt -e "ssh -p22" ./public/* root@partipilo.net:/var/www/staging/yessicaduque/html
         else
             echo $ERRORSTRING;
         fi

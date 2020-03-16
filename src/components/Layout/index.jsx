@@ -70,6 +70,7 @@ export default class MainLayout extends React.Component {
         <Helmet>
           <title>{`${config.siteTitle} | ${this.getLocalTitle()}`}</title>
           <meta name="description" content={config.siteDescription} />
+          <script src="https://apps.elfsight.com/p/platform.js" defer />
         </Helmet>
         <Header alwaysShow={invertFixedHeader} />
         {children}

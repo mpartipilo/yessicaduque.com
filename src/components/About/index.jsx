@@ -32,11 +32,11 @@ class About extends Component {
                 </p>
 
                 <p>
-                  I am based in the Netherlands, in the city of The Hague. My
-                  work involves beautiful food imagery for outdoor campaigns,
-                  social media, and PR for restaurants and Chefs in Europe. This
-                  is complemented by many years of experience as Graphic and
-                  Visual Designer.
+                  I am based in the Netherl./deploands, in a beautiful town
+                  called Wateringen. My work involves beautiful food imagery for
+                  outdoor campaigns, social media, and PR for restaurants and
+                  Chefs in Europe. This is complemented by many years of
+                  experience as Graphic and Visual Designer.
                 </p>
 
                 <p>
@@ -67,12 +67,19 @@ class About extends Component {
                   </a>
                   .
                 </p>
+                <p>Featured in:</p>
+                <ul>
+                  <li>
+                    FOODPHOTO FESTIVAL ART EXHIBITION - Velle Denmark 2019:
+                    Festival Screening and Catalog
+                  </li>
+                </ul>
                 <p>Awards and Certifications:</p>
                 <ul>
                   <li>
-                    <a href="http://foodelia.cc/best-photography-gallery/37">
-                      Foodelia - International Food Photography Awards - Winner
-                      of the 37 collection - 3 Awards (November 2018)
+                    <a href="http://foodelia.cc/photographer/YessicaDuque">
+                      Foodelia - International Food Photography Awards - Top 10
+                      Food Photographer of the Year 2019
                     </a>
                   </li>
                   <li>

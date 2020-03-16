@@ -10,7 +10,7 @@ module.exports = class CockpitHelpers {
   async getCollectionItems(name) {
     this.reporter.info(`Fetching Cockpit Collection ${name}`);
     const { fields, entries } = await this.cockpit.collectionGet(name);
-    this.tick();
+    // this.tick();
     return { fields, entries, name };
   }
 
@@ -19,7 +19,7 @@ module.exports = class CockpitHelpers {
     const collections = await this.getCollectionNames();
     this.reporter.info(`Specified Collections:`);
     // this.reporter.list(`collection names`, collections);
-    this.tick = this.reporter.progress(collections.length);
+    // this.tick = this.reporter.progress(collections.length);
     
     return Promise.all(collections.map(name => this.getCollectionItems(name)));
   }

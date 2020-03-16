@@ -7,15 +7,7 @@ import Measure from "react-measure";
 
 const InstagramFeed = () => (
   <React.Fragment>
-    <script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
-    <iframe
-      title="lightwidget"
-      src="//lightwidget.com/widgets/7199b3ac61ba5d9788bde04b7a11d31a.html"
-      scrolling="no"
-      allowtransparency="false"
-      className="lightwidget-widget"
-      style={{ width: "100%", border: 0, overflow: "hidden" }}
-    />
+    <div className="elfsight-app-add08927-7f51-4a4e-9c45-ec0792b5c66b" />
   </React.Fragment>
 );
 
@@ -125,7 +117,8 @@ class InstagramFeedOld extends Component {
         <Row>
           <Col lg="12" className="text-center">
             <h2 className="section-heading">
-              <FA name="instagram" className="p-3" />Latest Instagram posts:
+              <FA name="instagram" className="p-3" />
+              Latest Instagram posts:
             </h2>
             <hr className="primary" />
           </Col>
