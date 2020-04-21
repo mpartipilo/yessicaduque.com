@@ -1,8 +1,5 @@
 {
-  "extends": "fbjs",
-  "rules": {
-  },
-  "plugins": [
-      "markdown"
-  ]
+  "extends": ["prettier"],
+  "rules": {},
+  "plugins": ["markdown"]
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "gatsby";
 import Moment from "react-moment";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
 import Img from "gatsby-image";
 import Layout from "../components/Layout";
@@ -14,7 +14,7 @@ import config from "../../data/SiteConfig";
 
 export default class PostTemplate extends React.Component {
   render() {
-    const { data, pageContext } = this.props;
+    const { location, invert, data, pageContext } = this.props;
     const { slug } = pageContext;
     const postNode = data.post;
     const post = postNode.entry;
@@ -24,7 +24,7 @@ export default class PostTemplate extends React.Component {
     const heroImage = postNode.entry.image.localFile.childImageSharp.fluid;
 
     return (
-      <Layout {...this.props}>
+      <Layout location={location} invert={invert}>
         <div className="blogPost">
           <Helmet>
             <title>{`${post.title} | ${config.siteTitle}`}</title>
@@ -44,14 +44,16 @@ export default class PostTemplate extends React.Component {
                   <div
                     dangerouslySetInnerHTML={{
                       __html:
-                        postNode.entry.excerpt.markdown.childMarkdownRemark.html
+                        postNode.entry.excerpt.markdown.childMarkdownRemark
+                          .html,
                     }}
                   />
                   <hr />
                   <div
                     dangerouslySetInnerHTML={{
                       __html:
-                        postNode.entry.content.markdown.childMarkdownRemark.html
+                        postNode.entry.content.markdown.childMarkdownRemark
+                          .html,
                     }}
                   />
                 </Col>

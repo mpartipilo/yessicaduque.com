@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet";
 import { Container, Row, Col } from "reactstrap";
 import Layout from "../components/Layout";
 import Blog, { getPostList } from "../components/Blog";
@@ -8,11 +8,11 @@ import config from "../../data/SiteConfig";
 
 export default class TagTemplate extends React.Component {
   render() {
-    const { data, pageContext } = this.props;
+    const { location, invert, data, pageContext } = this.props;
     const { tag } = pageContext;
     const postEdges = getPostList(data.allPost.edges);
     return (
-      <Layout {...this.props}>
+      <Layout location={location} invert={invert}>
         <div className="tag-container">
           <Helmet title={`Posts tagged as "${tag}" | ${config.siteTitle}`} />
           <section id="_blog">

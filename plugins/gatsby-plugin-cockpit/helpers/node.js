@@ -2,20 +2,20 @@ const { singular } = require("pluralize");
 const crypto = require("crypto");
 const _ = require("lodash");
 
-const fieldHandlers = require("../field-handlers")
+const fieldHandlers = require("../field-handlers");
 
 module.exports = class CreateNodesHelpers {
   constructor({
     collectionsItems,
-    regionsItems,
+    singletonItems,
     store,
     cache,
     createNode,
     assetsMap,
-    config
+    config,
   }) {
     this.collectionsItems = collectionsItems;
-    this.regionsItems = regionsItems;
+    this.singletonItems = singletonItems;
     this.store = store;
     this.cache = cache;
     this.createNode = createNode;
@@ -27,29 +27,29 @@ module.exports = class CreateNodesHelpers {
   async createItemsNodes() {
     Promise.all(
       this.collectionsItems.map(({ fields, entries, name }) => {
-        const nodes = entries.map(entry =>
+        const nodes = entries.map((entry) =>
           this.createCollectionItemNode({
             entry,
             name,
-            fields
+            fields,
           })
         );
 
         return {
           name,
           nodes,
-          fields
+          fields,
         };
       }),
-      this.regionsItems.map(({ name, data }) => {
-        const node = this.createRegionItemNode({
+      this.singletonItems.map(({ name, data }) => {
+        const node = this.createSingletonItemNode({
           data,
-          name
+          name,
         });
 
         return {
           name: "region",
-          node
+          node,
         };
       })
     );
@@ -58,7 +58,7 @@ module.exports = class CreateNodesHelpers {
   getFileAsset(path) {
     let fileLocation;
 
-    Object.keys(this.assetsMap).forEach(key => {
+    Object.keys(this.assetsMap).forEach((key) => {
       if (key.includes(path)) {
         fileLocation = this.assetsMap[key];
       }
@@ -69,22 +69,28 @@ module.exports = class CreateNodesHelpers {
 
   createCollectionItemNode({ entry, fields, name }) {
     //1
-    var fieldsByType = fieldHandlers.getAllFields(fields)
+    var fieldsByType = fieldHandlers.getAllFields(fields);
 
     //2
     const nodeEntry = Object.keys(fieldsByType).reduce(
       (acc, fieldtype) => ({
         ...acc,
-        ...fieldHandlers.handlers[fieldtype](fieldsByType[fieldtype], fields, entry, this)
-      }
-    ), {})
+        ...fieldHandlers.handlers[fieldtype](
+          fieldsByType[fieldtype],
+          fields,
+          entry,
+          this
+        ),
+      }),
+      {}
+    );
 
     //3
     const node = {
       entry: nodeEntry,
       properties: {
         _created: entry._created,
-        _modified: entry._modified
+        _modified: entry._modified,
       },
       id: entry._id,
       children: [],
@@ -94,10 +100,29 @@ module.exports = class CreateNodesHelpers {
         contentDigest: crypto
           .createHash(`md5`)
           .update(JSON.stringify(entry))
-          .digest(`hex`)
-      }
+          .digest(`hex`),
+      },
     };
 
+    this.createNode(node);
+    return node;
+  }
+
+  createSingletonItemNode({ data, name }) {
+    const node = {
+      ...data,
+      name: name,
+      children: [],
+      parent: null,
+      id: `singleton-${name}`,
+      internal: {
+        type: "singleton",
+        contentDigest: crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(data))
+          .digest(`hex`),
+      },
+    };
     this.createNode(node);
     return node;
   }
@@ -114,8 +139,8 @@ module.exports = class CreateNodesHelpers {
         contentDigest: crypto
           .createHash(`md5`)
           .update(JSON.stringify(data))
-          .digest(`hex`)
-      }
+          .digest(`hex`),
+      },
     };
     this.createNode(node);
     return node;

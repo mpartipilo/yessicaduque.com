@@ -1,10 +1,10 @@
-const createNodeHelpers = require('gatsby-node-helpers').default;
+const createNodeHelpers = require("gatsby-node-helpers").default;
 const CockpitSDK = require("cockpit-sdk").default;
 
 const {
   AssetMapHelpers,
   CockpitHelpers,
-  CreateNodesHelpers
+  CreateNodesHelpers,
 } = require("./helpers");
 const extendNodeType = require("./extend-node-type");
 
@@ -25,7 +25,7 @@ exports.sourceNodes = async (
     folder: "",
     accessToken: "",
     sanitizeHtmlConfig: {},
-    customComponents: []
+    customComponents: [],
   };
 
   const config = Object.assign(defaultConfig, pluginOptions.cockpitConfig);
@@ -36,25 +36,26 @@ exports.sourceNodes = async (
 
   const cockpit = new CockpitSDK({
     host,
-    accessToken: config.accessToken
+    accessToken: config.accessToken,
   });
 
   const cockpitHelpers = new CockpitHelpers(cockpit, config, reporter);
 
-  const [{ assets }, collectionsItems, regionsItems] = await Promise.all([
+  const [{ assets }, collectionsItems, singletonItems] = await Promise.all([
     cockpit.assets(),
     cockpitHelpers.getCockpitCollections(),
-    cockpitHelpers.getCockpitRegions()
+    cockpitHelpers.getCockpitSingletons(),
   ]);
 
   reporter.info(`Assets retrieved: Found ${assets.length} assets`);
 
-  assets.forEach(
-    asset => (asset.path = host + "/storage/uploads" + asset.path)
-  );
+  const newAssets = assets.map(({ path, ...asset }) => ({
+    ...asset,
+    path: `${host}/storage/uploads${path}`,
+  }));
 
   const assetMapHelpers = new AssetMapHelpers({
-    assets,
+    assets: newAssets,
     store,
     cache,
     createNode,
@@ -62,7 +63,7 @@ exports.sourceNodes = async (
     touchNode,
     collectionsItems,
     config,
-    reporter
+    reporter,
   });
 
   reporter.info(`Creating remote file nodes for Assets...`);
@@ -71,12 +72,12 @@ exports.sourceNodes = async (
 
   const createNodesHelpers = new CreateNodesHelpers({
     collectionsItems,
-    regionsItems,
+    singletonItems,
     store,
     cache,
     createNode,
     assetsMap,
-    config
+    config,
   });
 
   await createNodesHelpers.createItemsNodes();

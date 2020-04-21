@@ -13,7 +13,7 @@ import RecipesSummary from "../components/RecipesSummary";
 import Layout from "../components/Layout";
 
 class Index extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     configureAnchors({ offset: -100, keepLastAnchorHash: true });
   }
 
@@ -24,16 +24,17 @@ class Index extends React.Component {
     const { edges: blogPostsEdges } = allPost || { edges: [] };
 
     const featuredGallery = gallery.entry.images.map(
-      i => i.localFile.childImageSharp
+      (i) => i.localFile.childImageSharp
     );
     const highlights = data.highlights.entry.images.map(
-      i => i.localFile.childImageSharp
+      (i) => i.localFile.childImageSharp
     );
     const seoImage = featuredGallery[0].fluid.src;
+    const { location } = this.props;
     return (
-      <Layout {...this.props} invert>
+      <Layout location={location} invert>
         <div className="index-container">
-          <SEO image={seoImage} />
+          {/* <SEO image={seoImage} />} */}
           <Masthead bgImages={featuredGallery} />
           {(blogPostsEdges || []).length > 0 && (
             <section id="_blog">

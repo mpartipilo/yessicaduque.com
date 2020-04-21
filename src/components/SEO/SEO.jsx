@@ -1,5 +1,5 @@
 import React from "react";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 
@@ -29,15 +29,15 @@ const SEO = ({ title, description, image, pathname, article }) => (
           defaultDescription,
           siteUrl,
           defaultImage,
-          twitterUsername
-        }
-      }
+          twitterUsername,
+        },
+      },
     }) => {
       const seo = {
         title: title || defaultTitle,
         description: description || defaultDescription,
         image: `${siteUrl}${image || defaultImage}`,
-        url: `${siteUrl}${pathname || "/"}`
+        url: `${siteUrl}${pathname || "/"}`,
       };
 
       return (
@@ -77,7 +77,7 @@ SEO.propTypes = {
   description: PropTypes.string,
   image: PropTypes.string,
   pathname: PropTypes.string,
-  article: PropTypes.bool
+  article: PropTypes.bool,
 };
 
 SEO.defaultProps = {
@@ -85,5 +85,5 @@ SEO.defaultProps = {
   description: null,
   image: null,
   pathname: null,
-  article: false
+  article: false,
 };

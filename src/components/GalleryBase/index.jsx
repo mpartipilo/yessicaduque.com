@@ -1,16 +1,16 @@
 import React from "react";
 import PhotoGallery from "react-photo-gallery";
 import Measure from "react-measure";
-import Lightbox from "react-images";
+import Carousel, { Modal, ModalGateway } from "react-images";
 import Img from "gatsby-image";
 
-const ImgWrapper = props => {
+const ImgWrapper = (props) => {
   console.log(props);
   const { onClick, photo, index, margin, ...rest } = props;
   return (
     <div
       className="gallery-base-img-wrapper"
-      onClick={e => onClick(e, { index, photo })}
+      onClick={(e) => onClick(e, { index, photo })}
     >
       <Img fixed={photo} style={{ margin }} {...rest} />
     </div>
@@ -28,8 +28,8 @@ class GalleryBase extends React.Component {
       cancelToken: null,
       dimensions: {
         width: -1,
-        height: -1
-      }
+        height: -1,
+      },
     };
     this.closeLightbox = this.closeLightbox.bind(this);
     this.openLightbox = this.openLightbox.bind(this);
@@ -49,13 +49,13 @@ class GalleryBase extends React.Component {
 
   gotoPrevious() {
     this.setState({
-      currentImage: this.state.currentImage - 1
+      currentImage: this.state.currentImage - 1,
     });
   }
 
   gotoNext() {
     this.setState({
-      currentImage: this.state.currentImage + 1
+      currentImage: this.state.currentImage + 1,
     });
   }
 
@@ -66,7 +66,7 @@ class GalleryBase extends React.Component {
     return (
       <Measure
         bounds
-        onResize={contentRect => {
+        onResize={(contentRect) => {
           this.setState({ dimensions: contentRect.bounds });
         }}
       >
@@ -102,16 +102,13 @@ class GalleryBase extends React.Component {
     return (
       <div>
         {this.renderGallery()}
-        <Lightbox
-          images={photos}
-          backdropClosesModal
-          onClose={this.closeLightbox}
-          onClickPrev={this.gotoPrevious}
-          onClickNext={this.gotoNext}
-          currentImage={currentImage}
-          isOpen={lightboxIsOpen}
-          width={1200}
-        />
+        <ModalGateway>
+          {lightboxIsOpen ? (
+            <Modal onClose={this.closeLightbox}>
+              <Carousel views={photos} currentIndex={currentImage} />
+            </Modal>
+          ) : null}
+        </ModalGateway>
       </div>
     );
   }
