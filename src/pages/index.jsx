@@ -34,7 +34,7 @@ class Index extends React.Component {
     return (
       <Layout location={location} invert>
         <div className="index-container">
-          {/* <SEO image={seoImage} />} */}
+          <SEO image={seoImage} />
           <Masthead bgImages={featuredGallery} />
           {(blogPostsEdges || []).length > 0 && (
             <section id="_blog">
