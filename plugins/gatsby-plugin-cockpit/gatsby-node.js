@@ -20,6 +20,7 @@ exports.sourceNodes = async (
   } = createNodeHelpers({
     typePrefix: `Cockpit`,
   });
+
   const defaultConfig = {
     baseURL: "",
     folder: "",

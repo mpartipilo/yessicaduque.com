@@ -5,12 +5,12 @@ const _ = require("lodash");
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
-  if (node.internal.type === "Blog") {
+  if (node.internal.type === "Blog" && node.entry != null) {
     const slug = `/recipe/${_.kebabCase(node.entry.title_slug)}`;
     createNodeField({ node, name: "slug", value: slug });
   }
 
-  if (node.internal.type === "Post") {
+  if (node.internal.type === "Post" && node.entry != null) {
     const slug = `/blog/${_.kebabCase(node.entry.title_slug)}`;
     createNodeField({ node, name: "slug", value: slug });
   }
@@ -55,7 +55,7 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         }
-      `).then(result => {
+      `).then((result) => {
         if (result.errors) {
           console.log(result.errors);
           reject(result.errors);
@@ -63,11 +63,11 @@ exports.createPages = ({ graphql, actions }) => {
 
         const tagSet = new Set();
         // const categorySet = new Set();
-        result.data.allBlog.edges.forEach(edge => {
+        result.data.allBlog.edges.forEach((edge) => {
           const { slug } = edge.node.fields;
 
           if (edge.node.entry.tags) {
-            edge.node.entry.tags.forEach(tag => {
+            edge.node.entry.tags.forEach((tag) => {
               tagSet.add(tag);
             });
           }
@@ -80,19 +80,19 @@ exports.createPages = ({ graphql, actions }) => {
             path: slug,
             component: recipePage,
             context: {
-              slug
-            }
+              slug,
+            },
           });
         });
 
         const tagList = Array.from(tagSet);
-        tagList.forEach(tag => {
+        tagList.forEach((tag) => {
           createPage({
             path: `/recipes/tags/${_.kebabCase(tag)}/`,
             component: tagRecipe,
             context: {
-              tag
-            }
+              tag,
+            },
           });
         });
 
@@ -108,11 +108,11 @@ exports.createPages = ({ graphql, actions }) => {
         // });
 
         const tagSetBlog = new Set();
-        result.data.allPost.edges.forEach(edge => {
+        result.data.allPost.edges.forEach((edge) => {
           const { slug } = edge.node.fields;
 
           if (edge.node.entry.tags) {
-            edge.node.entry.tags.forEach(tag => {
+            edge.node.entry.tags.forEach((tag) => {
               tagSetBlog.add(tag);
             });
           }
@@ -125,19 +125,19 @@ exports.createPages = ({ graphql, actions }) => {
             path: slug,
             component: postPage,
             context: {
-              slug
-            }
+              slug,
+            },
           });
         });
 
         const tagListBlog = Array.from(tagSetBlog);
-        tagListBlog.forEach(tag => {
+        tagListBlog.forEach((tag) => {
           createPage({
             path: `/blog/tags/${_.kebabCase(tag)}/`,
             component: tagBlog,
             context: {
-              tag
-            }
+              tag,
+            },
           });
         });
       })

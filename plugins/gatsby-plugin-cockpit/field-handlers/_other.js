@@ -4,7 +4,7 @@ function composeEntryFields(fields, allFields, entry) {
   return fields.reduce(
     (acc, fieldname) => ({
       ...acc,
-      [fieldname]: entry[fieldname]
+      [fieldname]: entry[fieldname],
     }),
     {}
   );
@@ -12,5 +12,5 @@ function composeEntryFields(fields, allFields, entry) {
 
 module.exports = {
   fieldType,
-  composeEntryFields
+  composeEntryFields,
 };

@@ -3,7 +3,6 @@ module.exports = class CockpitHelpers {
     this.cockpit = cockpit;
     this.config = config;
     this.reporter = reporter;
-    this.tick = {};
   }
 
   // get cockpit collection items by collection name
@@ -17,7 +16,7 @@ module.exports = class CockpitHelpers {
   // get all cockpit collections, together with their items
   async getCockpitCollections() {
     const collections = await this.getCollectionNames();
-    this.reporter.info(`Specified Collections:`);
+    //this.reporter.info(`Specified Collections:`);
     // this.reporter.list(`collection names`, collections);
     // this.tick = this.reporter.progress(collections.length);
 
