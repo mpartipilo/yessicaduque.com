@@ -6,14 +6,6 @@ module.exports = {
   siteMetadata: config.siteMetadata,
   plugins: [
     {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        precision: 8,
-        includePaths: [path.resolve(__dirname, "node_modules")]
-      }
-    },
-    "gatsby-plugin-react-helmet",
-    {
       resolve: "gatsby-plugin-cockpit",
       options: {
         cockpitConfig: {
@@ -22,9 +14,9 @@ module.exports = {
           folder: "",
           accessToken: "account-0aaa1438863e50a40c082513a1dc16",
           collections: ["Gallery", "Blog", "Posts"],
-          regions: ["about", "Services"]
-        }
-      }
+          singletons: ["About", "Services"],
+        },
+      },
     },
     {
       resolve: "gatsby-transformer-remark",
@@ -33,26 +25,34 @@ module.exports = {
           {
             resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 320
-            }
+              maxWidth: 320,
+            },
           },
           {
-            resolve: "gatsby-remark-responsive-iframe"
-          }
-        ]
-      }
+            resolve: "gatsby-remark-responsive-iframe",
+          },
+        ],
+      },
     },
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        precision: 8,
+        includePaths: [path.resolve(__dirname, "node_modules")],
+      },
+    },
+    "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-plugin-google-analytics",
       options: {
-        trackingId: config.googleAnalyticsID
-      }
+        trackingId: config.googleAnalyticsID,
+      },
     },
     {
       resolve: "gatsby-plugin-nprogress",
       options: {
-        color: config.themeColor
-      }
+        color: config.themeColor,
+      },
     },
     "gatsby-plugin-sharp",
     "gatsby-plugin-netlify-cache",
@@ -70,8 +70,8 @@ module.exports = {
         background_color: config.backgroundColor,
         theme_color: config.themeColor,
         display: "minimal-ui",
-        icon: "src/favicon.png"
-      }
-    }
-  ]
+        icon: "src/favicon.png",
+      },
+    },
+  ],
 };

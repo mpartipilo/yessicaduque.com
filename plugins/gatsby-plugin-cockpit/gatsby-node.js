@@ -1,4 +1,3 @@
-const createNodeHelpers = require("gatsby-node-helpers").default;
 const CockpitSDK = require("cockpit-sdk").default;
 
 const {
@@ -6,20 +5,13 @@ const {
   CockpitHelpers,
   CreateNodesHelpers,
 } = require("./helpers");
-const extendNodeType = require("./extend-node-type");
+// const extendNodeType = require("./extend-node-type");
 
 exports.sourceNodes = async (
-  { actions, reporter, store, cache },
+  { actions, createNodeId, createContentDigest, reporter, store, cache },
   pluginOptions
 ) => {
   const { createNode, touchNode } = actions;
-  const {
-    createNodeFactory,
-    generateNodeId,
-    generateTypeName,
-  } = createNodeHelpers({
-    typePrefix: `Cockpit`,
-  });
 
   const defaultConfig = {
     baseURL: "",
@@ -60,7 +52,7 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
-    createNodeId: generateNodeId,
+    createNodeId,
     touchNode,
     collectionsItems,
     config,
@@ -77,6 +69,8 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
+    createNodeId,
+    createContentDigest,
     assetsMap,
     config,
   });

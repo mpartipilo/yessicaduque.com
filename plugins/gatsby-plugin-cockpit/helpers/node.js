@@ -11,6 +11,8 @@ module.exports = class CreateNodesHelpers {
     store,
     cache,
     createNode,
+    createNodeId,
+    createContentDigest,
     assetsMap,
     config,
   }) {
@@ -19,40 +21,34 @@ module.exports = class CreateNodesHelpers {
     this.store = store;
     this.cache = cache;
     this.createNode = createNode;
+    this.createNodeId = createNodeId;
+    this.createContentDigest = createContentDigest;
     this.assetsMap = assetsMap;
     this.config = config;
     this.getFileAsset = this.getFileAsset.bind(this);
   }
 
   async createItemsNodes() {
-    Promise.all(
-      this.collectionsItems.map(({ fields, entries, name }) => {
-        const nodes = entries.map((entry) =>
-          this.createCollectionItemNode({
-            entry,
-            name,
-            fields,
-          })
-        );
-
-        return {
+    await this.collectionsItems.forEach(async ({ fields, entries, name }) => {
+      await entries.forEach(async (entry) => {
+        const node = this.createCollectionItemNode({
+          entry,
           name,
-          nodes,
           fields,
-        };
-      }),
-      this.singletonItems.map(({ name, data }) => {
-        const node = this.createSingletonItemNode({
-          data,
-          name,
         });
 
-        return {
-          name: "region",
-          node,
-        };
-      })
-    );
+        await this.createNode(node);
+      });
+    });
+
+    await this.singletonItems.forEach(async ({ name, data }) => {
+      const node = this.createSingletonItemNode({
+        data,
+        name,
+      });
+
+      await this.createNode(node);
+    });
   }
 
   getFileAsset(path) {
@@ -69,7 +65,9 @@ module.exports = class CreateNodesHelpers {
 
   createCollectionItemNode({ entry, fields, name }) {
     //1
-    var fieldsByType = fieldHandlers.getAllFields(fields);
+    const typeName = singular(name);
+    const nodeId = this.createNodeId(`${typeName}-${entry._id}`);
+    const fieldsByType = fieldHandlers.getAllFields(fields);
 
     //2
     const nodeEntry = Object.keys(fieldsByType).reduce(
@@ -79,6 +77,7 @@ module.exports = class CreateNodesHelpers {
           fieldsByType[fieldtype],
           fields,
           entry,
+          nodeId,
           this
         ),
       }),
@@ -92,19 +91,15 @@ module.exports = class CreateNodesHelpers {
         _created: entry._created,
         _modified: entry._modified,
       },
-      id: entry._id,
+      id: nodeId,
       children: [],
       parent: null,
       internal: {
-        type: singular(name),
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(entry))
-          .digest(`hex`),
+        type: typeName,
+        contentDigest: this.createContentDigest(JSON.stringify(entry)),
       },
     };
 
-    this.createNode(node);
     return node;
   }
 
@@ -123,7 +118,7 @@ module.exports = class CreateNodesHelpers {
           .digest(`hex`),
       },
     };
-    this.createNode(node);
+
     return node;
   }
 
@@ -142,7 +137,7 @@ module.exports = class CreateNodesHelpers {
           .digest(`hex`),
       },
     };
-    this.createNode(node);
+
     return node;
   }
 };

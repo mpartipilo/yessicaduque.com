@@ -1,6 +1,6 @@
 const fieldType = "_other";
 
-function composeEntryFields(fields, allFields, entry) {
+function composeEntryFields(fields, allFields, entry, parentNodeId) {
   return fields.reduce(
     (acc, fieldname) => ({
       ...acc,

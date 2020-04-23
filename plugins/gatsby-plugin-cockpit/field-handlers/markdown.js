@@ -1,54 +1,65 @@
-const _ = require("lodash");
 const crypto = require("crypto");
 
 const fieldType = "markdown";
 
-const digest = data =>
-  crypto
-    .createHash(`md5`)
-    .update(JSON.stringify(data))
-    .digest(`hex`);
-
-function createTextNode(node, key, text) {
-  const str = _.isString(text) ? text : ` `;
+function createTextNode(
+  node,
+  key,
+  text,
+  createNodeId,
+  createContentDigest,
+  parentNodeId
+) {
+  const nodeId = createNodeId(`${node._id}_${key}_TextNode`);
   const textNode = {
-    id: `${node._id}_${key}_TextNode`,
-    parent: node._id,
+    id: nodeId,
+    parent: parentNodeId,
     children: [],
     internal: {
-      type: _.camelCase(`${key} TextNode`),
+      type: `${key}_TextNode`,
       mediaType: `text/markdown`,
-      content: str,
-      contentDigest: digest(str)
-    }
+      content: text,
+      contentDigest: createContentDigest(text),
+    },
   };
 
   return textNode;
 }
 
-function composeEntryFields(fields, allFields, entry, { createNode, assetsMap }) {
+function composeEntryFields(
+  fields,
+  allFields,
+  entry,
+  parentNodeId,
+  { createNode, createNodeId, createContentDigest, assetsMap }
+) {
   return fields.reduce((acc, fieldname) => {
-
-    const node = createTextNode(entry, fieldname, entry[fieldname]);
+    const node = createTextNode(
+      entry,
+      fieldname,
+      entry[fieldname],
+      createNodeId,
+      createContentDigest,
+      parentNodeId
+    );
 
     // Replace image links by assets links that can be picked up by gatsby-remark-images
-    
 
     createNode(node);
 
     const transformed = {
       raw: entry[fieldname],
-      markdown___NODE: node.id
+      markdown___NODE: node.id,
     };
 
     return {
       ...acc,
-      [fieldname]: transformed
+      [fieldname]: transformed,
     };
   }, {});
 }
 
 module.exports = {
   fieldType,
-  composeEntryFields
+  composeEntryFields,
 };
