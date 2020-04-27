@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 
 import Services from "../Services";
@@ -6,7 +6,7 @@ import Services from "../Services";
 class About extends Component {
   render() {
     return (
-      <Fragment>
+      <>
         <Container>
           <Row>
             <Col lg={{ size: 6 }} md={{ size: 4 }}>
@@ -40,7 +40,7 @@ class About extends Component {
                 </p>
 
                 <p>
-                  My expertise in Food Photography and Food Styling is backed by{" "}
+                  My expertise in Food Photography and Food Styling is backed by
                   <a
                     href="https://www.cordonbleu.edu/london/"
                     target="_blank"
@@ -48,15 +48,15 @@ class About extends Component {
                   >
                     Le Cordon Bleu Paris
                   </a>
-                  ,{" "}
+                  ,
                   <a
                     href="https://www.leiths.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     Leiths School of Food and Wine in London
-                  </a>{" "}
-                  and{" "}
+                  </a>
+                  and
                   <a
                     href="https://www.internationalculinarycenter.com/new-york-campus/amateur-classes-ny/food-styling-media/"
                     target="_blank"
@@ -70,8 +70,37 @@ class About extends Component {
                 <p>Featured in:</p>
                 <ul>
                   <li>
-                    FOODPHOTO FESTIVAL ART EXHIBITION - Velle Denmark 2019:
-                    Festival Screening and Catalog
+                    <a
+                      href="https://www.pinkladyfoodphotographeroftheyear.com/pink-lady-food-photographer-shortlist-2020/"
+                      target="_blank"
+                    >
+                      Shortlisted Pink Lady Food Photography Award 2020
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.ad.nl/koken-en-eten/deze-zeven-foodfotografen-uit-nederland-behoren-tot-de-besten-van-de-wereld~a9d8daab/?referrer=https://yessicaduque.com/"
+                      target="_blank"
+                    >
+                      Algemeen Dagblad
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.wos.nl/wateringse-genomineerd-voor-voedselfotografieprijs/nieuws/item?1157096"
+                      target="_blank"
+                    >
+                      Westlandse Omroep Stichting
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.foodphotofestival.com/index.php/exhibitions-2019.html"
+                      target="_blank"
+                    >
+                      FOODPHOTO FESTIVAL ART EXHIBITION - Velle Denmark 2019:
+                      Festival Screening and Catalog
+                    </a>
                   </li>
                 </ul>
                 <p>Awards and Certifications:</p>
@@ -85,7 +114,7 @@ class About extends Component {
                   <li>
                     <a href="https://en.wikipedia.org/wiki/Hazard_analysis_and_critical_control_points">
                       HACCP
-                    </a>{" "}
+                    </a>
                     <a href="https://www.horecaacademie.nl/">
                       Horeca Academie Den Haag
                     </a>
@@ -96,13 +125,13 @@ class About extends Component {
                     </a>
                   </li>
                   <li>
-                    Barista Training by Giancarlo Matarazzi:{" "}
+                    Barista Training by Giancarlo Matarazzi:
                     <a href="https://capriolecafe.nl/koffie-barista-workshops-den-haag/">
                       Capriol&eacute; Caf&eacute;
                     </a>
                   </li>
                   <li>
-                    Fotografía Gastronómica y estilismo culinario:{" "}
+                    Fotografía Gastronómica y estilismo culinario:
                     <a href="http://kemafoodculture.com/">
                       KEMA Food Culture - Barcelona España
                     </a>
@@ -119,7 +148,7 @@ class About extends Component {
         <Container>
           <Services />
         </Container>
-      </Fragment>
+      </>
     );
   }
 }

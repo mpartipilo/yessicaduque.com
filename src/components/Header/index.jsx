@@ -9,7 +9,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
 } from "reactstrap";
 
 class Header extends Component {
@@ -20,8 +20,8 @@ class Header extends Component {
       scrollThresholdCrossed: false,
       dimensions: {
         width: -1,
-        height: -1
-      }
+        height: -1,
+      },
     };
 
     this.toggle = this.toggle.bind(this);
@@ -47,8 +47,8 @@ class Header extends Component {
   }
 
   toggle() {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
+    this.setState((prevState) => ({
+      isOpen: !prevState.isOpen,
     }));
   }
 
@@ -57,22 +57,22 @@ class Header extends Component {
       state: {
         dimensions: { width, height },
         isOpen,
-        scrollThresholdCrossed
+        scrollThresholdCrossed,
       },
-      props: { alwaysShow = false }
+      props: { alwaysShow = false },
     } = this;
     const inverted = isOpen || scrollThresholdCrossed || alwaysShow;
     const classes = classNames({
-      "navbar-shrink": inverted
+      "navbar-shrink": inverted,
     });
 
     return (
-      <React.Fragment>
+      <>
         <Measure
           bounds
-          onResize={contentRect => {
+          onResize={(contentRect) => {
             this.setState({
-              dimensions: contentRect.bounds
+              dimensions: contentRect.bounds,
             });
           }}
         >
@@ -97,9 +97,9 @@ class Header extends Component {
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                      <NavItem>
+                      {/* <NavItem>
                         <NavLink href="/#blog">Blog</NavLink>
-                      </NavItem>
+                      </NavItem> */}
                       <NavItem>
                         <NavLink href="/#recipes">Recipes</NavLink>
                       </NavItem>
@@ -119,7 +119,7 @@ class Header extends Component {
             </header>
           )}
         </Measure>
-      </React.Fragment>
+      </>
     );
   }
 }
