@@ -32,15 +32,15 @@ class About extends Component {
                 </p>
 
                 <p>
-                  I am based in the Netherl./deploands, in a beautiful town
-                  called Wateringen. My work involves beautiful food imagery for
+                  I am based in the Netherlands, in a beautiful town called
+                  Wateringen. My work involves beautiful food imagery for
                   outdoor campaigns, social media, and PR for restaurants and
                   Chefs in Europe. This is complemented by many years of
                   experience as Graphic and Visual Designer.
                 </p>
 
                 <p>
-                  My expertise in Food Photography and Food Styling is backed by
+                  My expertise in Food Photography and Food Styling is backed by{" "}
                   <a
                     href="https://www.cordonbleu.edu/london/"
                     target="_blank"
@@ -48,15 +48,15 @@ class About extends Component {
                   >
                     Le Cordon Bleu Paris
                   </a>
-                  ,
+                  ,{" "}
                   <a
                     href="https://www.leiths.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     Leiths School of Food and Wine in London
-                  </a>
-                  and
+                  </a>{" "}
+                  and{" "}
                   <a
                     href="https://www.internationalculinarycenter.com/new-york-campus/amateur-classes-ny/food-styling-media/"
                     target="_blank"
@@ -74,7 +74,7 @@ class About extends Component {
                       href="https://www.pinkladyfoodphotographeroftheyear.com/pink-lady-food-photographer-shortlist-2020/"
                       target="_blank"
                     >
-                      Shortlisted Pink Lady Food Photography Award 2020
+                      Pink Lady Food Photography Award 2020 Shortlist
                     </a>
                   </li>
                   <li>
@@ -125,13 +125,13 @@ class About extends Component {
                     </a>
                   </li>
                   <li>
-                    Barista Training by Giancarlo Matarazzi:
+                    Barista Training by Giancarlo Matarazzi:{" "}
                     <a href="https://capriolecafe.nl/koffie-barista-workshops-den-haag/">
                       Capriol&eacute; Caf&eacute;
                     </a>
                   </li>
                   <li>
-                    Fotografía Gastronómica y estilismo culinario:
+                    Fotografía Gastronómica y estilismo culinario:{" "}
                     <a href="http://kemafoodculture.com/">
                       KEMA Food Culture - Barcelona España
                     </a>
