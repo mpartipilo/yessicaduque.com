@@ -1,18 +1,20 @@
 {
-  "extends": ["airbnb", "prettier"],
-  "plugins": ["react", "jsx-a11y", "import", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "plugins": ["react", "prettier"],
   "rules": {
-    "react/prefer-stateless-function": "off",
-    "react/prop-types": "off",
-    "react/no-danger": "off",
-    "prettier/prettier": ["error", {"tabWidth": 2}],
-    "react/jsx-indent": 0,
-    "react/jsx-indent-props": 0,
-    "react/jsx-one-expression-per-line": 0,
-    "no-underscore-dangle": 0
+    "react/prefer-stateless-function": 1,
+    "react/no-danger": "off"
   },
-  "settings": {
-    "import/core-modules": []
+  "settings": {},
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "jsx": true
   },
   "env": {
     "browser": true,

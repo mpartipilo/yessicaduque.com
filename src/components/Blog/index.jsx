@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { Container, Row, Col, CardBody, CardTitle } from "reactstrap";
 import { graphql, Link } from "gatsby";
 import Img from "gatsby-image";
 
-export const getPostList = postEdges =>
+export const getPostList = (postEdges) =>
   postEdges.map(({ node }) => ({
     host: node.host,
     path: node.fields.slug,
@@ -14,10 +15,10 @@ export const getPostList = postEdges =>
     date: node.properties._modified * 1000,
     summary: node.entry.excerpt.markdown.childMarkdownRemark.html,
     excerpt: node.entry.content.markdown.childMarkdownRemark.html,
-    timeToRead: node.entry.content.markdown.childMarkdownRemark.timeToRead
+    timeToRead: node.entry.content.markdown.childMarkdownRemark.timeToRead,
   }));
 
-export const PostCardSummary = post => {
+export const PostCardSummary = (post) => {
   const { title, cover, path, summary, excerpt, date } = post;
   return (
     <div style={{ paddingBottom: "1em" }} key={title}>
@@ -30,7 +31,7 @@ export const PostCardSummary = post => {
                 width: "100%",
                 height: "100%",
                 minHeight: 150,
-                overflow: "hidden"
+                overflow: "hidden",
               }}
             >
               <Img
@@ -45,7 +46,7 @@ export const PostCardSummary = post => {
                   top: 0,
                   bottom: 0,
                   width: "100%",
-                  height: "100%"
+                  height: "100%",
                 }}
               />
             </div>
@@ -55,7 +56,7 @@ export const PostCardSummary = post => {
               style={{
                 display: "table-cell",
                 verticalAlign: "middle",
-                padding: "6px"
+                padding: "6px",
               }}
             >
               <CardBody>
@@ -67,7 +68,7 @@ export const PostCardSummary = post => {
                 <div
                   className="card-text"
                   dangerouslySetInnerHTML={{
-                    __html: summary.length > 0 ? summary : excerpt
+                    __html: summary.length > 0 ? summary : excerpt,
                   }}
                 />
                 <div>
@@ -85,6 +86,12 @@ export const PostCardSummary = post => {
 };
 
 const Blog = ({ posts }) => <Container>{posts.map(PostCardSummary)}</Container>;
+
+Blog.propTypes = {
+  posts: PropTypes.shape({
+    map: PropTypes.func,
+  }),
+};
 
 export default Blog;
 

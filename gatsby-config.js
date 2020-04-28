@@ -9,7 +9,6 @@ module.exports = {
       resolve: "gatsby-plugin-cockpit",
       options: {
         cockpitConfig: {
-          // baseURL: "http://localhost:3001",
           baseURL: "http://content.yessicaduque.com",
           folder: "",
           accessToken: "account-0aaa1438863e50a40c082513a1dc16",
@@ -46,12 +45,6 @@ module.exports = {
       resolve: "gatsby-plugin-google-analytics",
       options: {
         trackingId: config.googleAnalyticsID,
-      },
-    },
-    {
-      resolve: "gatsby-plugin-nprogress",
-      options: {
-        color: config.themeColor,
       },
     },
     "gatsby-plugin-sharp",
