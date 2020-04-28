@@ -43,9 +43,9 @@ class Index extends React.Component {
               </ScrollableAnchor>
             </section>
           )}
-          <section id="_recipes">
-            <ScrollableAnchor id="recipes">
-              <RecipesSummary postEdges={recipePostEdges} />
+          <section id="_about">
+            <ScrollableAnchor id="about">
+              <About />
             </ScrollableAnchor>
           </section>
           <section id="_portfolioSummary">
@@ -56,9 +56,9 @@ class Index extends React.Component {
               </div>
             </ScrollableAnchor>
           </section>
-          <section id="_about">
-            <ScrollableAnchor id="about">
-              <About />
+          <section id="_recipes">
+            <ScrollableAnchor id="recipes">
+              <RecipesSummary postEdges={recipePostEdges} />
             </ScrollableAnchor>
           </section>
           <section id="_contact">

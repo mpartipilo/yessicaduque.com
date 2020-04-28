@@ -8,7 +8,9 @@ module.exports = class CockpitHelpers {
   // get cockpit collection items by collection name
   async getCollectionItems(name) {
     this.reporter.info(`Fetching Cockpit Collection ${name}`);
-    const { fields, entries } = await this.cockpit.collectionGet(name);
+    const { fields, entries } = await this.cockpit.collectionGet(name, {
+      filter: {},
+    });
     // this.tick();
     return { fields, entries, name };
   }

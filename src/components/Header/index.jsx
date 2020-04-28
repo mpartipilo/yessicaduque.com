@@ -97,17 +97,17 @@ class Header extends Component {
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={isOpen} navbar>
                     <Nav className="ml-auto" navbar>
+                      <NavItem>
+                        <NavLink href="/#about">About</NavLink>
+                      </NavItem>
                       {/* <NavItem>
                         <NavLink href="/#blog">Blog</NavLink>
                       </NavItem> */}
                       <NavItem>
-                        <NavLink href="/#recipes">Recipes</NavLink>
-                      </NavItem>
-                      <NavItem>
                         <NavLink href="/#portfolio">Gallery</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink href="/#about">About</NavLink>
+                        <NavLink href="/#recipes">Recipes</NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink href="/#contact">Contact</NavLink>
