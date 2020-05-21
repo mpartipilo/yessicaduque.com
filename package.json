@@ -47,7 +47,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-standard": "^4.0.1",
-    "gatsby": "^2.21.1",
+    "gatsby": "^2.22.4",
     "gatsby-cli": "^2.12.1",
     "gatsby-node-helpers": "^0.3.0",
     "gatsby-plugin-catch-links": "^2.3.0",
@@ -100,7 +100,7 @@
     "develop": "gatsby develop",
     "developOpen": "gatsby develop -H 0.0.0.0",
     "serve": "gatsby serve",
-    "build": "gatsby build",
+    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
     "lint:js": "eslint --ext .js,.jsx --ignore-pattern public,static .",
     "format:js": "prettier '**/*.{js,jsx}' --write"
   },
