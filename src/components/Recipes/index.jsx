@@ -7,11 +7,11 @@ import {
   Card,
   CardImg,
   CardBody,
-  CardTitle
+  CardTitle,
 } from "reactstrap";
 import { graphql, Link } from "gatsby";
 
-export const getPostList = postEdges =>
+export const getPostList = (postEdges) =>
   postEdges.map(({ node }) => ({
     path: node.fields.slug,
     tags: node.entry.tags || [],
@@ -20,21 +20,23 @@ export const getPostList = postEdges =>
     date: node.properties._modified * 1000,
     summary: node.entry.excerpt.markdown.childMarkdownRemark.html,
     excerpt: node.entry.content.markdown.childMarkdownRemark.html,
-    timeToRead: node.entry.content.markdown.childMarkdownRemark.timeToRead
+    timeToRead: node.entry.content.markdown.childMarkdownRemark.timeToRead,
   }));
 
-export const PostCardSummary = post => {
+export const PostCardSummary = (post) => {
   const { title, cover, path, summary, excerpt, date } = post;
   return (
     <Col lg={4} md={6} key={title}>
       <Card style={{ marginBottom: 5 }}>
-        <CardImg
-          top
-          width="100%"
-          className="h-100"
-          src={cover.fixed.src}
-          alt={title}
-        />
+        <Link to={path} href={path}>
+          <CardImg
+            top
+            width="100%"
+            className="h-100"
+            src={cover.fixed.src}
+            alt={title}
+          />
+        </Link>
         <CardBody>
           <CardTitle>
             <Link to={path} href={path}>
@@ -44,7 +46,7 @@ export const PostCardSummary = post => {
           <div
             className="card-text"
             dangerouslySetInnerHTML={{
-              __html: summary.length > 0 ? summary : excerpt
+              __html: summary.length > 0 ? summary : excerpt,
             }}
           />
           <div>

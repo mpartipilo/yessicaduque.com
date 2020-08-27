@@ -1,17 +1,19 @@
 const limit = require("simple-rate-limiter");
 const { createRemoteFileNode } = require("gatsby-source-filesystem");
 const validUrl = require("valid-url");
+const { result } = require("lodash");
 
-const limited = limit(async (args, callback) => {
-  const result = await createRemoteFileNode(args);
-  return result;
+const limited = limit((args, callback) => {
+  createRemoteFileNode(args).then((x) => {
+    callback(x);
+  });
 })
-  .to(1)
-  .per(4000);
+  .to(10)
+  .per(1000);
 
 // A function that returns a promise to resolve into the data //fetched from the API or an error
-const createRemoteFileNodeThrottled = args => {
-  return new Promise((resolve, reject) => limited(args, r => resolve(r)));
+const createRemoteFileNodeThrottled = (args) => {
+  return new Promise((resolve, reject) => limited(args, (r) => resolve(r)));
 };
 
 async function createRemoteAssetByPath(
@@ -19,28 +21,19 @@ async function createRemoteAssetByPath(
   store,
   cache,
   createNode,
-  createNodeId,
-  touchNode
+  createNodeId
 ) {
   const url = asset.path;
   const cacheKey = `cockpitAsset${url}`;
-  const cacheMediaData = await cache.get(cacheKey);
-
-  // If we have cached media data and it wasn't modified, reuse
-  // previously created file node to not try to redownload
-  if (cacheMediaData && asset.modified === cacheMediaData.modified) {
-    touchNode({ nodeId: cacheMediaData.id });
-    return { localFile___NODE: cacheMediaData.id, ...cacheMediaData };
-  }
 
   // If we don't have cached data, download the file
   try {
-    const { id, internal, ext, name } = await createRemoteFileNode({
+    const { id, internal, ext, name } = await createRemoteFileNodeThrottled({
       url,
       store,
       cache,
       createNode,
-      createNodeId
+      createNodeId,
     });
 
     var result = {
@@ -49,16 +42,14 @@ async function createRemoteAssetByPath(
       ext,
       name,
       modified: asset.modified,
-      contentDigest: internal.contentDigest
+      contentDigest: internal.contentDigest,
     };
 
     if (id) {
       await cache.set(cacheKey, result);
     }
   } catch (e) {
-    console.log(e)
-    process.exit(1);
-
+    console.log(e);
     // Ignore
   }
 
@@ -69,7 +60,7 @@ function createAssetsMap(allResults) {
   return allResults.reduce(
     (acc, { url, id }) => ({
       ...acc,
-      [url]: id
+      [url]: id,
     }),
     {}
   );
@@ -85,7 +76,7 @@ class AssetMapHelpers {
     touchNode,
     collectionsItems,
     config,
-    reporter
+    reporter,
   }) {
     this.assets = assets;
     this.store = store;
@@ -102,10 +93,10 @@ class AssetMapHelpers {
   addAllOtherImagesPathsToAssetsArray() {
     this.collectionsItems.map(({ entries, fields }) => {
       const imageFields = Object.keys(fields).filter(
-        fieldname => fields[fieldname].type === "image"
+        (fieldname) => fields[fieldname].type === "image"
       );
-      imageFields.forEach(fieldname => {
-        entries.forEach(entry => {
+      imageFields.forEach((fieldname) => {
+        entries.forEach((entry) => {
           if (entry[fieldname].path) {
             let path = entry[fieldname].path;
             if (!validUrl.isUri(path)) {
@@ -113,7 +104,7 @@ class AssetMapHelpers {
             }
             if (validUrl.isUri(path)) {
               this.assets.push({
-                path
+                path,
               });
             } else {
               throw new Error(
@@ -132,7 +123,7 @@ class AssetMapHelpers {
   async createAssetsNodes() {
     this.addAllOtherImagesPathsToAssetsArray();
 
-    const allRemoteAssetsPromises = this.assets.map(asset =>
+    const allRemoteAssetsPromises = this.assets.map((asset) =>
       createRemoteAssetByPath(
         asset,
         this.store,
@@ -153,5 +144,5 @@ class AssetMapHelpers {
 
 module.exports = {
   AssetMapHelpers,
-  createAssetsMap
+  createAssetsMap,
 };

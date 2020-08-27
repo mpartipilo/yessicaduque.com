@@ -69,6 +69,53 @@ const About = () => (
             <ul>
               <li>
                 <a
+                  href="https://thestoriedrecipe.com/episode-035-yessicas-venezuelan-arepas-coming-to-us-from-holland/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  The Storied Recipe podcast - Yessica&apos;s Venezuelan Arepas,
+                  Coming To Us From Holland
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.bhphotovideo.com/explora/photography/features/15-mouthwatering-food-photographers-to-follow-on-instagram"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  15 Mouthwatering Food Photographers to Follow on Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.sigmabenelux.com/nl/nieuws/uitslag-sigmathuisfotowedstrijd"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  #sigmathuisfotowedstrijd
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://archief.wos.nl/nieuwsarchief/bericht/20200407-wateringse-genomineerd-voor-voedselfotografieprijs"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Wateringse genomineerd voor voedselfotografieprijs
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.ad.nl/koken-en-eten/deze-zeven-foodfotografen-uit-nederland-behoren-tot-de-besten-van-de-wereld~a9d8daab/?referrer=https://yessicaduque.com/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Deze zeven foodfotografen uit Nederland behoren tot de besten
+                  van de wereld
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://www.pinkladyfoodphotographeroftheyear.com/pink-lady-food-photographer-shortlist-2020/"
                   target="_blank"
                   rel="noreferrer noopener"

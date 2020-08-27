@@ -34,21 +34,23 @@ export const PostCardSummary = (post) => {
                 overflow: "hidden",
               }}
             >
-              <Img
-                fixed={cover.fixed}
-                alt={title}
-                style={{
-                  position: "relative",
-                  overflow: "hidden",
-                  display: "inline-block",
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
+              <Link to={path} href={path}>
+                <Img
+                  fixed={cover.fixed}
+                  alt={title}
+                  style={{
+                    position: "relative",
+                    overflow: "hidden",
+                    display: "inline-block",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </Link>
             </div>
           </Col>
           <Col lg={8} md={6}>

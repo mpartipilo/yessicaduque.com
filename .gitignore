@@ -47,7 +47,6 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
-
 # Build Files
 public/
 .cache/
@@ -64,3 +63,4 @@ static/data/feed.json
 static/img/gallery
 # Local Netlify folder
 .netlify
+.DS_Store
