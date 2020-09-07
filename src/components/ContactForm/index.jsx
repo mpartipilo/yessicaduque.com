@@ -29,6 +29,7 @@ export default class ContactForm extends React.Component {
         action="https://formspree.io/moqkanqw"
         method="POST"
       >
+        <input type="text" name="_gotcha" style="display:none" />
         <Card>
           <CardBody>
             {(status === "" || status === "ERROR") && (
